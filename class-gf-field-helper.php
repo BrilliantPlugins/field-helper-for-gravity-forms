@@ -16,7 +16,7 @@ GFForms::include_addon_framework();
  *
  * @package gravityforms-field-helper
  */
-class GF_Field_Helper {
+class GF_Field_Helper extends GFAddOn {
 
 	/**
 	 * Plugin version.
@@ -70,7 +70,7 @@ class GF_Field_Helper {
 	 *
 	 * @var string $_title
 	 */
-	protected $_title = 'Gravity Forms Simple Add-On';
+	protected $_title = 'Gravity Forms Field Helper';
 
 	/**
 	 * Short plugin title.
@@ -79,7 +79,7 @@ class GF_Field_Helper {
 	 *
 	 * @var string $_short_title
 	 */
-	protected $_short_title = 'Simple Add-On';
+	protected $_short_title = 'Field Helper';
 
 	/**
 	 * Class instance.
@@ -99,6 +99,17 @@ class GF_Field_Helper {
 		}
 
 		return self::$_instance;
+	}
+
+	/**
+	 * Render plugin page content.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	public function plugin_page() {
+		echo 'To use this plugin, go to the Field Helper section on each of your forms’ settings.';
 	}
 
 }
