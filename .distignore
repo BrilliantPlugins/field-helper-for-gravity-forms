@@ -1,0 +1,7 @@
+.gitignore
+.vscode
+gulpfile.js
+node_modules
+package.json
+phpcs.xml
+shrinkwrap.yaml
