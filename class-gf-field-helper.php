@@ -112,4 +112,122 @@ class GF_Field_Helper extends GFAddOn {
 		echo 'To use this plugin, go to the Field Helper section on each of your forms’ settings.';
 	}
 
+	/**
+	 * Basic sanity check for field names.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $value Field value.
+	 *
+	 * @return bool         Whether field value checks out.
+	 */
+	public function is_valid_name( $value ) {
+		return is_string( $value );
+	}
+
+	/**
+	 * Build form settings array.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param mixed $form Form object.
+	 *
+	 * @return array      Form settings.
+	 */
+	public function form_settings_fields( $form ) {
+		$friendly_fields = array(
+			array(
+				'title'       => esc_html__( 'Field Helper Settings', 'gravityforms-field-helper' ),
+				'description' => esc_html__( 'Enter human-friendly field names for each field below, or leave blank to ignore.', 'gravityforms-field-helper' ),
+				'fields'      => array(),
+			),
+		);
+
+		foreach ( $form['fields'] as $key => $field ) {
+			$friendly_fields[] = $this->build_form_settings_array( $field, $form[ $this->_slug ] );
+		}
+
+		return $friendly_fields;
+	}
+
+	/**
+	 * Recursively build form settings fields array.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $field           Field object.
+	 * @param array $helper_settings Saved options for this form.
+	 *
+	 * @return array                 Field settings array.
+	 */
+	private function build_form_settings_array( $field, $helper_settings ) {
+
+		// Handle page fields: add a header and bail out.
+		if ( is_a( $field, 'GF_Field_Page' ) ) {
+			return array(
+				'title'  => 'Page Break',
+				'fields' => array(),
+			);
+		}
+
+		// Create section header.
+		$friendly_fields = array(
+			'title'  => $field['label'],
+			'fields' => array(),
+		);
+
+		$description = '';
+		if ( array_key_exists( 'description', $field ) ) {
+			$description = $field['description'];
+		}
+
+		if ( array_key_exists( 'inputs', $field ) && is_array( $field['inputs'] ) ) {
+			// This is a multiple-input field.
+			foreach ( $field['inputs'] as $key => $field ) {
+				$value = '';
+				if ( array_key_exists( $this->convert_field_id( $field['id'] ), $helper_settings ) ) {
+					$value = $helper_settings[ $this->convert_field_id( $field['id'] ) ];
+				}
+
+				$friendly_fields['fields'][] = array(
+					'name'  => $this->convert_field_id( $field['id'] ),
+					'label' => $field['label'],
+					'type'  => 'text',
+					'class' => 'small',
+					'value' => $value,
+				);
+			}
+		} else {
+			// This is a single-input field.
+			$value = '';
+			if ( array_key_exists( $this->convert_field_id( $field['id'] ), $helper_settings ) ) {
+				$value = $helper_settings[ $this->convert_field_id( $field['id'] ) ];
+			}
+
+			$friendly_fields['fields'][] = array(
+				'name'    => $this->convert_field_id( $field['id'] ),
+				'tooltip' => esc_html__( 'Field Description: ', 'gravityforms-field-helper' ) . $description,
+				'label'   => $field['label'],
+				'type'    => 'text',
+				'class'   => 'small',
+				'value'   => $helper_settings[ $field['id'] ],
+			);
+		}
+
+		return $friendly_fields;
+	}
+
+	/**
+	 * Convert field ID with period to underscore.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $id Field ID.
+	 *
+	 * @return string    Sanitized field ID for/from database.
+	 */
+	private function convert_field_id( $id ) {
+		return str_replace( '.', '_', $id );
+	}
+
 }
