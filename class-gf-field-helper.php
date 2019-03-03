@@ -82,6 +82,15 @@ class GF_Field_Helper extends GFAddOn {
 	protected $_short_title = 'Field Helper';
 
 	/**
+	 * Our cache of human-friendly labels.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var array $friendly_labels
+	 */
+	protected $friendly_labels = array();
+
+	/**
 	 * Class instance.
 	 *
 	 * @var null
