@@ -102,6 +102,20 @@ class GF_Field_Helper extends GFAddOn {
 	}
 
 	/**
+	 * Load hooks and actions.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	public function init() {
+		parent::init();
+
+		// Filter REST response to use friendly field names.
+		add_filter( 'rest_dispatch_request', array( $this, 'make_friendly_field_names' ), 10, 4 );
+	}
+
+	/**
 	 * Render plugin page content.
 	 *
 	 * @since 1.0.0
@@ -228,6 +242,64 @@ class GF_Field_Helper extends GFAddOn {
 	 */
 	private function convert_field_id( $id ) {
 		return str_replace( '.', '_', $id );
+	}
+
+	/**
+	 * Add friendly field names to REST API response.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param bool            $dispatch_result Dispatch result, will be used if not empty.
+	 * @param WP_REST_Request $request         Request used to generate the response.
+	 * @param string          $route           Route matched for the request.
+	 * @param array           $handler         Route handler used for the request.
+	 *
+	 * @return mixde                           Result to send to the client.
+	 */
+	public function make_friendly_field_names( $dispatch_result, $request, $route, $handler ) {
+
+		// If not an entries request, bail out.
+		if ( ! is_a( $handler['callback'][0], 'GF_REST_Entries_Controller' ) ) {
+			return $dispatch_result;
+		}
+
+		// Get the default response.
+		$response      = call_user_func( $handler['callback'], $request );
+		$response_data = $response->get_data();
+
+		// Add human-friendly field names to the response.
+		foreach ( $response_data['entries'] as $key => $entry ) {
+			$labels = $this->get_form_friendly_labels( $entry['form_id'] );
+
+			foreach ( $entry as $e_key => $e_value ) {
+				$sanitized_key = $this->convert_field_id( $e_key );
+
+				if ( in_array( $sanitized_key, array_flip( $labels ), true ) ) {
+					$response_data['entries'][ $key ][ $labels[ $sanitized_key ] ] = $e_value;
+				}
+			}
+		}
+
+		return new WP_REST_Response( $response_data, 200 );
+	}
+
+	/**
+	 * Get friendly labels for the given form.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param int $form_id Form ID.
+	 *
+	 * @return array       Human-friendly form labels.
+	 */
+	private function get_form_friendly_labels( $form_id ) {
+		if ( ! isset( $this->friendly_labels[ $form_id ] ) ) {
+			$form = GFAPI::get_form( $form_id );
+
+			$this->friendly_labels[ $form_id ] = $form[ $this->_slug ];
+		}
+
+		return $this->friendly_labels[ $form_id ];
 	}
 
 }
