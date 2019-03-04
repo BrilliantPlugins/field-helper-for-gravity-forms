@@ -144,7 +144,7 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 
 		// Merge fields into a JSON blob.
 		if ( array_key_exists( 'format', $_REQUEST ) && ! empty( $_REQUEST['format'] ) && 'json' === sanitize_key( $_REQUEST['format'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$results['entries_json'] = wp_json_encode( $this->json_fields );
+			$results['entries_json'] = $this->json_fields;
 			unset( $results['entries'] );
 		}
 
@@ -162,6 +162,8 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 	 */
 	private function replace_field_names( $result ) {
 		$labels = $this->get_form_friendly_labels( $result['form_id'] );
+
+		$this->json_fields[ $result['id'] ]['id'] = $result['id'];
 
 		foreach ( $result as $key => $value ) {
 			$sanitized_key = GF_Field_Helper::convert_field_id( $key );
