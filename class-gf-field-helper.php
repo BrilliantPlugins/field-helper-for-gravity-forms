@@ -285,7 +285,7 @@ class GF_Field_Helper extends GFAddOn {
 			foreach ( $entry as $e_key => $e_value ) {
 				$sanitized_key = $this->convert_field_id( $e_key );
 
-				if ( in_array( $sanitized_key, array_flip( $labels ), true ) ) {
+				if ( in_array( $sanitized_key, array_flip( $labels ), false ) ) { // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict -- since GF uses both integer and string field keys.
 					$response_data['entries'][ $key ][ $labels[ $sanitized_key ] ] = $e_value;
 				}
 			}
