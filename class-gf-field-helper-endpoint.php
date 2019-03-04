@@ -46,6 +46,15 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 	protected $friendly_labels = array();
 
 	/**
+	 * Fields for a JSON array.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var array $json_fields
+	 */
+	protected $json_fields = array();
+
+	/**
 	 * Register our REST endpoint.
 	 *
 	 * @since 1.0.0
@@ -133,6 +142,12 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 			}
 		}
 
+		// Merge fields into a JSON blob.
+		if ( array_key_exists( 'format', $_REQUEST ) && ! empty( $_REQUEST['format'] ) && 'json' === sanitize_key( $_REQUEST['format'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$results['entries_json'] = wp_json_encode( $this->json_fields );
+			unset( $results['entries'] );
+		}
+
 		return new WP_REST_Response( $results, $response->get_status() );
 	}
 
@@ -158,6 +173,11 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 			// Unset only field keys (strings will convert to 0, floats to integers).
 			if ( 0 !== absint( $key ) ) {
 				unset( $result[ $key ] );
+
+				// Add to JSON array.
+				if ( ! empty( $labels[ $sanitized_key ] ) ) {
+					$this->json_fields[ $result['id'] ][ $labels[ $sanitized_key ] ] = $value;
+				}
 			}
 		}
 
