@@ -82,15 +82,6 @@ class GF_Field_Helper extends GFAddOn {
 	protected $_short_title = 'Field Helper';
 
 	/**
-	 * Our cache of human-friendly labels.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @var array $friendly_labels
-	 */
-	protected $friendly_labels = array();
-
-	/**
 	 * Class instance.
 	 *
 	 * @var null
@@ -108,20 +99,6 @@ class GF_Field_Helper extends GFAddOn {
 		}
 
 		return self::$_instance;
-	}
-
-	/**
-	 * Load hooks and actions.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	public function init() {
-		parent::init();
-
-		// Filter REST response to add friendly field names to response.
-		add_filter( 'rest_dispatch_request', array( $this, 'intercept_rest_request' ), 10, 4 );
 	}
 
 	/**
@@ -208,12 +185,12 @@ class GF_Field_Helper extends GFAddOn {
 			// This is a multiple-input field.
 			foreach ( $field['inputs'] as $key => $field ) {
 				$value = '';
-				if ( array_key_exists( $this->convert_field_id( $field['id'] ), $helper_settings ) ) {
-					$value = $helper_settings[ $this->convert_field_id( $field['id'] ) ];
+				if ( array_key_exists( self::convert_field_id( $field['id'] ), $helper_settings ) ) {
+					$value = $helper_settings[ self::convert_field_id( $field['id'] ) ];
 				}
 
 				$friendly_fields['fields'][] = array(
-					'name'              => $this->convert_field_id( $field['id'] ),
+					'name'              => self::convert_field_id( $field['id'] ),
 					'label'             => $field['label'],
 					'type'              => 'text',
 					'class'             => 'small',
@@ -224,12 +201,12 @@ class GF_Field_Helper extends GFAddOn {
 		} else {
 			// This is a single-input field.
 			$value = '';
-			if ( array_key_exists( $this->convert_field_id( $field['id'] ), $helper_settings ) ) {
-				$value = $helper_settings[ $this->convert_field_id( $field['id'] ) ];
+			if ( array_key_exists( self::convert_field_id( $field['id'] ), $helper_settings ) ) {
+				$value = $helper_settings[ self::convert_field_id( $field['id'] ) ];
 			}
 
 			$friendly_fields['fields'][] = array(
-				'name'              => $this->convert_field_id( $field['id'] ),
+				'name'              => self::convert_field_id( $field['id'] ),
 				'tooltip'           => esc_html__( 'Field Description: ', 'gravityforms-field-helper' ) . $description,
 				'label'             => $field['label'],
 				'type'              => 'text',
@@ -251,66 +228,8 @@ class GF_Field_Helper extends GFAddOn {
 	 *
 	 * @return string    Sanitized field ID for/from database.
 	 */
-	private function convert_field_id( $id ) {
+	public static function convert_field_id( $id ) {
 		return str_replace( '.', '_', $id );
-	}
-
-	/**
-	 * Add friendly field names to REST API response.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param bool            $dispatch_result Dispatch result, will be used if not empty.
-	 * @param WP_REST_Request $request         Request used to generate the response.
-	 * @param string          $route           Route matched for the request.
-	 * @param array           $handler         Route handler used for the request.
-	 *
-	 * @return mixed                           Result to send to the client.
-	 */
-	public function intercept_rest_request( $dispatch_result, $request, $route, $handler ) {
-
-		// If not an entries request, bail out.
-		if ( ! is_a( $handler['callback'][0], 'GF_REST_Entries_Controller' ) ) {
-			return $dispatch_result;
-		}
-
-		// Get the default response.
-		$response      = call_user_func( $handler['callback'], $request );
-		$response_data = $response->get_data();
-
-		// Add human-friendly field names to the response.
-		foreach ( $response_data['entries'] as $key => $entry ) {
-			$labels = $this->get_form_friendly_labels( $entry['form_id'] );
-
-			foreach ( $entry as $e_key => $e_value ) {
-				$sanitized_key = $this->convert_field_id( $e_key );
-
-				if ( in_array( $sanitized_key, array_flip( $labels ), false ) ) { // phpcs:ignore WordPress.PHP.StrictInArray -- since GF uses both integer and string field keys.
-					$response_data['entries'][ $key ][ $labels[ $sanitized_key ] ] = $e_value;
-				}
-			}
-		}
-
-		return new WP_REST_Response( $response_data, 200 );
-	}
-
-	/**
-	 * Get friendly labels for the given form.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param int $form_id Form ID.
-	 *
-	 * @return array       Human-friendly form labels.
-	 */
-	private function get_form_friendly_labels( $form_id ) {
-		if ( ! isset( $this->friendly_labels[ $form_id ] ) ) {
-			$form = GFAPI::get_form( $form_id );
-
-			$this->friendly_labels[ $form_id ] = array_filter( $form[ $this->_slug ] );
-		}
-
-		return $this->friendly_labels[ $form_id ];
 	}
 
 }

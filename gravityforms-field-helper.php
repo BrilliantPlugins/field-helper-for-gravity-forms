@@ -54,11 +54,28 @@ class GF_Field_Helper_Bootstrap {
 			return;
 		}
 
+		// Form settings.
 		require_once 'class-gf-field-helper.php';
 
 		GFAddOn::register( 'GF_Field_Helper' );
 	}
 }
+
+/**
+ * Register custom REST API endpoint.
+ *
+ * @since 1.0.0
+ *
+ * @return void
+ */
+add_action(
+	'rest_api_init',
+	function() {
+		require_once 'class-gf-field-helper-endpoint.php';
+		$endpoint = new GF_Field_Helper_Endpoint();
+		$endpoint->register_rest_routes();
+	}
+);
 
 /**
  * Get the GF Field Helper instance.
