@@ -120,7 +120,7 @@ class GF_Field_Helper extends GFAddOn {
 	public function init() {
 		parent::init();
 
-		// Filter REST response to use friendly field names.
+		// Filter REST response to add friendly field names to response.
 		add_filter( 'rest_dispatch_request', array( $this, 'intercept_rest_request' ), 10, 4 );
 	}
 
@@ -285,7 +285,7 @@ class GF_Field_Helper extends GFAddOn {
 			foreach ( $entry as $e_key => $e_value ) {
 				$sanitized_key = $this->convert_field_id( $e_key );
 
-				if ( in_array( $sanitized_key, array_flip( $labels ), false ) ) { // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict -- since GF uses both integer and string field keys.
+				if ( in_array( $sanitized_key, array_flip( $labels ), false ) ) { // phpcs:ignore WordPress.PHP.StrictInArray -- since GF uses both integer and string field keys.
 					$response_data['entries'][ $key ][ $labels[ $sanitized_key ] ] = $e_value;
 				}
 			}
