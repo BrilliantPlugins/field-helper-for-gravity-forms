@@ -50,9 +50,9 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @var array $json_fields
+	 * @var array $fields_json
 	 */
-	protected $json_fields = array();
+	protected $fields_json = array();
 
 	/**
 	 * Register our REST endpoint.
@@ -142,12 +142,6 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 			}
 		}
 
-		// Merge fields into a JSON blob.
-		if ( array_key_exists( 'format', $_REQUEST ) && ! empty( $_REQUEST['format'] ) && 'json' === sanitize_key( $_REQUEST['format'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$results['entries_json'] = $this->json_fields;
-			unset( $results['entries'] );
-		}
-
 		return new WP_REST_Response( $results, $response->get_status() );
 	}
 
@@ -163,8 +157,6 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 	private function replace_field_names( $result ) {
 		$labels = $this->get_form_friendly_labels( $result['form_id'] );
 
-		$this->json_fields[ $result['id'] ]['id'] = $result['id'];
-
 		foreach ( $result as $key => $value ) {
 			$sanitized_key = GF_Field_Helper::convert_field_id( $key );
 
@@ -178,9 +170,14 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 
 				// Add to JSON array.
 				if ( ! empty( $labels[ $sanitized_key ] ) ) {
-					$this->json_fields[ $result['id'] ][ $labels[ $sanitized_key ] ] = $value;
+					$this->fields_json[ $result['id'] ][ $labels[ $sanitized_key ] ] = $value;
 				}
 			}
+		}
+
+		// Merge fields into a JSON blob.
+		if ( array_key_exists( 'merge_fields', $_REQUEST ) && ! empty( $_REQUEST['merge_fields'] ) && 'true' === sanitize_key( $_REQUEST['merge_fields'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$result['fields_json'] = $this->fields_json[ $result['id'] ];
 		}
 
 		return $result;
