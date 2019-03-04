@@ -121,7 +121,7 @@ class GF_Field_Helper extends GFAddOn {
 		parent::init();
 
 		// Filter REST response to use friendly field names.
-		add_filter( 'rest_dispatch_request', array( $this, 'make_friendly_field_names' ), 10, 4 );
+		add_filter( 'rest_dispatch_request', array( $this, 'intercept_rest_request' ), 10, 4 );
 	}
 
 	/**
@@ -265,9 +265,9 @@ class GF_Field_Helper extends GFAddOn {
 	 * @param string          $route           Route matched for the request.
 	 * @param array           $handler         Route handler used for the request.
 	 *
-	 * @return mixde                           Result to send to the client.
+	 * @return mixed                           Result to send to the client.
 	 */
-	public function make_friendly_field_names( $dispatch_result, $request, $route, $handler ) {
+	public function intercept_rest_request( $dispatch_result, $request, $route, $handler ) {
 
 		// If not an entries request, bail out.
 		if ( ! is_a( $handler['callback'][0], 'GF_REST_Entries_Controller' ) ) {
