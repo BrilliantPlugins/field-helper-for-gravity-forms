@@ -307,7 +307,7 @@ class GF_Field_Helper extends GFAddOn {
 		if ( ! isset( $this->friendly_labels[ $form_id ] ) ) {
 			$form = GFAPI::get_form( $form_id );
 
-			$this->friendly_labels[ $form_id ] = $form[ $this->_slug ];
+			$this->friendly_labels[ $form_id ] = array_filter( $form[ $this->_slug ] );
 		}
 
 		return $this->friendly_labels[ $form_id ];
