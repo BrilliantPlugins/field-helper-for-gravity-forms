@@ -145,7 +145,7 @@ class GF_Field_Helper extends GFAddOn {
 	 * @return bool         Whether field value checks out.
 	 */
 	public function is_valid_name( $value ) {
-		return is_string( $value );
+		return ( strpos( $value, ' ' ) === false );
 	}
 
 	/**
@@ -213,11 +213,12 @@ class GF_Field_Helper extends GFAddOn {
 				}
 
 				$friendly_fields['fields'][] = array(
-					'name'  => $this->convert_field_id( $field['id'] ),
-					'label' => $field['label'],
-					'type'  => 'text',
-					'class' => 'small',
-					'value' => $value,
+					'name'              => $this->convert_field_id( $field['id'] ),
+					'label'             => $field['label'],
+					'type'              => 'text',
+					'class'             => 'small',
+					'value'             => $value,
+					'feedback_callback' => array( $this, 'is_valid_name' ),
 				);
 			}
 		} else {
@@ -228,12 +229,13 @@ class GF_Field_Helper extends GFAddOn {
 			}
 
 			$friendly_fields['fields'][] = array(
-				'name'    => $this->convert_field_id( $field['id'] ),
-				'tooltip' => esc_html__( 'Field Description: ', 'gravityforms-field-helper' ) . $description,
-				'label'   => $field['label'],
-				'type'    => 'text',
-				'class'   => 'small',
-				'value'   => $helper_settings[ $field['id'] ],
+				'name'              => $this->convert_field_id( $field['id'] ),
+				'tooltip'           => esc_html__( 'Field Description: ', 'gravityforms-field-helper' ) . $description,
+				'label'             => $field['label'],
+				'type'              => 'text',
+				'class'             => 'small',
+				'value'             => $helper_settings[ $field['id'] ],
+				'feedback_callback' => array( $this, 'is_valid_name' ),
 			);
 		}
 
