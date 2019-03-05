@@ -46,15 +46,6 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 	protected $friendly_labels = array();
 
 	/**
-	 * Fields for a JSON array.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @var array $fields_json
-	 */
-	protected $fields_json = array();
-
-	/**
 	 * Register our REST endpoint.
 	 *
 	 * @since 1.0.0
@@ -157,28 +148,22 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 	private function replace_field_names( $result ) {
 		$labels = $this->get_form_friendly_labels( $result['form_id'] );
 
+		$fields = array();
+
 		foreach ( $result as $key => $value ) {
 			$sanitized_key = GF_Field_Helper::convert_field_id( $key );
 
 			if ( in_array( $sanitized_key, array_flip( $labels ), false ) ) { // phpcs:ignore WordPress.PHP.StrictInArray -- since GF uses both integer and string field keys.
-				$result[ $labels[ $sanitized_key ] ] = $value;
+				$fields[ $labels[ $sanitized_key ] ] = $value;
 			}
 
 			// Unset only field keys (strings will convert to 0, floats to integers).
 			if ( 0 !== absint( $key ) ) {
 				unset( $result[ $key ] );
-
-				// Add to JSON array.
-				if ( ! empty( $labels[ $sanitized_key ] ) ) {
-					$this->fields_json[ $result['id'] ][ $labels[ $sanitized_key ] ] = $value;
-				}
 			}
 		}
 
-		// Merge fields into a JSON blob.
-		if ( array_key_exists( 'merge_fields', $_REQUEST ) && ! empty( $_REQUEST['merge_fields'] ) && 'true' === sanitize_key( $_REQUEST['merge_fields'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$result['fields_json'] = $this->fields_json[ $result['id'] ];
-		}
+		$result['fields'] = $fields;
 
 		return $result;
 	}
