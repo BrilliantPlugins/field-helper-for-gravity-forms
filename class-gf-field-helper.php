@@ -186,12 +186,12 @@ class GF_Field_Helper extends GFAddOn {
 			// This is a multiple-input field.
 			foreach ( $field['inputs'] as $key => $field ) {
 				$value = '';
-				if ( array_key_exists( self::convert_field_id( $field['id'] ), $helper_settings ) ) {
-					$value = $helper_settings[ self::convert_field_id( $field['id'] ) ];
+				if ( array_key_exists( GF_Field_Helper_Common::convert_field_id( $field['id'] ), $helper_settings ) ) {
+					$value = $helper_settings[ GF_Field_Helper_Common::convert_field_id( $field['id'] ) ];
 				}
 
 				$friendly_fields['fields'][] = array(
-					'name'              => self::convert_field_id( $field['id'] ),
+					'name'              => GF_Field_Helper_Common::convert_field_id( $field['id'] ),
 					'label'             => $field['label'],
 					'type'              => 'text',
 					'class'             => 'small',
@@ -202,12 +202,12 @@ class GF_Field_Helper extends GFAddOn {
 		} else {
 			// This is a single-input field.
 			$value = '';
-			if ( array_key_exists( self::convert_field_id( $field['id'] ), $helper_settings ) ) {
-				$value = $helper_settings[ self::convert_field_id( $field['id'] ) ];
+			if ( array_key_exists( GF_Field_Helper_Common::convert_field_id( $field['id'] ), $helper_settings ) ) {
+				$value = $helper_settings[ GF_Field_Helper_Common::convert_field_id( $field['id'] ) ];
 			}
 
 			$friendly_fields['fields'][] = array(
-				'name'              => self::convert_field_id( $field['id'] ),
+				'name'              => GF_Field_Helper_Common::convert_field_id( $field['id'] ),
 				'tooltip'           => esc_html__( 'Field Description: ', 'gravityforms-field-helper' ) . $description,
 				'label'             => $field['label'],
 				'type'              => 'text',
@@ -218,19 +218,6 @@ class GF_Field_Helper extends GFAddOn {
 		}
 
 		return $friendly_fields;
-	}
-
-	/**
-	 * Convert field ID with period to underscore.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $id Field ID.
-	 *
-	 * @return string    Sanitized field ID for/from database.
-	 */
-	public static function convert_field_id( $id ) {
-		return str_replace( '.', '_', $id );
 	}
 
 }

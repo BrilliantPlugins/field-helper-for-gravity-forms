@@ -151,7 +151,7 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 		$fields = array();
 
 		foreach ( $result as $key => $value ) {
-			$sanitized_key = GF_Field_Helper::convert_field_id( $key );
+			$sanitized_key = GF_Field_Helper_Common::convert_field_id( $key );
 
 			if ( in_array( $sanitized_key, array_flip( $labels ), false ) ) { // phpcs:ignore WordPress.PHP.StrictInArray -- since GF uses both integer and string field keys.
 				$fields[ $labels[ $sanitized_key ] ] = $value;

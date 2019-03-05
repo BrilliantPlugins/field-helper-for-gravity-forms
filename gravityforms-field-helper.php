@@ -55,9 +55,11 @@ class GF_Field_Helper_Bootstrap {
 			return;
 		}
 
+		// Common.
+		require_once 'class-gf-field-helper-common.php';
+
 		// Form settings.
 		require_once 'class-gf-field-helper.php';
-
 		GFAddOn::register( 'GF_Field_Helper' );
 	}
 }
