@@ -34,7 +34,7 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 	 *
 	 * @var string $rest_base
 	 */
-	public $rest_base = 'entries/friendly';
+	public $rest_base = GF_FIELD_HELPER_REST_BASE;
 
 	/**
 	 * Our cache of human-friendly labels.
