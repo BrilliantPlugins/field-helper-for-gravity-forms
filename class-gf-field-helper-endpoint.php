@@ -145,7 +145,7 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 	 *
 	 * @return array        Modified entry object.
 	 */
-	private function replace_field_names( $result ) {
+	public function replace_field_names( $result ) {
 		$labels = $this->get_form_friendly_labels( $result['form_id'] );
 
 		$fields = array();
@@ -177,7 +177,7 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 	 *
 	 * @return array       Human-friendly form labels.
 	 */
-	private function get_form_friendly_labels( $form_id ) {
+	public function get_form_friendly_labels( $form_id ) {
 		if ( ! isset( $this->friendly_labels[ $form_id ] ) ) {
 			$form = GFAPI::get_form( $form_id );
 
