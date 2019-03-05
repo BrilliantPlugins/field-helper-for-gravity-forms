@@ -138,7 +138,8 @@ class GF_Field_Helper extends GFAddOn {
 		$friendly_fields = array(
 			array(
 				'title'       => esc_html__( 'Field Helper Settings', 'gravityforms-field-helper' ),
-				'description' => esc_html__( 'Enter human-friendly field names for each field below, or leave blank to ignore.', 'gravityforms-field-helper' ),
+				// Translators: %s: REST API endpoint URL.
+				'description' => sprintf( esc_html__( 'Enter human-friendly field names for each field below, or leave blank to ignore. To use these human-friendly names, use this API URL: %s', 'gravityforms-field-helper' ), admin_url( 'wp-json/v2/' . GF_FIELD_HELPER_REST_BASE . '/' ) ),
 				'fields'      => array(),
 			),
 		);
