@@ -161,7 +161,12 @@ class GF_Field_Helper extends GFAddOn {
 	 *
 	 * @return array                 Field settings array.
 	 */
-	private function build_form_settings_array( $field, $helper_settings = array() ) {
+	private function build_form_settings_array( $field = array(), $helper_settings ) {
+
+		// Defaulting $helper_settings to an array in the function line does not always work.
+		if ( ! is_array( $helper_settings ) ) {
+			$helper_settings = array();
+		}
 
 		// Handle page fields: add a header and bail out.
 		if ( is_a( $field, 'GF_Field_Page' ) ) {
