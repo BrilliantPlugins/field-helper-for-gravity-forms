@@ -32,6 +32,7 @@
 
 define( 'GF_FIELD_HELPER_VERSION', '1.0.0' );
 define( 'GF_FIELD_HELPER_REST_BASE', 'entries/json' );
+define( 'GF_FIELD_HELPER_SLUG', 'gravityforms-field-helper' );
 
 add_action( 'gform_loaded', array( 'GF_Field_Helper_Bootstrap', 'load' ), 5 );
 

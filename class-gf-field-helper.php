@@ -43,7 +43,7 @@ class GF_Field_Helper extends GFAddOn {
 	 *
 	 * @var string $_slug
 	 */
-	protected $_slug = 'gravityforms-field-helper';
+	protected $_slug = GF_FIELD_HELPER_SLUG;
 
 	/**
 	 * Plugin path.
@@ -145,7 +145,7 @@ class GF_Field_Helper extends GFAddOn {
 		);
 
 		foreach ( $form['fields'] as $key => $field ) {
-			$friendly_fields[] = $this->build_form_settings_array( $field, $form[ $this->_slug ] );
+			$friendly_fields[] = $this->build_form_settings_array( $field, $form[ GF_FIELD_HELPER_SLUG ] );
 		}
 
 		return $friendly_fields;

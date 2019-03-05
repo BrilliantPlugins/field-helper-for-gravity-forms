@@ -85,7 +85,7 @@ class GF_Field_Helper_Common {
 		if ( ! isset( $this->friendly_labels[ $form_id ] ) ) {
 			$form = GFAPI::get_form( $form_id );
 
-			$this->friendly_labels[ $form_id ] = array_filter( $form[ $this->_slug ] );
+			$this->friendly_labels[ $form_id ] = array_filter( $form[ GF_FIELD_HELPER_SLUG ] );
 		}
 
 		return $this->friendly_labels[ $form_id ];
