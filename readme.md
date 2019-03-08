@@ -90,3 +90,7 @@ Example of a **friendly** `entry/<ID>` response with the `fields` object:
   }
 }
 ```
+
+## Changelog
+
+See [change_log.txt](change_log.txt).
