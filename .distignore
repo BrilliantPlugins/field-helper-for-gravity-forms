@@ -1,5 +1,7 @@
+.git
 .gitignore
 .vscode
+.DS_Store
 gulpfile.js
 node_modules
 package.json
