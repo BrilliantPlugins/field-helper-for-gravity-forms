@@ -12,7 +12,7 @@ Adds a settings page and REST API endpoint to retrieve human- and computer-frien
 
 ## API Endpoints
 
-- Basically, append `/json` to form- or entry-related endpoints to get JSON field data.
+- Basically, append `/json` to Gravity Forms’ form- or entry-related endpoints to get JSON field data.
 - Retrieve all entries:  `https://your-site.com/wp-json/gf/v2/entries/json/`
 - Retrieve a specific entry:  `https://your-site.com/wp-json/gf/v2/entries/<entry_id>/json/`
 - Retrieve all entries from a specific form:  `https://your-site.com/wp-json/gf/v2/forms/<form_id>/json/`
