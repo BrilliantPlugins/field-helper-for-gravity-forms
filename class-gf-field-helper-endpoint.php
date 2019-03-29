@@ -34,7 +34,7 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 	 *
 	 * @var string $rest_base
 	 */
-	public $rest_base = GF_FIELD_HELPER_REST_BASE;
+	public $rest_base = 'json';
 
 	/**
 	 * Our cache of human-friendly labels.
@@ -56,9 +56,12 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 		$namespace = $this->namespace;
 		$base      = $this->rest_base;
 
+		/**
+		 * Entries.
+		 */
 		register_rest_route(
 			$namespace,
-			'/' . $base,
+			'/entries/' . $base,
 			array(
 				array(
 					'methods'             => WP_REST_SERVER::READABLE,
@@ -71,7 +74,36 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 
 		register_rest_route(
 			$namespace,
-			$base . '/(?P<entry_id>[\d]+)',
+			'/entries/(?P<entry_id>[\d]+)/' . $base,
+			array(
+				array(
+					'methods'             => WP_REST_SERVER::READABLE,
+					'callback'            => array( $this, 'get_item' ),
+					'permission_callback' => array( $this, 'get_items_permissions_check' ),
+					'args'                => $this->get_collection_params(),
+				),
+			)
+		);
+
+		/**
+		 * Forms.
+		 */
+		register_rest_route(
+			$namespace,
+			'/forms/(?P<form_id>[\d]+)/entries/' . $base,
+			array(
+				array(
+					'methods'             => WP_REST_SERVER::READABLE,
+					'callback'            => array( $this, 'get_items' ),
+					'permission_callback' => array( $this, 'get_items_permissions_check' ),
+					'args'                => $this->get_collection_params(),
+				),
+			)
+		);
+
+		register_rest_route(
+			$namespace,
+			'/forms/(?P<form_id>[\d]+)/entries/(?P<entry_id>[\d]+)/' . $base,
 			array(
 				array(
 					'methods'             => WP_REST_SERVER::READABLE,
