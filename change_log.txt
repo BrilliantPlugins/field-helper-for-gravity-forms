@@ -1,2 +1,9 @@
-# 1.0 | 2019-03-08\r
-   - First version of the plugin\r
+# 1.0.2 | 2019-03-29
+  - Fix typo in the admin.
+  - Add support for retrieving form entries.
+
+# 1.0.1 | 2019-03-08
+   - Fix a class loading conflict with Gutenberg.
+
+# 1.0.0 | 2019-03-07
+   - First version of the plugin.

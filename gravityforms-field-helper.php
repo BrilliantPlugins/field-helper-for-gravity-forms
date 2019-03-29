@@ -3,7 +3,7 @@
  * Plugin Name: Gravity Forms Field Helper
  * Plugin URI: https://gravityintegrations.com/
  * Description: Enables Gravity Forms users to set consistent, human-friendly field names for use in the Gravity Forms REST API.
- * Version: 1.0.0
+ * Version: 1.0.2
  * Author: LuminFire
  * Author URI: https://luminfire.com
  * License: GPL-2.0+
@@ -30,9 +30,11 @@
  * @package gravityforms-field-helper
  */
 
-define( 'GF_FIELD_HELPER_VERSION', '1.0.0' );
+define( 'GF_FIELD_HELPER_VERSION', '1.0.2' );
+define( 'GF_FIELD_HELPER_SLUG', 'gravityforms-field-helper' );
 
-add_action( 'gform_loaded', array( 'GF_Field_Helper_Bootstrap', 'load' ), 5 );
+add_action( 'gform_loaded', array( 'GF_Field_Helper_Bootstrap', 'load_field_helper' ), 5 );
+add_action( 'rest_api_init', array( 'GF_Field_Helper_Bootstrap', 'register_api_endpoint' ) );
 
 /**
  * Load up the plugin.
@@ -48,15 +50,34 @@ class GF_Field_Helper_Bootstrap {
 	 *
 	 * @return void
 	 */
-	public static function load() {
+	public static function load_field_helper() {
 
 		if ( ! method_exists( 'GFForms', 'include_feed_addon_framework' ) ) {
 			return;
 		}
 
-		require_once 'class-gf-field-helper.php';
+		// Common.
+		require_once 'class-gf-field-helper-common.php';
 
+		// Form settings.
+		require_once 'class-gf-field-helper.php';
 		GFAddOn::register( 'GF_Field_Helper' );
+	}
+
+	/**
+	 * Register custom REST API endpoint.
+	 *
+	 * @since 1.0.0
+	 * @since 1.0.1 Moved into GF_Field_Helper_Bootstrap class.
+	 *
+	 * @return void
+	 */
+	public static function register_api_endpoint() {
+		if ( class_exists( 'GF_REST_Entries_Controller' ) ) {
+			require_once 'class-gf-field-helper-endpoint.php';
+			$endpoint = new GF_Field_Helper_Endpoint();
+			$endpoint->register_rest_routes();
+		}
 	}
 }
 
