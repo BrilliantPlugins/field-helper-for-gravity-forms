@@ -6,9 +6,19 @@ Adds a settings page and REST API endpoint to retrieve human- and computer-frien
 
 1. Install and activate this plugin.
 2. Create friendly field names on the form settings page: ![Form Settings Page](img/plugin-settings.png)
-3. Use the API endpoint `https://your-site.com/wp-json/gf/v2/entries/json/` to retrieve entries. To retrieve a specific entry, add the entry ID to the end of the URL (e.g., `https://your-site.com/wp-json/gf/v2/entries/json/2`).
+3. Use the API endpoints to retrieve entries.
    - The standard entry data is untouched.
    - All named fields are added to a `fields` object in each entry object.
+
+## API Endpoints
+
+- Basically, append `/json` to form- or entry-related endpoints to get JSON field data.
+- Retrieve all entries:  `https://your-site.com/wp-json/gf/v2/entries/json/`
+- Retrieve a specific entry:  `https://your-site.com/wp-json/gf/v2/entries/<entry_id>/json/`
+- Retrieve all entries from a specific form:  `https://your-site.com/wp-json/gf/v2/forms/<form_id>/json/`
+- Retrieve a specific entry from a specific form:  `https://your-site.com/wp-json/gf/v2/forms/<form_id>/entries/<entry_id>/json/`
+
+## Examples
 
 Example of a **standard** `entry/<ID>` response with ID fields:
 

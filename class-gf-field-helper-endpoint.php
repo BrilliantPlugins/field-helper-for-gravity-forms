@@ -49,6 +49,7 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 	 * Register our REST endpoint.
 	 *
 	 * @since 1.0.0
+	 * @since 1.0.2 Added support for forms.
 	 *
 	 * @return void
 	 */
