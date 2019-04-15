@@ -190,13 +190,15 @@ class GF_Field_Helper extends GFAddOn {
 		if ( array_key_exists( 'inputs', $field ) && is_array( $field['inputs'] ) ) {
 			// This is a multiple-input field.
 			foreach ( $field['inputs'] as $key => $field ) {
+				$id = $this->get_field_id( $field );
+
 				$value = '';
-				if ( array_key_exists( GF_Field_Helper_Common::convert_field_id( $field['id'] ), $helper_settings ) ) {
-					$value = $helper_settings[ GF_Field_Helper_Common::convert_field_id( $field['id'] ) ];
+				if ( array_key_exists( $id, $helper_settings ) ) {
+					$value = $helper_settings[ $id ];
 				}
 
-				$friendly_fields['fields'][] = array(
-					'name'              => GF_Field_Helper_Common::convert_field_id( $field['id'] ),
+				$friendly_fields['fields'][ $id ] = array(
+					'name'              => $id,
 					'label'             => $field['label'],
 					'type'              => 'text',
 					'class'             => 'small',
@@ -206,14 +208,15 @@ class GF_Field_Helper extends GFAddOn {
 			}
 		} else {
 			// This is a single-input field.
+			$id = $this->get_field_id( $field );
+
 			$value = '';
-			if ( array_key_exists( GF_Field_Helper_Common::convert_field_id( $field['id'] ), $helper_settings ) ) {
-				$value = $helper_settings[ GF_Field_Helper_Common::convert_field_id( $field['id'] ) ];
+			if ( array_key_exists( $id, $helper_settings ) ) {
+				$value = $helper_settings[ $id ];
 			}
 
-			$friendly_fields['fields'][] = array(
-				'name'              => GF_Field_Helper_Common::convert_field_id( $field['id'] ),
-				'tooltip'           => esc_html__( 'Field Description: ', 'gravityforms-field-helper' ) . $description,
+			$friendly_fields['fields'][ $id ] = array(
+				'name'              => $id,
 				'label'             => $field['label'],
 				'type'              => 'text',
 				'class'             => 'small',
@@ -223,6 +226,19 @@ class GF_Field_Helper extends GFAddOn {
 		}
 
 		return $friendly_fields;
+	}
+
+	/**
+	 * Retrieve field ID.
+	 *
+	 * @since 1.0.3.0
+	 *
+	 * @param array $field Field object.
+	 *
+	 * @return int|string  Field ID.
+	 */
+	public function get_field_id( $field ) {
+		return GF_Field_Helper_Common::convert_field_id( $field['id'] );
 	}
 
 }
