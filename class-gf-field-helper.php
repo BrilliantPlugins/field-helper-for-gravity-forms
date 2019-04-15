@@ -220,7 +220,7 @@ class GF_Field_Helper extends GFAddOn {
 				'label'             => $field['label'],
 				'type'              => 'text',
 				'class'             => 'small',
-				'value'             => $helper_settings[ $field['id'] ],
+				'value'             => $value,
 				'feedback_callback' => array( $this, 'is_valid_name' ),
 			);
 		}
