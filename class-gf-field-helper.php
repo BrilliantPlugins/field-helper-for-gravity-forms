@@ -223,6 +223,10 @@ class GF_Field_Helper extends GFAddOn {
 				'value'             => $value,
 				'feedback_callback' => array( $this, 'is_valid_name' ),
 			);
+
+			if ( ! empty( $description ) ) {
+				$friendly_fields['fields'][ $id ]['tooltip'] = esc_html__( 'Field Description: ', 'gravityforms-field-helper' ) . $description;
+			}
 		}
 
 		return $friendly_fields;
