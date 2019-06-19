@@ -135,6 +135,8 @@ class GF_Field_Helper extends GFAddOn {
 	 * @return array      Form settings.
 	 */
 	public function form_settings_fields( $form ) {
+		wp_enqueue_script( 'gravityforms-field-helper-admin' );
+
 		$friendly_fields = array(
 			array(
 				'title'       => esc_html__( 'Field Helper Settings', 'gravityforms-field-helper' ),
@@ -194,10 +196,12 @@ class GF_Field_Helper extends GFAddOn {
 			// This is a multiple-input field.
 			if ( 'checkbox' === $field['type'] ) {
 				$friendly_fields['fields'][ $id . '-checkbox-return' ] = array(
-					'name'    => $id . '-checkbox-return',
-					'label'   => esc_html__( 'Response Format', 'gravityforms-field-helper' ),
-					'type'    => 'radio',
-					'choices' => array(
+					'name'       => $id . '-checkbox-return',
+					'label'      => esc_html__( 'Response Format', 'gravityforms-field-helper' ),
+					'class'      => 'checkbox-return-format',
+					'data-input' => $id,
+					'type'       => 'radio',
+					'choices'    => array(
 						array(
 							'label' => esc_html__( 'One array item for each choice', 'gravityforms-field-helper' ),
 							'value' => 'single',
@@ -207,7 +211,7 @@ class GF_Field_Helper extends GFAddOn {
 							'value' => 'combined',
 						),
 					),
-					'tooltip' => esc_html__( 'How should selected values from this field be returned in the JSON response?', 'gravityforms-field-helper' ),
+					'tooltip'    => esc_html__( 'How should selected values from this field be returned in the JSON response?', 'gravityforms-field-helper' ),
 				);
 
 				$friendly_fields['fields'][ $id ] = array(

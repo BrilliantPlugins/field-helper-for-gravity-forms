@@ -31,6 +31,7 @@
  */
 
 define( 'GF_FIELD_HELPER_VERSION', '1.0.2' );
+define( 'GF_FIELD_HELPER_FILE', __FILE__ );
 define( 'GF_FIELD_HELPER_SLUG', 'gravityforms-field-helper' );
 
 add_action( 'gform_loaded', array( 'GF_Field_Helper_Bootstrap', 'load_field_helper' ), 5 );
@@ -62,6 +63,9 @@ class GF_Field_Helper_Bootstrap {
 		// Form settings.
 		require_once 'class-gf-field-helper.php';
 		GFAddOn::register( 'GF_Field_Helper' );
+
+		// Backend assets.
+		wp_register_script( 'gravityforms-field-helper-admin', plugin_dir_url( GF_FIELD_HELPER_FILE ) . '/assets/js/gravityforms-field-helper-admin.js', array( 'jquery' ), GF_FIELD_HELPER_VERSION, true );
 	}
 
 	/**
