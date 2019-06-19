@@ -170,11 +170,25 @@ class GF_Field_Helper extends GFAddOn {
 			$helper_settings = array();
 		}
 
-		// Handle page fields: add a header and bail out.
-		if ( is_a( $field, 'GF_Field_Page' ) ) {
+		// Handle html, page, and section fields: add a header and bail out.
+		if ( in_array( $field['type'], array( 'html', 'page', 'section' ), true ) ) {
+
+			if ( ! empty( $field['label'] ) ) {
+				$title = $field['label'];
+			} else {
+				// Translators: %s is the field type key.
+				$title = sprintf( esc_html__( '%s Field', 'gravityforms-field-helper' ), ucfirst( $field['type'] ) );
+			}
+
 			return array(
-				'title'  => esc_html__( 'Page Break', 'gravityforms-field-helper' ),
-				'fields' => array(),
+				'title'  => $title,
+				'fields' => array(
+					array(
+						'name'  => $this->get_field_id( $field ),
+						'label' => '',
+						'type'  => 'gf_helper_no_return_value',
+					),
+				),
 			);
 		}
 
@@ -263,6 +277,19 @@ class GF_Field_Helper extends GFAddOn {
 		}
 
 		return $friendly_fields;
+	}
+
+	/**
+	 * Display note on html, section, and page fields.
+	 *
+	 * @param array $field Gravity Forms field.
+	 *
+	 * @since 1.0.3.0
+	 *
+	 * @return void
+	 */
+	public function settings_gf_helper_no_return_value( $field ) {
+		esc_html_e( 'No return value is available for this type of field.', 'gravityforms-field-helper' );
 	}
 
 	/**
