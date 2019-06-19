@@ -109,7 +109,7 @@ class GF_Field_Helper extends GFAddOn {
 	 * @return void
 	 */
 	public function plugin_page() {
-		echo 'To use this plugin, go to the Field Helper section on each of your forms’ settings.';
+		echo esc_html__( 'To use this plugin, go to the Field Helper section on each of your forms’ settings.', 'gravityforms-field-helper' );
 	}
 
 	/**
@@ -171,7 +171,7 @@ class GF_Field_Helper extends GFAddOn {
 		// Handle page fields: add a header and bail out.
 		if ( is_a( $field, 'GF_Field_Page' ) ) {
 			return array(
-				'title'  => 'Page Break',
+				'title'  => esc_html__( 'Page Break', 'gravityforms-field-helper' ),
 				'fields' => array(),
 			);
 		}
