@@ -5,8 +5,9 @@ Adds a settings page and REST API endpoint to retrieve human- and computer-frien
 ## Usage
 
 1. Install and activate this plugin.
-2. Create friendly field names on the form settings page: ![Form Settings Page](assets/img/plugin-settings.png)
-3. Use the API endpoints to retrieve entries.
+2. Go to Forms > Settings > Field Helper to add your license key.
+3. Create friendly field names on the form settings page: ![Form Settings Page](assets/img/plugin-settings.png)
+4. Use the API endpoints to retrieve entries.
    - The standard entry data is untouched.
    - All named fields are added to a `fields` object in each entry object.
 
@@ -22,7 +23,7 @@ Adds a settings page and REST API endpoint to retrieve human- and computer-frien
 
 Example of a **standard** `entry/<ID>` response with ID fields:
 
-```
+```json
 {
   "id": "2",
   "form_id": "1",
@@ -64,7 +65,7 @@ Example of a **standard** `entry/<ID>` response with ID fields:
 
 Example of a **friendly** `entry/<ID>` response with the `fields` object:
 
-```
+```json
 {
   "id": "2",
   "form_id": "1",
