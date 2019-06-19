@@ -113,6 +113,116 @@ class GF_Field_Helper extends GFAddOn {
 	}
 
 	/**
+	 * Add plugin settings.
+	 *
+	 * @since 1.0.3.0
+	 *
+	 * @return array License fields.
+	 */
+	public function plugin_settings_fields() {
+		return array(
+			array(
+				'title'       => 'Licensing Settings',
+				'description' => wp_kses_post( 'Enter your license below to get automatic plugin updates. If you don’t have a license, visit <a href="https://brilliantplugins.com">brillianplugins.com</a>.', 'gravityforms-field-helper' ),
+				'fields'      => array(
+					array(
+						'title'               => esc_html__( 'GravityForms Field Helper Settings', 'gravityforms-field-helper' ),
+						'label'               => esc_html__( 'License Key', 'gravityforms-field-helper' ),
+						'name'                => 'license_key',
+						'type'                => 'text',
+						'input_type'          => 'password',
+						'validation_callback' => array( $this, 'license_validation' ),
+						'feedback_callback'   => array( $this, 'license_feedback' ),
+						'error_message'       => esc_html__( 'Invalid license', 'gravityforms-field-helper' ),
+						'class'               => 'large',
+						'default_value'       => '',
+					),
+				),
+			),
+		);
+	}
+
+	/**
+	 * Determine if the license key is valid so the appropriate icon can be displayed next to the field.
+	 *
+	 * @since 1.0.3.0
+	 *
+	 * @param string $value The current value of the license_key field.
+	 * @param array  $field The field properties.
+	 *
+	 * @return bool|null
+	 */
+	public function license_feedback( $value, $field ) {
+		if ( empty( $value ) ) {
+			return null;
+		}
+
+		// Send the remote request to check that the license is valid.
+		$license_data = $this->perform_edd_license_request( 'check_license', $value );
+
+		$valid = null;
+		if ( empty( $license_data ) || 'invalid' === $license_data->license ) {
+			$valid = false;
+		} elseif ( 'valid' === $license_data->license ) {
+			$valid = true;
+		}
+
+		return $valid;
+	}
+
+	/**
+	 * Handle license key activation or deactivation.
+	 *
+	 * @since 1.0.3.0
+	 *
+	 * @param array  $field         The field properties.
+	 * @param string $field_setting The submitted value of the license_key field.
+	 *
+	 * @return void
+	 */
+	public function license_validation( $field, $field_setting ) {
+		$old_license = $this->get_plugin_setting( 'license_key' );
+
+		if ( $old_license && $field_setting !== $old_license ) {
+			// Send the remote request to deactivate the old license.
+			$this->perform_edd_license_request( 'deactivate_license', $old_license );
+		}
+
+		if ( ! empty( $field_setting ) ) {
+			// Send the remote request to activate the new license.
+			$this->perform_edd_license_request( 'activate_license', $field_setting );
+		}
+	}
+
+	/**
+	 * Send a request to the EDD store url.
+	 *
+	 * @param string $edd_action The action to perform (check_license, activate_license, or deactivate_license).
+	 * @param string $license    The license key.
+	 *
+	 * @return object
+	 */
+	public function perform_edd_license_request( $edd_action, $license ) {
+
+		// Prepare the request arguments.
+		$args = array(
+			'timeout'   => 10,
+			'sslverify' => false,
+			'body'      => array(
+				'edd_action' => $edd_action,
+				'license'    => trim( $license ),
+				'item_name'  => rawurlencode( BRILLIANTPLUGINS_ITEM_NAME ),
+				'url'        => home_url(),
+			),
+		);
+
+		// Send the remote request.
+		$response = wp_remote_post( BRILLIANTPLUGINS_STORE_URL, $args );
+
+		return json_decode( wp_remote_retrieve_body( $response ) );
+	}
+
+	/**
 	 * Basic sanity check for field names.
 	 *
 	 * @since 1.0.0
