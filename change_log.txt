@@ -1,3 +1,6 @@
+# 1.0.3.1 | 2019-06-19
+  - Prevent unchecked checkboxes from return an empty value.
+
 # 1.0.3.0 | 2019-06-19
   - Add option to return checkbox fields as an array of selected options.
   - Add EDD licensing for automatic plugin updates.

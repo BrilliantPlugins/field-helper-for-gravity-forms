@@ -199,7 +199,9 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 
 				if ( in_array( absint( $sanitized_key ), $this->checkbox_fields, true ) ) {
 					// Checkbox.
-					$fields[ $labels[ absint( $sanitized_key ) ] ][] = $value;
+					if ( ! empty( $value ) ) {
+						$fields[ $labels[ absint( $sanitized_key ) ] ][] = $value;
+					}
 				} else {
 					// Others.
 					$fields[ $labels[ $sanitized_key ] ] = $value;
