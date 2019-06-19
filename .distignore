@@ -1,3 +1,4 @@
+.distignore
 .git
 .gitignore
 .vscode

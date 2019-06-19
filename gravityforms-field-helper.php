@@ -3,7 +3,7 @@
  * Plugin Name: Gravity Forms Field Helper
  * Plugin URI: https://gravityintegrations.com/
  * Description: Enables Gravity Forms users to set consistent, human-friendly field names for use in the Gravity Forms REST API.
- * Version: 1.0.2
+ * Version: 1.0.3.0
  * Author: LuminFire
  * Author URI: https://luminfire.com
  * License: GPL-2.0+
@@ -30,11 +30,49 @@
  * @package gravityforms-field-helper
  */
 
-define( 'GF_FIELD_HELPER_VERSION', '1.0.2' );
+define( 'GF_FIELD_HELPER_VERSION', '1.0.3.0' );
+define( 'GF_FIELD_HELPER_FILE', __FILE__ );
 define( 'GF_FIELD_HELPER_SLUG', 'gravityforms-field-helper' );
 
+// Licensing.
+define( 'BRILLIANTPLUGINS_STORE_URL', 'https://brilliantplugins.com' );
+define( 'BRILLIANTPLUGINS_ITEM_ID', 1541 );
+define( 'BRILLIANTPLUGINS_ITEM_NAME', 'GravityForms Field Helper' );
+
+// Init hooks.
 add_action( 'gform_loaded', array( 'GF_Field_Helper_Bootstrap', 'load_field_helper' ), 5 );
 add_action( 'rest_api_init', array( 'GF_Field_Helper_Bootstrap', 'register_api_endpoint' ) );
+add_action( 'init', 'gf_field_helper_edd_plugin_updater', 0 );
+
+/**
+ * Handle update checks.
+ *
+ * @since 1.0.3.0
+ *
+ * @return void
+ */
+function gf_field_helper_edd_plugin_updater() {
+
+	if ( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
+		require_once dirname( GF_FIELD_HELPER_FILE ) . '/inc/EDD_SL_Plugin_Updater.php';
+	}
+
+	$license_key = trim( GF_Field_Helper()->get_plugin_setting( 'license_key' ) );
+
+	$edd_updater = new EDD_SL_Plugin_Updater(
+		BRILLIANTPLUGINS_STORE_URL,
+		GF_FIELD_HELPER_FILE,
+		array(
+			'version' => GF_FIELD_HELPER_VERSION,
+			'license' => $license_key,
+			'item_id' => BRILLIANTPLUGINS_ITEM_ID,
+			'author'  => 'LuminFire',
+			'url'     => home_url(),
+			'beta'    => false,
+		)
+	);
+}
+
 
 /**
  * Load up the plugin.
@@ -62,6 +100,9 @@ class GF_Field_Helper_Bootstrap {
 		// Form settings.
 		require_once 'class-gf-field-helper.php';
 		GFAddOn::register( 'GF_Field_Helper' );
+
+		// Backend assets.
+		wp_register_script( 'gravityforms-field-helper-admin', plugin_dir_url( GF_FIELD_HELPER_FILE ) . '/assets/js/gravityforms-field-helper-admin.js', array( 'jquery' ), GF_FIELD_HELPER_VERSION, true );
 	}
 
 	/**

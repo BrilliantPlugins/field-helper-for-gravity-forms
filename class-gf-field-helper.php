@@ -109,7 +109,117 @@ class GF_Field_Helper extends GFAddOn {
 	 * @return void
 	 */
 	public function plugin_page() {
-		echo 'To use this plugin, go to the Field Helper section on each of your forms’ settings.';
+		echo esc_html__( 'To use this plugin, go to the Field Helper section on each of your forms’ settings.', 'gravityforms-field-helper' );
+	}
+
+	/**
+	 * Add plugin settings.
+	 *
+	 * @since 1.0.3.0
+	 *
+	 * @return array License fields.
+	 */
+	public function plugin_settings_fields() {
+		return array(
+			array(
+				'title'       => 'Licensing Settings',
+				'description' => wp_kses_post( 'Enter your license below to get automatic plugin updates. If you don’t have a license, visit <a href="https://brilliantplugins.com">brillianplugins.com</a>.', 'gravityforms-field-helper' ),
+				'fields'      => array(
+					array(
+						'title'               => esc_html__( 'GravityForms Field Helper Settings', 'gravityforms-field-helper' ),
+						'label'               => esc_html__( 'License Key', 'gravityforms-field-helper' ),
+						'name'                => 'license_key',
+						'type'                => 'text',
+						'input_type'          => 'password',
+						'validation_callback' => array( $this, 'license_validation' ),
+						'feedback_callback'   => array( $this, 'license_feedback' ),
+						'error_message'       => esc_html__( 'Invalid license', 'gravityforms-field-helper' ),
+						'class'               => 'large',
+						'default_value'       => '',
+					),
+				),
+			),
+		);
+	}
+
+	/**
+	 * Determine if the license key is valid so the appropriate icon can be displayed next to the field.
+	 *
+	 * @since 1.0.3.0
+	 *
+	 * @param string $value The current value of the license_key field.
+	 * @param array  $field The field properties.
+	 *
+	 * @return bool|null
+	 */
+	public function license_feedback( $value, $field ) {
+		if ( empty( $value ) ) {
+			return null;
+		}
+
+		// Send the remote request to check that the license is valid.
+		$license_data = $this->perform_edd_license_request( 'check_license', $value );
+
+		$valid = null;
+		if ( empty( $license_data ) || 'invalid' === $license_data->license ) {
+			$valid = false;
+		} elseif ( 'valid' === $license_data->license ) {
+			$valid = true;
+		}
+
+		return $valid;
+	}
+
+	/**
+	 * Handle license key activation or deactivation.
+	 *
+	 * @since 1.0.3.0
+	 *
+	 * @param array  $field         The field properties.
+	 * @param string $field_setting The submitted value of the license_key field.
+	 *
+	 * @return void
+	 */
+	public function license_validation( $field, $field_setting ) {
+		$old_license = $this->get_plugin_setting( 'license_key' );
+
+		if ( $old_license && $field_setting !== $old_license ) {
+			// Send the remote request to deactivate the old license.
+			$this->perform_edd_license_request( 'deactivate_license', $old_license );
+		}
+
+		if ( ! empty( $field_setting ) ) {
+			// Send the remote request to activate the new license.
+			$this->perform_edd_license_request( 'activate_license', $field_setting );
+		}
+	}
+
+	/**
+	 * Send a request to the EDD store url.
+	 *
+	 * @param string $edd_action The action to perform (check_license, activate_license, or deactivate_license).
+	 * @param string $license    The license key.
+	 *
+	 * @return object
+	 */
+	public function perform_edd_license_request( $edd_action, $license ) {
+
+		// Prepare the request arguments.
+		$args = array(
+			'timeout'   => 10,
+			'sslverify' => false,
+			'body'      => array(
+				'edd_action' => $edd_action,
+				'license'    => trim( $license ),
+				'item_name'  => rawurlencode( BRILLIANTPLUGINS_ITEM_NAME ),
+				'url'        => home_url(),
+			),
+		);
+
+		// Send the remote request.
+		$response = wp_remote_post( BRILLIANTPLUGINS_STORE_URL, $args );
+
+		return json_decode( wp_remote_retrieve_body( $response ) );
 	}
 
 	/**
@@ -135,6 +245,8 @@ class GF_Field_Helper extends GFAddOn {
 	 * @return array      Form settings.
 	 */
 	public function form_settings_fields( $form ) {
+		wp_enqueue_script( 'gravityforms-field-helper-admin' );
+
 		$friendly_fields = array(
 			array(
 				'title'       => esc_html__( 'Field Helper Settings', 'gravityforms-field-helper' ),
@@ -168,19 +280,35 @@ class GF_Field_Helper extends GFAddOn {
 			$helper_settings = array();
 		}
 
-		// Handle page fields: add a header and bail out.
-		if ( is_a( $field, 'GF_Field_Page' ) ) {
+		// Handle html, page, and section fields: add a header and bail out.
+		if ( in_array( $field['type'], array( 'html', 'page', 'section' ), true ) ) {
+
+			if ( ! empty( $field['label'] ) ) {
+				$title = $field['label'];
+			} else {
+				// Translators: %s is the field type key.
+				$title = sprintf( esc_html__( '%s Field', 'gravityforms-field-helper' ), ucfirst( $field['type'] ) );
+			}
+
 			return array(
-				'title'  => 'Page Break',
-				'fields' => array(),
+				'title'  => $title,
+				'fields' => array(
+					array(
+						'name'  => $this->get_field_id( $field ),
+						'label' => '',
+						'type'  => 'gf_helper_no_return_value',
+					),
+				),
 			);
 		}
 
 		// Create section header.
 		$friendly_fields = array(
-			'title'  => $field['label'],
+			'title'  => esc_html( $field['label'] ),
 			'fields' => array(),
 		);
+
+		$id = $this->get_field_id( $field );
 
 		$description = '';
 		if ( array_key_exists( 'description', $field ) ) {
@@ -188,18 +316,51 @@ class GF_Field_Helper extends GFAddOn {
 		}
 
 		if ( array_key_exists( 'inputs', $field ) && is_array( $field['inputs'] ) ) {
+
 			// This is a multiple-input field.
+			if ( 'checkbox' === $field['type'] ) {
+				$friendly_fields['fields'][ $id . '-checkbox-return' ] = array(
+					'name'       => $id . '-checkbox-return',
+					'label'      => esc_html__( 'Response Format', 'gravityforms-field-helper' ),
+					'class'      => 'checkbox-return-format',
+					'data-input' => $id,
+					'type'       => 'radio',
+					'choices'    => array(
+						array(
+							'label' => esc_html__( 'One array item for each choice', 'gravityforms-field-helper' ),
+							'value' => 'single',
+						),
+						array(
+							'label' => esc_html__( 'An array with all selected choices', 'gravityforms-field-helper' ),
+							'value' => 'combined',
+						),
+					),
+					'tooltip'    => esc_html__( 'How should selected values from this field be returned in the JSON response?', 'gravityforms-field-helper' ),
+				);
+
+				$friendly_fields['fields'][ $id ] = array(
+					'name'              => $id,
+					'label'             => esc_html__( 'Combined Field', 'gravityforms-field-helper' ),
+					'type'              => 'text',
+					'class'             => 'small checkbox combined',
+					'value'             => $value,
+					'feedback_callback' => array( $this, 'is_valid_name' ),
+				);
+			}
+
 			foreach ( $field['inputs'] as $key => $field ) {
+				$id = $this->get_field_id( $field );
+
 				$value = '';
-				if ( array_key_exists( GF_Field_Helper_Common::convert_field_id( $field['id'] ), $helper_settings ) ) {
-					$value = $helper_settings[ GF_Field_Helper_Common::convert_field_id( $field['id'] ) ];
+				if ( array_key_exists( $id, $helper_settings ) ) {
+					$value = $helper_settings[ $id ];
 				}
 
-				$friendly_fields['fields'][] = array(
-					'name'              => GF_Field_Helper_Common::convert_field_id( $field['id'] ),
+				$friendly_fields['fields'][ $id ] = array(
+					'name'              => $id,
 					'label'             => $field['label'],
 					'type'              => 'text',
-					'class'             => 'small',
+					'class'             => 'small checkbox single',
 					'value'             => $value,
 					'feedback_callback' => array( $this, 'is_valid_name' ),
 				);
@@ -207,22 +368,51 @@ class GF_Field_Helper extends GFAddOn {
 		} else {
 			// This is a single-input field.
 			$value = '';
-			if ( array_key_exists( GF_Field_Helper_Common::convert_field_id( $field['id'] ), $helper_settings ) ) {
-				$value = $helper_settings[ GF_Field_Helper_Common::convert_field_id( $field['id'] ) ];
+			if ( array_key_exists( $id, $helper_settings ) ) {
+				$value = $helper_settings[ $id ];
 			}
 
-			$friendly_fields['fields'][] = array(
-				'name'              => GF_Field_Helper_Common::convert_field_id( $field['id'] ),
-				'tooltip'           => esc_html__( 'Field Description: ', 'gravityforms-field-helper' ) . $description,
+			$friendly_fields['fields'][ $id ] = array(
+				'name'              => $id,
 				'label'             => $field['label'],
 				'type'              => 'text',
 				'class'             => 'small',
-				'value'             => $helper_settings[ $field['id'] ],
+				'value'             => $value,
 				'feedback_callback' => array( $this, 'is_valid_name' ),
 			);
+
+			if ( ! empty( $description ) ) {
+				$friendly_fields['fields'][ $id ]['tooltip'] = esc_html__( 'Field Description: ', 'gravityforms-field-helper' ) . $description;
+			}
 		}
 
 		return $friendly_fields;
+	}
+
+	/**
+	 * Display note on html, section, and page fields.
+	 *
+	 * @param array $field Gravity Forms field.
+	 *
+	 * @since 1.0.3.0
+	 *
+	 * @return void
+	 */
+	public function settings_gf_helper_no_return_value( $field ) {
+		esc_html_e( 'No return value is available for this type of field.', 'gravityforms-field-helper' );
+	}
+
+	/**
+	 * Retrieve field ID.
+	 *
+	 * @since 1.0.3.0
+	 *
+	 * @param array $field Field object.
+	 *
+	 * @return int|string  Field ID.
+	 */
+	public function get_field_id( $field ) {
+		return GF_Field_Helper_Common::convert_field_id( $field['id'] );
 	}
 
 }
