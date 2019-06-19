@@ -46,6 +46,15 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 	protected $friendly_labels = array();
 
 	/**
+	 * Checkbox fields to coalasce.
+	 *
+	 * @since 1.0.3.0
+	 *
+	 * @var array $checkbox_fields
+	 */
+	protected $checkbox_fields = array();
+
+	/**
 	 * Register our REST endpoint.
 	 *
 	 * @since 1.0.0
@@ -187,7 +196,14 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 			$sanitized_key = GF_Field_Helper_Common::convert_field_id( $key );
 
 			if ( in_array( $sanitized_key, array_flip( $labels ), false ) ) { // phpcs:ignore WordPress.PHP.StrictInArray -- since GF uses both integer and string field keys.
-				$fields[ $labels[ $sanitized_key ] ] = $value;
+
+				if ( in_array( absint( $sanitized_key ), $this->checkbox_fields, true ) ) {
+					// Checkbox.
+					$fields[ $labels[ absint( $sanitized_key ) ] ][] = $value;
+				} else {
+					// Others.
+					$fields[ $labels[ $sanitized_key ] ] = $value;
+				}
 			}
 
 			// Unset only field keys (strings will convert to 0, floats to integers).
@@ -214,7 +230,26 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 		if ( ! isset( $this->friendly_labels[ $form_id ] ) ) {
 			$form = GFAPI::get_form( $form_id );
 
-			$this->friendly_labels[ $form_id ] = array_filter( $form[ GF_FIELD_HELPER_SLUG ] );
+			$fields = array_filter( $form[ GF_FIELD_HELPER_SLUG ] );
+
+			foreach ( $form['fields'] as $id => $field ) {
+				if ( 'checkbox' === $field['type'] && 'combined' === $fields[ $id . '-checkbox-return' ] ) {
+
+					// Unset the choices.
+					foreach ( $field['inputs'] as $input_key => $input_id ) {
+						$input_id = GF_Field_Helper_Common::convert_field_id( $input_id );
+						unset( $fields[ $input_id['id'] ] );
+					}
+
+					// Set array of checkbox fields.
+					$this->checkbox_fields[ $id ] = $id;
+				}
+
+				// Unset the Field Helper setting for checkboxes.
+				unset( $fields[ $id . '-checkbox-return' ] );
+			}
+
+			$this->friendly_labels[ $form_id ] = $fields;
 		}
 
 		return $this->friendly_labels[ $form_id ];
