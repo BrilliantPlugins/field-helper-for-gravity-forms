@@ -178,7 +178,7 @@ class GF_Field_Helper extends GFAddOn {
 
 		// Create section header.
 		$friendly_fields = array(
-			'title'  => $field['label'],
+			'title'  => esc_html( $field['label'] ),
 			'fields' => array(),
 		);
 
@@ -195,7 +195,7 @@ class GF_Field_Helper extends GFAddOn {
 			if ( 'checkbox' === $field['type'] ) {
 				$friendly_fields['fields'][ $id . '-checkbox-return' ] = array(
 					'name'    => $id . '-checkbox-return',
-					'label'   => esc_html__( 'Response Type', 'gravityforms-field-helper' ),
+					'label'   => esc_html__( 'Response Format', 'gravityforms-field-helper' ),
 					'type'    => 'radio',
 					'choices' => array(
 						array(
@@ -208,6 +208,15 @@ class GF_Field_Helper extends GFAddOn {
 						),
 					),
 					'tooltip' => esc_html__( 'How should selected values from this field be returned in the JSON response?', 'gravityforms-field-helper' ),
+				);
+
+				$friendly_fields['fields'][ $id ] = array(
+					'name'              => $id,
+					'label'             => esc_html__( 'Combined Field', 'gravityforms-field-helper' ),
+					'type'              => 'text',
+					'class'             => 'small checkbox combined',
+					'value'             => $value,
+					'feedback_callback' => array( $this, 'is_valid_name' ),
 				);
 			}
 
@@ -223,7 +232,7 @@ class GF_Field_Helper extends GFAddOn {
 					'name'              => $id,
 					'label'             => $field['label'],
 					'type'              => 'text',
-					'class'             => 'small',
+					'class'             => 'small checkbox single',
 					'value'             => $value,
 					'feedback_callback' => array( $this, 'is_valid_name' ),
 				);
