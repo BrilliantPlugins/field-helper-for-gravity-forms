@@ -1,3 +1,7 @@
+# 1.0.3.0 | 2019-06-19
+  - Add option to return checkbox fields as an array of selected options.
+  - Add EDD licensing for automatic plugin updates.
+
 # 1.0.2 | 2019-03-29
   - Fix typo in the admin.
   - Add support for retrieving form entries.
