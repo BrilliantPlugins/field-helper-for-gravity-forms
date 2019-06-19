@@ -182,13 +182,35 @@ class GF_Field_Helper extends GFAddOn {
 			'fields' => array(),
 		);
 
+		$id = $this->get_field_id( $field );
+
 		$description = '';
 		if ( array_key_exists( 'description', $field ) ) {
 			$description = $field['description'];
 		}
 
 		if ( array_key_exists( 'inputs', $field ) && is_array( $field['inputs'] ) ) {
+
 			// This is a multiple-input field.
+			if ( 'checkbox' === $field['type'] ) {
+				$friendly_fields['fields'][ $id . '-checkbox-return' ] = array(
+					'name'    => $id . '-checkbox-return',
+					'label'   => esc_html__( 'Response Type', 'gravityforms-field-helper' ),
+					'type'    => 'radio',
+					'choices' => array(
+						array(
+							'label' => esc_html__( 'One array item for each choice', 'gravityforms-field-helper' ),
+							'value' => 'single',
+						),
+						array(
+							'label' => esc_html__( 'An array with all selected choices', 'gravityforms-field-helper' ),
+							'value' => 'combined',
+						),
+					),
+					'tooltip' => esc_html__( 'How should selected values from this field be returned in the JSON response?', 'gravityforms-field-helper' ),
+				);
+			}
+
 			foreach ( $field['inputs'] as $key => $field ) {
 				$id = $this->get_field_id( $field );
 
@@ -208,8 +230,6 @@ class GF_Field_Helper extends GFAddOn {
 			}
 		} else {
 			// This is a single-input field.
-			$id = $this->get_field_id( $field );
-
 			$value = '';
 			if ( array_key_exists( $id, $helper_settings ) ) {
 				$value = $helper_settings[ $id ];
