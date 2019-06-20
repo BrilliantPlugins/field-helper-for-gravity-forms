@@ -123,7 +123,7 @@ class GF_Field_Helper extends GFAddOn {
 		return array(
 			array(
 				'title'       => 'Licensing Settings',
-				'description' => wp_kses_post( 'Enter your license below to get automatic plugin updates. If you don’t have a license, visit <a href="https://brilliantplugins.com">brillianplugins.com</a>.', 'gravityforms-field-helper' ),
+				'description' => wp_kses_post( 'Enter your license below to get automatic plugin updates. If you don’t have a license, visit <a href="https://gravityintegrations.com">gravityintegrations.com</a>.', 'gravityforms-field-helper' ),
 				'fields'      => array(
 					array(
 						'title'               => esc_html__( 'GravityForms Field Helper Settings', 'gravityforms-field-helper' ),

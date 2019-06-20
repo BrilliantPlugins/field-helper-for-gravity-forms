@@ -35,7 +35,7 @@ define( 'GF_FIELD_HELPER_FILE', __FILE__ );
 define( 'GF_FIELD_HELPER_SLUG', 'gravityforms-field-helper' );
 
 // Licensing.
-define( 'GF_FIELD_HELPER_EDD_STORE_URL', 'https://gravityintegrations.com' );
+define( 'GF_FIELD_HELPER_EDD_STORE_URL', 'https://gravityintegrations.com/index.php' );
 define( 'GF_FIELD_HELPER_EDD_ITEM_ID', 9 );
 define( 'GF_FIELD_HELPER_EDD_ITEM_NAME', 'Gravity Forms Field Helper' );
 
