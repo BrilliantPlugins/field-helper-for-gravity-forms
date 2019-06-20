@@ -35,9 +35,9 @@ define( 'GF_FIELD_HELPER_FILE', __FILE__ );
 define( 'GF_FIELD_HELPER_SLUG', 'gravityforms-field-helper' );
 
 // Licensing.
-define( 'GF_FIELD_HELPER_EDD_STORE_URL', 'https://brilliantplugins.com' );
-define( 'GF_FIELD_HELPER_EDD_ITEM_ID', 1541 );
-define( 'GF_FIELD_HELPER_EDD_ITEM_NAME', 'GravityForms Field Helper' );
+define( 'GF_FIELD_HELPER_EDD_STORE_URL', 'https://gravityintegrations.com' );
+define( 'GF_FIELD_HELPER_EDD_ITEM_ID', 9 );
+define( 'GF_FIELD_HELPER_EDD_ITEM_NAME', 'Gravity Forms Field Helper' );
 
 // Init hooks.
 add_action( 'gform_loaded', array( 'GF_Field_Helper_Bootstrap', 'load_field_helper' ), 5 );
