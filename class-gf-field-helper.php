@@ -211,13 +211,13 @@ class GF_Field_Helper extends GFAddOn {
 			'body'      => array(
 				'edd_action' => $edd_action,
 				'license'    => trim( $license ),
-				'item_name'  => rawurlencode( BRILLIANTPLUGINS_ITEM_NAME ),
+				'item_name'  => rawurlencode( GF_FIELD_HELPER_EDD_ITEM_NAME ),
 				'url'        => home_url(),
 			),
 		);
 
 		// Send the remote request.
-		$response = wp_remote_post( BRILLIANTPLUGINS_STORE_URL, $args );
+		$response = wp_remote_post( GF_FIELD_HELPER_EDD_STORE_URL, $args );
 
 		return json_decode( wp_remote_retrieve_body( $response ) );
 	}
