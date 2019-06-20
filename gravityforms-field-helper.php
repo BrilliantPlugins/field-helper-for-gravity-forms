@@ -3,7 +3,7 @@
  * Plugin Name: Gravity Forms Field Helper
  * Plugin URI: https://gravityintegrations.com/
  * Description: Enables Gravity Forms users to set consistent, human-friendly field names for use in the Gravity Forms REST API.
- * Version: 1.0.3.1
+ * Version: 1.0.3.2
  * Author: LuminFire
  * Author URI: https://luminfire.com
  * License: GPL-2.0+
@@ -30,14 +30,14 @@
  * @package gravityforms-field-helper
  */
 
-define( 'GF_FIELD_HELPER_VERSION', '1.0.3.1' );
+define( 'GF_FIELD_HELPER_VERSION', '1.0.3.2' );
 define( 'GF_FIELD_HELPER_FILE', __FILE__ );
 define( 'GF_FIELD_HELPER_SLUG', 'gravityforms-field-helper' );
 
 // Licensing.
-define( 'BRILLIANTPLUGINS_STORE_URL', 'https://brilliantplugins.com' );
-define( 'BRILLIANTPLUGINS_ITEM_ID', 1541 );
-define( 'BRILLIANTPLUGINS_ITEM_NAME', 'GravityForms Field Helper' );
+define( 'GF_FIELD_HELPER_EDD_STORE_URL', 'https://gravityintegrations.com/index.php' );
+define( 'GF_FIELD_HELPER_EDD_ITEM_ID', 9 );
+define( 'GF_FIELD_HELPER_EDD_ITEM_NAME', 'Gravity Forms Field Helper' );
 
 // Init hooks.
 add_action( 'gform_loaded', array( 'GF_Field_Helper_Bootstrap', 'load_field_helper' ), 5 );
@@ -60,12 +60,12 @@ function gf_field_helper_edd_plugin_updater() {
 	$license_key = trim( GF_Field_Helper()->get_plugin_setting( 'license_key' ) );
 
 	$edd_updater = new EDD_SL_Plugin_Updater(
-		BRILLIANTPLUGINS_STORE_URL,
+		GF_FIELD_HELPER_EDD_STORE_URL,
 		GF_FIELD_HELPER_FILE,
 		array(
 			'version' => GF_FIELD_HELPER_VERSION,
 			'license' => $license_key,
-			'item_id' => BRILLIANTPLUGINS_ITEM_ID,
+			'item_id' => GF_FIELD_HELPER_EDD_ITEM_ID,
 			'author'  => 'LuminFire',
 			'url'     => home_url(),
 			'beta'    => false,

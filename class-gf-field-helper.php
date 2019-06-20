@@ -123,7 +123,7 @@ class GF_Field_Helper extends GFAddOn {
 		return array(
 			array(
 				'title'       => 'Licensing Settings',
-				'description' => wp_kses_post( 'Enter your license below to get automatic plugin updates. If you don’t have a license, visit <a href="https://brilliantplugins.com">brillianplugins.com</a>.', 'gravityforms-field-helper' ),
+				'description' => wp_kses_post( 'Enter your license below to get automatic plugin updates. If you don’t have a license, visit <a href="https://gravityintegrations.com">gravityintegrations.com</a>.', 'gravityforms-field-helper' ),
 				'fields'      => array(
 					array(
 						'title'               => esc_html__( 'GravityForms Field Helper Settings', 'gravityforms-field-helper' ),
@@ -211,13 +211,13 @@ class GF_Field_Helper extends GFAddOn {
 			'body'      => array(
 				'edd_action' => $edd_action,
 				'license'    => trim( $license ),
-				'item_name'  => rawurlencode( BRILLIANTPLUGINS_ITEM_NAME ),
+				'item_name'  => rawurlencode( GF_FIELD_HELPER_EDD_ITEM_NAME ),
 				'url'        => home_url(),
 			),
 		);
 
 		// Send the remote request.
-		$response = wp_remote_post( BRILLIANTPLUGINS_STORE_URL, $args );
+		$response = wp_remote_post( GF_FIELD_HELPER_EDD_STORE_URL, $args );
 
 		return json_decode( wp_remote_retrieve_body( $response ) );
 	}
