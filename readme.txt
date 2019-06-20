@@ -32,6 +32,9 @@ Adds a settings page and REST API endpoint to retrieve human- and computer-frien
 
 == Changelog ==
 
+= 1.0.3.2 | 2019-06-19 =
+  - Update EDD licensing store details.
+
 = 1.0.3.1 | 2019-06-19 =
   - Prevent unchecked checkboxes from return an empty value.
 
