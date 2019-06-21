@@ -102,6 +102,17 @@ class GF_Field_Helper_Bootstrap {
 		GFAddOn::register( 'GF_Field_Helper' );
 
 		// Backend assets.
+		add_action( 'admin_enqueue_scripts', 'GF_Field_Helper_Bootstrap::enqueue_assets' );
+	}
+
+	/**
+	 * Register/enqueue backend assets.
+	 *
+	 * @since 1.0.3.3
+	 *
+	 * @return void
+	 */
+	public static function enqueue_assets() {
 		wp_register_script( 'gravityforms-field-helper-admin', plugin_dir_url( GF_FIELD_HELPER_FILE ) . '/assets/js/gravityforms-field-helper-admin.js', array( 'jquery' ), GF_FIELD_HELPER_VERSION, true );
 	}
 
