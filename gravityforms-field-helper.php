@@ -3,7 +3,7 @@
  * Plugin Name: Gravity Forms Field Helper
  * Plugin URI: https://gravityintegrations.com/
  * Description: Enables Gravity Forms users to set consistent, human-friendly field names for use in the Gravity Forms REST API.
- * Version: 1.0.3.2
+ * Version: 1.0.3.3
  * Author: LuminFire
  * Author URI: https://luminfire.com
  * License: GPL-2.0+
@@ -30,7 +30,7 @@
  * @package gravityforms-field-helper
  */
 
-define( 'GF_FIELD_HELPER_VERSION', '1.0.3.2' );
+define( 'GF_FIELD_HELPER_VERSION', '1.0.3.3' );
 define( 'GF_FIELD_HELPER_FILE', __FILE__ );
 define( 'GF_FIELD_HELPER_SLUG', 'gravityforms-field-helper' );
 
@@ -102,6 +102,17 @@ class GF_Field_Helper_Bootstrap {
 		GFAddOn::register( 'GF_Field_Helper' );
 
 		// Backend assets.
+		add_action( 'admin_enqueue_scripts', 'GF_Field_Helper_Bootstrap::enqueue_assets' );
+	}
+
+	/**
+	 * Register/enqueue backend assets.
+	 *
+	 * @since 1.0.3.3
+	 *
+	 * @return void
+	 */
+	public static function enqueue_assets() {
 		wp_register_script( 'gravityforms-field-helper-admin', plugin_dir_url( GF_FIELD_HELPER_FILE ) . '/assets/js/gravityforms-field-helper-admin.js', array( 'jquery' ), GF_FIELD_HELPER_VERSION, true );
 	}
 

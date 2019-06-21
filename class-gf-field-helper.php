@@ -338,6 +338,11 @@ class GF_Field_Helper extends GFAddOn {
 					'tooltip'    => esc_html__( 'How should selected values from this field be returned in the JSON response?', 'gravityforms-field-helper' ),
 				);
 
+				$value = '';
+				if ( array_key_exists( $id, $helper_settings ) ) {
+					$value = $helper_settings[ $id ];
+				}
+
 				$friendly_fields['fields'][ $id ] = array(
 					'name'              => $id,
 					'label'             => esc_html__( 'Combined Field', 'gravityforms-field-helper' ),

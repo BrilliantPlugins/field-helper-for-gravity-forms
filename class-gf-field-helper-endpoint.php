@@ -234,21 +234,21 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 
 			$fields = array_filter( $form[ GF_FIELD_HELPER_SLUG ] );
 
-			foreach ( $form['fields'] as $id => $field ) {
-				if ( 'checkbox' === $field['type'] && 'combined' === $fields[ $id . '-checkbox-return' ] ) {
+			foreach ( $form['fields'] as $field ) {
+				if ( 'checkbox' === $field['type'] && array_key_exists( $field['id'] . '-checkbox-return', $fields ) && 'combined' === $fields[ $field['id'] . '-checkbox-return' ] ) {
 
 					// Unset the choices.
 					foreach ( $field['inputs'] as $input_key => $input_id ) {
-						$input_id = GF_Field_Helper_Common::convert_field_id( $input_id );
+						$input_id = GF_Field_Helper_Common::convert_field_id( $input_id['id'] );
 						unset( $fields[ $input_id['id'] ] );
 					}
 
 					// Set array of checkbox fields.
-					$this->checkbox_fields[ $id ] = $id;
+					$this->checkbox_fields[ $field['id'] ] = $field['id'];
 				}
 
 				// Unset the Field Helper setting for checkboxes.
-				unset( $fields[ $id . '-checkbox-return' ] );
+				unset( $fields[ $field['id'] . '-checkbox-return' ] );
 			}
 
 			$this->friendly_labels[ $form_id ] = $fields;

@@ -3,7 +3,7 @@ Contributors: luminfire, macbookandrew
 Tags: forms, form entries, api
 Requires at least: 4.8
 Tested up to: 4.9.9
-Stable tag: 10.3.1
+Stable tag: 1.0.3.3
 
 Adds a settings page and REST API endpoint to retrieve human- and computer-friendly field names.
 
