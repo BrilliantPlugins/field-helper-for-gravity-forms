@@ -52,6 +52,11 @@ class GF_Field_Helper_Common {
 	public function replace_field_names( $result ) {
 		$labels = $this->get_form_friendly_labels( $result['form_id'] );
 
+		// Bail out if no labels are set.
+		if ( empty( $labels ) ) {
+			return $result;
+		}
+
 		$fields = array();
 
 		foreach ( $result as $key => $value ) {
@@ -79,11 +84,16 @@ class GF_Field_Helper_Common {
 	 *
 	 * @param int $form_id Form ID.
 	 *
-	 * @return array       Human-friendly form labels.
+	 * @return array|false Human-friendly form labels or false if not set.
 	 */
 	public function get_form_friendly_labels( $form_id ) {
 		if ( ! isset( $this->friendly_labels[ $form_id ] ) ) {
 			$form = GFAPI::get_form( $form_id );
+
+			// Bail out if no labels are set.
+			if ( ! array_key_exists( GF_FIELD_HELPER_SLUG, $form ) ) {
+				return false;
+			}
 
 			$this->friendly_labels[ $form_id ] = array_filter( $form[ GF_FIELD_HELPER_SLUG ] );
 		}
