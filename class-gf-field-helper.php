@@ -2,7 +2,7 @@
 /**
  * Gravity Forms Field Helper
  *
- * @package gravityforms-field-helper
+ * @package gravity-forms-field-helper
  */
 
 if ( ! class_exists( 'GFForms' ) ) {
@@ -14,7 +14,7 @@ GFForms::include_addon_framework();
 /**
  * Gravity Forms Field Helper
  *
- * @package gravityforms-field-helper
+ * @package gravity-forms-field-helper
  */
 class GF_Field_Helper extends GFAddOn {
 
@@ -52,7 +52,7 @@ class GF_Field_Helper extends GFAddOn {
 	 *
 	 * @var string $_path
 	 */
-	protected $_path = 'gravityforms-field-helper/gravityforms-field-helper.php';
+	protected $_path = 'gravity-forms-field-helper/gravity-forms-field-helper.php';
 
 	/**
 	 * Full plugin path.
@@ -109,7 +109,7 @@ class GF_Field_Helper extends GFAddOn {
 	 * @return void
 	 */
 	public function plugin_page() {
-		echo esc_html__( 'To use this plugin, go to the Field Helper section on each of your forms’ settings.', 'gravityforms-field-helper' );
+		echo esc_html__( 'To use this plugin, go to the Field Helper section on each of your forms’ settings.', 'gravity-forms-field-helper' );
 	}
 
 	/**
@@ -135,13 +135,13 @@ class GF_Field_Helper extends GFAddOn {
 	 * @return array      Form settings.
 	 */
 	public function form_settings_fields( $form ) {
-		wp_enqueue_script( 'gravityforms-field-helper-admin' );
+		wp_enqueue_script( 'gravity-forms-field-helper-admin' );
 
 		$friendly_fields = array(
 			array(
-				'title'       => esc_html__( 'Field Helper Settings', 'gravityforms-field-helper' ),
+				'title'       => esc_html__( 'Field Helper Settings', 'gravity-forms-field-helper' ),
 				// Translators: %s: REST API endpoint URL.
-				'description' => sprintf( __( '<p>Enter human-friendly field names for each field below, or leave blank to ignore. To use these human-friendly names for this form, use this API URL: <code>%s</code></p><p>The Field Helper is an extension of the Gravity Forms REST API, and query parameters should pass through; for more information, see <a href="https://docs.gravityforms.com/rest-api-v2/" target="_blank">their documentation</a>.</p><p>For more information, see <a href="https://gravity-forms-field-helper.brilliantplugins.info/#/" target="_blank">the Gravity Forms Field Helper documentation</a>.</p>', 'gravityforms-field-helper' ), rest_url( 'gf/v2/forms/' . $form['id'] . '/entries/json/' ) ),
+				'description' => sprintf( __( '<p>Enter human-friendly field names for each field below, or leave blank to ignore. To use these human-friendly names for this form, use this API URL: <code>%s</code></p><p>The Field Helper is an extension of the Gravity Forms REST API, and query parameters should pass through; for more information, see <a href="https://docs.gravityforms.com/rest-api-v2/" target="_blank">their documentation</a>.</p><p>For more information, see <a href="https://gravity-forms-field-helper.brilliantplugins.info/#/" target="_blank">the Gravity Forms Field Helper documentation</a>.</p>', 'gravity-forms-field-helper' ), rest_url( 'gf/v2/forms/' . $form['id'] . '/entries/json/' ) ),
 				'fields'      => array(),
 			),
 		);
@@ -177,7 +177,7 @@ class GF_Field_Helper extends GFAddOn {
 				$title = $field['label'];
 			} else {
 				// Translators: %s is the field type key.
-				$title = sprintf( esc_html__( '%s Field', 'gravityforms-field-helper' ), ucfirst( $field['type'] ) );
+				$title = sprintf( esc_html__( '%s Field', 'gravity-forms-field-helper' ), ucfirst( $field['type'] ) );
 			}
 
 			return array(
@@ -211,21 +211,21 @@ class GF_Field_Helper extends GFAddOn {
 			if ( 'checkbox' === $field['type'] ) {
 				$friendly_fields['fields'][ $id . '-checkbox-return' ] = array(
 					'name'       => $id . '-checkbox-return',
-					'label'      => esc_html__( 'Response Format', 'gravityforms-field-helper' ),
+					'label'      => esc_html__( 'Response Format', 'gravity-forms-field-helper' ),
 					'class'      => 'checkbox-return-format',
 					'data-input' => $id,
 					'type'       => 'radio',
 					'choices'    => array(
 						array(
-							'label' => esc_html__( 'One array item for each choice', 'gravityforms-field-helper' ),
+							'label' => esc_html__( 'One array item for each choice', 'gravity-forms-field-helper' ),
 							'value' => 'single',
 						),
 						array(
-							'label' => esc_html__( 'An array with all selected choices', 'gravityforms-field-helper' ),
+							'label' => esc_html__( 'An array with all selected choices', 'gravity-forms-field-helper' ),
 							'value' => 'combined',
 						),
 					),
-					'tooltip'    => esc_html__( 'How should selected values from this field be returned in the JSON response?', 'gravityforms-field-helper' ),
+					'tooltip'    => esc_html__( 'How should selected values from this field be returned in the JSON response?', 'gravity-forms-field-helper' ),
 				);
 
 				$value = '';
@@ -235,7 +235,7 @@ class GF_Field_Helper extends GFAddOn {
 
 				$friendly_fields['fields'][ $id ] = array(
 					'name'              => $id,
-					'label'             => esc_html__( 'Combined Field', 'gravityforms-field-helper' ),
+					'label'             => esc_html__( 'Combined Field', 'gravity-forms-field-helper' ),
 					'type'              => 'text',
 					'class'             => 'small checkbox combined',
 					'value'             => $value,
@@ -277,7 +277,7 @@ class GF_Field_Helper extends GFAddOn {
 			);
 
 			if ( ! empty( $description ) ) {
-				$friendly_fields['fields'][ $id ]['tooltip'] = esc_html__( 'Field Description: ', 'gravityforms-field-helper' ) . $description;
+				$friendly_fields['fields'][ $id ]['tooltip'] = esc_html__( 'Field Description: ', 'gravity-forms-field-helper' ) . $description;
 			}
 		}
 
@@ -294,7 +294,7 @@ class GF_Field_Helper extends GFAddOn {
 	 * @return void
 	 */
 	public function settings_gf_helper_no_return_value( $field ) {
-		esc_html_e( 'No return value is available for this type of field.', 'gravityforms-field-helper' );
+		esc_html_e( 'No return value is available for this type of field.', 'gravity-forms-field-helper' );
 	}
 
 	/**
