@@ -2,7 +2,7 @@
 /**
  * Gravity Forms Field Helper Common
  *
- * @package gravityforms-field-helper
+ * @package gravity-forms-field-helper
  */
 
 if ( ! class_exists( 'GFForms' ) ) {
@@ -14,7 +14,7 @@ GFForms::include_addon_framework();
 /**
  * Gravity Forms Field Helper Common
  *
- * @package gravityforms-field-helper
+ * @package gravity-forms-field-helper
  */
 class GF_Field_Helper_Common {
 

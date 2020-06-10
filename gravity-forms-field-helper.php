@@ -7,7 +7,7 @@
  * Author: LuminFire
  * Author URI: https://luminfire.com
  * License: GPL-2.0+
- * Text Domain: gravityforms-field-helper
+ * Text Domain: gravity-forms-field-helper
  * Domain Path: /languages
  *
  * ------------------------------------------------------------------------
@@ -27,12 +27,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
- * @package gravityforms-field-helper
+ * @package gravity-forms-field-helper
  */
 
 define( 'GF_FIELD_HELPER_VERSION', '1.0.3.5' );
 define( 'GF_FIELD_HELPER_FILE', __FILE__ );
-define( 'GF_FIELD_HELPER_SLUG', 'gravityforms-field-helper' );
+define( 'GF_FIELD_HELPER_SLUG', 'gravity-forms-field-helper' );
 
 // Init hooks.
 add_action( 'gform_loaded', array( 'GF_Field_Helper_Bootstrap', 'load_field_helper' ), 5 );
@@ -77,7 +77,7 @@ class GF_Field_Helper_Bootstrap {
 	 * @return void
 	 */
 	public static function enqueue_assets() {
-		wp_register_script( 'gravityforms-field-helper-admin', plugin_dir_url( GF_FIELD_HELPER_FILE ) . '/assets/js/gravityforms-field-helper-admin.js', array( 'jquery' ), GF_FIELD_HELPER_VERSION, true );
+		wp_register_script( 'gravity-forms-field-helper-admin', plugin_dir_url( GF_FIELD_HELPER_FILE ) . '/assets/js/gravity-forms-field-helper-admin.js', array( 'jquery' ), GF_FIELD_HELPER_VERSION, true );
 	}
 
 	/**
