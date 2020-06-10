@@ -26,8 +26,7 @@ See [gravity-forms-field-helper.brilliantplugins.info](https://gravity-forms-fie
 == Installation ==
 
 1. Install and activate this plugin.
-2. Go to Forms > Settings > Field Helper to add your license key.
-3. Create friendly field names on the form settings page: ![Form Settings Page](documentation/img/plugin-settings.png)
-4. Use the API endpoints to retrieve entries.
+2. Create friendly field names on the form settings page: ![Form Settings Page](documentation/img/plugin-settings.png)
+3. Use the API endpoints to retrieve entries.
    - The standard entry data is untouched.
    - All named fields are added to a `fields` object in each entry object.

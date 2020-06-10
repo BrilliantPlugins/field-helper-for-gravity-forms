@@ -34,45 +34,9 @@ define( 'GF_FIELD_HELPER_VERSION', '1.0.3.5' );
 define( 'GF_FIELD_HELPER_FILE', __FILE__ );
 define( 'GF_FIELD_HELPER_SLUG', 'gravityforms-field-helper' );
 
-// Licensing.
-define( 'GF_FIELD_HELPER_EDD_STORE_URL', 'https://brilliantplugins.com/' );
-define( 'GF_FIELD_HELPER_EDD_ITEM_ID', 9 ); // FIXME: update for BrilliantPlugins.com
-define( 'GF_FIELD_HELPER_EDD_ITEM_NAME', 'Gravity Forms Field Helper' );
-
 // Init hooks.
 add_action( 'gform_loaded', array( 'GF_Field_Helper_Bootstrap', 'load_field_helper' ), 5 );
 add_action( 'rest_api_init', array( 'GF_Field_Helper_Bootstrap', 'register_api_endpoint' ) );
-add_action( 'init', 'gf_field_helper_edd_plugin_updater', 0 );
-
-/**
- * Handle update checks.
- *
- * @since 1.0.3.0
- *
- * @return void
- */
-function gf_field_helper_edd_plugin_updater() {
-
-	if ( ! class_exists( 'EDD_SL_Plugin_Updater' ) ) {
-		require_once dirname( GF_FIELD_HELPER_FILE ) . '/inc/EDD_SL_Plugin_Updater.php';
-	}
-
-	$license_key = trim( GF_Field_Helper()->get_plugin_setting( 'license_key' ) );
-
-	$edd_updater = new EDD_SL_Plugin_Updater(
-		GF_FIELD_HELPER_EDD_STORE_URL,
-		GF_FIELD_HELPER_FILE,
-		array(
-			'version' => GF_FIELD_HELPER_VERSION,
-			'license' => $license_key,
-			'item_id' => GF_FIELD_HELPER_EDD_ITEM_ID,
-			'author'  => 'LuminFire',
-			'url'     => home_url(),
-			'beta'    => false,
-		)
-	);
-}
-
 
 /**
  * Load up the plugin.
