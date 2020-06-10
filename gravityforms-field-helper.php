@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: Gravity Forms Field Helper
- * Plugin URI: https://gravityintegrations.com/
+ * Plugin URI: https://brilliantplugins.com/
  * Description: Enables Gravity Forms users to set consistent, human-friendly field names for use in the Gravity Forms REST API.
- * Version: 1.0.3.5
+ * Version: 1.1.0
  * Author: LuminFire
  * Author URI: https://luminfire.com
  * License: GPL-2.0+
