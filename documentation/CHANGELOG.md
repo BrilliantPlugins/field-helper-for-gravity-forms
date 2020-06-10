@@ -2,7 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Explicit Versioning](https://github.com/exadra37-versioning/explicit-versioning).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+
+# 1.1.0 | 2020-06-10
+  - Public release
 
 # 1.0.3.5 | 2020-04-23
   - Bugfix: fix API URL in dashboard.

@@ -2,14 +2,16 @@
 Contributors: luminfire, macbookandrew
 Tags: forms, form entries, api
 Requires at least: 4.8
-Tested up to: 4.9.9
-Stable tag: 1.0.3.3
+Tested up to: 5.3.2
+Stable tag: 1.1.0
 
 Adds a settings page and REST API endpoint to retrieve human- and computer-friendly field names.
 
 == Description ==
 
 Adds a settings page and REST API endpoint to retrieve human- and computer-friendly field names.
+
+See [gravity-forms-field-helper.brilliantplugins.info](https://gravity-forms-field-helper.brilliantplugins.info) for more documentation.
 
 = Usage =
 
@@ -25,7 +27,7 @@ Adds a settings page and REST API endpoint to retrieve human- and computer-frien
 
 1. Install and activate this plugin.
 2. Go to Forms > Settings > Field Helper to add your license key.
-3. Create friendly field names on the form settings page: ![Form Settings Page](assets/img/plugin-settings.png)
+3. Create friendly field names on the form settings page: ![Form Settings Page](documentation/img/plugin-settings.png)
 4. Use the API endpoints to retrieve entries.
    - The standard entry data is untouched.
    - All named fields are added to a `fields` object in each entry object.

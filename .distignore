@@ -1,8 +1,10 @@
 .distignore
 .git
 .gitignore
+.gitlab-ci.yml
 .vscode
 .DS_Store
+bin
 gulpfile.js
 node_modules
 package.json
