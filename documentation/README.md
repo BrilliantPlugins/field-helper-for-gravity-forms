@@ -1,18 +1,22 @@
-# Gravity Forms Field Helper
+# Description
 
 Adds a settings page and REST API endpoint to retrieve human- and computer-friendly field names.
 
-## Usage
+# Requirements
+
+1. [Purchase and install Gravity Forms](https://www.gravityforms.com/pricing/)
+2. Enable the Gravity Forms REST API
+
+# Usage
 
 1. Install and activate this plugin.
-2. Go to Forms > Settings > Field Helper to add your license key.
-3. Create friendly field names on the form settings page:
-   - ![Form Settings Page](assets/img/plugin-settings.png)
-4. Use the API endpoints to retrieve entries.
+2. Create friendly field names on the form settings page:
+   - ![Form Settings Page](img/plugin-settings.png)
+3. Use the API endpoints to retrieve entries.
    - The standard entry data is untouched.
    - All named fields are added to a `fields` object in each entry object.
 
-## API Endpoints
+# API Endpoints
 
 - Basically, append `/json` to Gravity Forms’ form- or entry-related endpoints to get JSON field data.
 - Retrieve all entries:  `https://your-site.com/wp-json/gf/v2/entries/json/`
@@ -20,7 +24,9 @@ Adds a settings page and REST API endpoint to retrieve human- and computer-frien
 - Retrieve all entries from a specific form:  `https://your-site.com/wp-json/gf/v2/forms/<form_id>/json/`
 - Retrieve a specific entry from a specific form:  `https://your-site.com/wp-json/gf/v2/forms/<form_id>/entries/<entry_id>/json/`
 
-## Examples
+# Examples
+
+## Standard Gravity Forms Response
 
 Example of a **standard** `entry/<ID>` response with ID fields:
 
@@ -64,7 +70,9 @@ Example of a **standard** `entry/<ID>` response with ID fields:
 }
 ```
 
-Example of a **friendly** `entry/<ID>` response with the `fields` object:
+## Friendly Gravity Forms Response
+
+Example of a **friendly** `entry/<ID>/json` response with the `fields` object:
 
 ```json
 {
@@ -102,7 +110,3 @@ Example of a **friendly** `entry/<ID>` response with the `fields` object:
   }
 }
 ```
-
-## Changelog
-
-See [change_log.txt](change_log.txt).

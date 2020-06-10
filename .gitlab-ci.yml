@@ -1,0 +1,30 @@
+stages:
+  - test
+  - build
+  - deploy
+
+Test Changed Files:
+  stage: test
+  environment:
+    name: php-test-syntax-diff
+  script:
+    - bin/php-syntaxChecker-changed.sh
+
+Test All Files:
+  stage: test
+  environment:
+    name: php-test-syntax-all
+  only:
+    - merge_requests
+  script:
+    - bin/php-syntaxChecker-full.sh
+
+Deploy Documentation:
+  stage: deploy
+  only:
+    - master
+  environment:
+    name: docs
+    url: $DOCS_URL
+  script:
+    - curl $DEPLOY_DOCS
