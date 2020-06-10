@@ -2,7 +2,7 @@
 /**
  * Gravity Forms Field Helper Endpoint
  *
- * @package gravityforms-field-helper
+ * @package gravity-forms-field-helper
  */
 
 if ( ! class_exists( 'GFForms' ) ) {
@@ -14,7 +14,7 @@ GFForms::include_addon_framework();
 /**
  * Gravity Forms Field Helper Endpoint
  *
- * @package gravityforms-field-helper
+ * @package gravity-forms-field-helper
  */
 class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 
@@ -25,7 +25,7 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 	 *
 	 * @var string $_slug
 	 */
-	protected $_slug = 'gravityforms-field-helper';
+	protected $_slug = 'gravity-forms-field-helper';
 
 	/**
 	 * API base.
