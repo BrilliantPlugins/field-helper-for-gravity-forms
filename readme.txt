@@ -4,6 +4,8 @@ Tags: forms, form entries, api
 Requires at least: 4.8
 Tested up to: 5.3.2
 Stable tag: 1.1.0
+License: GPLv3
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Adds a settings page and REST API endpoint to retrieve human- and computer-friendly field names.
 
