@@ -1,6 +1,6 @@
 <?php
 /**
- * Gravity Forms Field Helper
+ * Field Helper for Gravity Forms
  *
  * @package gravity-forms-field-helper
  */
@@ -12,7 +12,7 @@ if ( ! class_exists( 'GFForms' ) ) {
 GFForms::include_addon_framework();
 
 /**
- * Gravity Forms Field Helper
+ * Field Helper for Gravity Forms
  *
  * @package gravity-forms-field-helper
  */
@@ -70,7 +70,7 @@ class GF_Field_Helper extends GFAddOn {
 	 *
 	 * @var string $_title
 	 */
-	protected $_title = 'Gravity Forms Field Helper';
+	protected $_title = 'Field Helper for Gravity Forms';
 
 	/**
 	 * Short plugin title.
@@ -141,7 +141,7 @@ class GF_Field_Helper extends GFAddOn {
 			array(
 				'title'       => esc_html__( 'Field Helper Settings', 'gravity-forms-field-helper' ),
 				// Translators: %s: REST API endpoint URL.
-				'description' => sprintf( __( '<p>Enter human-friendly field names for each field below, or leave blank to ignore. To use these human-friendly names for this form, use this API URL: <code>%s</code></p><p>The Field Helper is an extension of the Gravity Forms REST API, and query parameters should pass through; for more information, see <a href="https://docs.gravityforms.com/rest-api-v2/" target="_blank">their documentation</a>.</p><p>For more information, see <a href="https://gravity-forms-field-helper.brilliantplugins.info/#/" target="_blank">the Gravity Forms Field Helper documentation</a>.</p>', 'gravity-forms-field-helper' ), rest_url( 'gf/v2/forms/' . $form['id'] . '/entries/json/' ) ),
+				'description' => sprintf( __( '<p>Enter human-friendly field names for each field below, or leave blank to ignore. To use these human-friendly names for this form, use this API URL: <code>%s</code></p><p>The Field Helper is an extension of the Gravity Forms REST API, and query parameters should pass through; for more information, see <a href="https://docs.gravityforms.com/rest-api-v2/" target="_blank">their documentation</a>.</p><p>For more information, see <a href="https://gravity-forms-field-helper.brilliantplugins.info/#/" target="_blank">the Field Helper for Gravity Forms documentation</a>.</p>', 'gravity-forms-field-helper' ), rest_url( 'gf/v2/forms/' . $form['id'] . '/entries/json/' ) ),
 				'fields'      => array(),
 			),
 		);

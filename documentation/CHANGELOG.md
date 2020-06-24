@@ -4,8 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-# 1.1.0 | 2020-06-10
-  - Public release
+# 1.1.0 | 2020-06-24
+  - Public release.
+  - Bugfixes: fix problems on forms without friendly labels.
+  - Bugfixes: fix errors for nonexistent entry IDs.
 
 # 1.0.3.5 | 2020-04-23
   - Bugfix: fix API URL in dashboard.
@@ -32,7 +34,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - Add support for retrieving form entries.
 
 # 1.0.1 | 2019-03-08
-   - Fix a class loading conflict with Gutenberg.
+  - Fix a class loading conflict with Gutenberg.
 
 # 1.0.0 | 2019-03-07
-   - First version of the plugin.
+  - First version of the plugin.
