@@ -165,6 +165,10 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 	 */
 	public function customize_rest_request( $response, $single = false ) {
 
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+
 		$results = $response->get_data();
 
 		if ( $single ) {
