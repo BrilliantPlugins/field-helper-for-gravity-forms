@@ -195,6 +195,13 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 		foreach ( $result as $key => $value ) {
 			$sanitized_key = GF_Field_Helper_Common::convert_field_id( $key );
 
+			if ( empty( $labels ) ) {
+				$fields['error'] = array(
+					'code'    => 500,
+					'message' => 'Friendly field names are not set. Please visit your form settings to set them.',
+				);
+			}
+
 			if ( in_array( $sanitized_key, array_flip( $labels ), false ) ) { // phpcs:ignore WordPress.PHP.StrictInArray -- since GF uses both integer and string field keys.
 
 				if ( in_array( absint( $sanitized_key ), $this->checkbox_fields, true ) ) {
@@ -232,6 +239,10 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 		if ( ! isset( $this->friendly_labels[ $form_id ] ) ) {
 			$form = GFAPI::get_form( $form_id );
 
+			if ( ! array_key_exists( GF_FIELD_HELPER_SLUG, $form ) ) {
+				return array();
+			}
+
 			$fields = array_filter( $form[ GF_FIELD_HELPER_SLUG ] );
 
 			foreach ( $form['fields'] as $field ) {
@@ -240,7 +251,7 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 					// Unset the choices.
 					foreach ( $field['inputs'] as $input_key => $input_id ) {
 						$input_id = GF_Field_Helper_Common::convert_field_id( $input_id['id'] );
-						unset( $fields[ $input_id['id'] ] );
+						unset( $fields[ $input_id ] );
 					}
 
 					// Set array of checkbox fields.
