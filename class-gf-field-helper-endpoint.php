@@ -158,10 +158,10 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $response Original API response.
-	 * @param bool  $single   Whether this is a single entry or multiple entries.
+	 * @param \WP_REST_Response $response Original API response.
+	 * @param bool              $single   Whether this is a single entry or multiple entries.
 	 *
-	 * @return mixed          Result to send to the client.
+	 * @return mixed                      Result to send to the client.
 	 */
 	public function customize_rest_request( $response, $single = false ) {
 
