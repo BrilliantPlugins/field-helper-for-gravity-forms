@@ -1,6 +1,6 @@
 <?php
 /**
- * Gravity Forms Field Helper Common
+ * Field Helper for Gravity Forms Common
  *
  * @package gravity-forms-field-helper
  */
@@ -12,7 +12,7 @@ if ( ! class_exists( 'GFForms' ) ) {
 GFForms::include_addon_framework();
 
 /**
- * Gravity Forms Field Helper Common
+ * Field Helper for Gravity Forms Common
  *
  * @package gravity-forms-field-helper
  */
