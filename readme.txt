@@ -1,4 +1,4 @@
-=== Gravity Forms Field Helper ===
+=== Field Helper for Gravity Forms ===
 Contributors: luminfire, macbookandrew
 Tags: forms, form entries, api
 Requires at least: 4.8
