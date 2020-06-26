@@ -19,6 +19,18 @@ Test All Files:
   script:
     - bin/php-syntaxChecker-full.sh
 
+Build Plugin Package:
+  stage: build
+  only:
+    - tags
+  script:
+    - wp dist-archive . $PLUGIN_SLUG.$CI_COMMIT_TAG.zip
+  artifacts:
+    name: "$PLUGIN_SLUG.$CI_COMMIT_TAG"
+    paths:
+      - $PLUGIN_SLUG.$CI_COMMIT_TAG.zip
+  when: manual
+
 Deploy Documentation:
   stage: deploy
   only:
