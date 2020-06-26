@@ -6,6 +6,7 @@
 .DS_Store
 bin
 gulpfile.js
+documentation
 node_modules
 package.json
 phpcs.xml
