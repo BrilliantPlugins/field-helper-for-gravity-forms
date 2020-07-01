@@ -1,8 +1,10 @@
 .distignore
 .git
+.github
 .gitignore
 .gitlab-ci.yml
 .vscode
+.wordpress-org
 .DS_Store
 bin
 gulpfile.js
