@@ -1,9 +1,9 @@
 === Field Helper for Gravity Forms ===
-Contributors: luminfire, macbookandrew
-Tags: forms, form entries, api
+Contributors: luminfire, macbookandrew, brilliantplugins, nickciske
+Tags: forms, form entries, api, Gravity Forms, FileMaker, database, field names
 Requires at least: 4.8
 Tested up to: 5.3.2
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -14,6 +14,10 @@ Adds a settings page and REST API endpoint to retrieve human- and computer-frien
 Adds a settings page and REST API endpoint to retrieve human- and computer-friendly field names.
 
 See [field-helper-for-gravity-forms.brilliantplugins.info](https://field-helper-for-gravity-forms.brilliantplugins.info) for more documentation.
+
+# Looking to import Gravity Forms entries from your WordPress website into FileMaker?
+
+Create nearly any form with Gravity Form’s drag-and-drop interface, and use this plugin to quickly import that form’s entry data to your FileMaker solution via [fmFlare](fmflare.com).
 
 = Usage =
 
