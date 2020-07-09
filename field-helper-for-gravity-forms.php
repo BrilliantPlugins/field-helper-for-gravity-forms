@@ -4,14 +4,14 @@
  * Plugin URI: https://brilliantplugins.com/
  * Description: Enables Gravity Forms users to set consistent, human-friendly field names for use in the Gravity Forms REST API.
  * Version: 1.1.1
- * Author: LuminFire
- * Author URI: https://luminfire.com
+ * Author: BrilliantPlugins
+ * Author URI: https://brilliantplugins.com
  * License: GPL-2.0+
  * Text Domain: gravity-forms-field-helper
  * Domain Path: /languages
  *
  * ------------------------------------------------------------------------
- * Copyright 2019 LuminFire
+ * Copyright 2020 LuminFire
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

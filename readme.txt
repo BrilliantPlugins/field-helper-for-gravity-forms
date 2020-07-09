@@ -1,5 +1,5 @@
 === Field Helper for Gravity Forms ===
-Contributors: luminfire, macbookandrew
+Contributors: luminfire, macbookandrew, brilliantplugins, nickciske
 Tags: forms, form entries, api
 Requires at least: 4.8
 Tested up to: 5.3.2
