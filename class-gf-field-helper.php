@@ -52,7 +52,7 @@ class GF_Field_Helper extends GFAddOn {
 	 *
 	 * @var string $_path
 	 */
-	protected $_path = 'gravity-forms-field-helper/gravity-forms-field-helper.php';
+	protected $_path = 'field-helper-for-gravity-forms/field-helper-for-gravity-forms.php';
 
 	/**
 	 * Full plugin path.

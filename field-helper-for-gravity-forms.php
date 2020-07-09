@@ -3,15 +3,15 @@
  * Plugin Name: Field Helper for Gravity Forms
  * Plugin URI: https://brilliantplugins.com/
  * Description: Enables Gravity Forms users to set consistent, human-friendly field names for use in the Gravity Forms REST API.
- * Version: 1.1.1
- * Author: LuminFire
- * Author URI: https://luminfire.com
+ * Version: 1.1.2
+ * Author: BrilliantPlugins
+ * Author URI: https://brilliantplugins.com
  * License: GPL-2.0+
  * Text Domain: gravity-forms-field-helper
  * Domain Path: /languages
  *
  * ------------------------------------------------------------------------
- * Copyright 2019 LuminFire
+ * Copyright 2020 LuminFire
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
  * @package gravity-forms-field-helper
  */
 
-define( 'GF_FIELD_HELPER_VERSION', '1.1.1' );
+define( 'GF_FIELD_HELPER_VERSION', '1.1.2' );
 define( 'GF_FIELD_HELPER_FILE', __FILE__ );
 define( 'GF_FIELD_HELPER_SLUG', 'gravity-forms-field-helper' );
 
