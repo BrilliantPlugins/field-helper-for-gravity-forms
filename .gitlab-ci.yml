@@ -1,23 +1,31 @@
+# Tests, builds, and releases a plugin and documentation.
+# See https://git.luminfire.net/ops/tooling/ci/gitlab-ci-general/-/tree/master/wp-plugin
+
 stages:
   - test
   - build
   - deploy
 
-Test Changed Files:
+# Run syntax checker
+Test Syntax:
+  tags:
+    - docker
+  image: git.luminfire.net:5005/ops/tooling/ci/gitlab-runner-tooling/gitlab-docker-runners/syntax-checker
+  services:
+    - docker:dind
   stage: test
-  environment:
-    name: php-test-syntax-diff
   script:
-    - bin/php-syntaxChecker-changed.sh
+    - phplint
 
-Test All Files:
-  stage: test
-  environment:
-    name: php-test-syntax-all
-  only:
-    - merge_requests
-  script:
-    - bin/php-syntaxChecker-full.sh
+# Test PHPUnit:
+#   stage: test
+#   tags:
+#     - docker
+#   image: gitlab/dind:latest
+#   services:
+#     - docker:dind
+#   script:
+#     - docker run --rm --privileged -v "$(pwd):/code" humanmade/plugin-tester --stop-on-error
 
 Build Plugin Package:
   stage: build
@@ -38,5 +46,7 @@ Deploy Documentation:
   environment:
     name: docs
     url: $DOCS_URL
+  cache:
+    policy: pull
   script:
     - curl $DEPLOY_DOCS
