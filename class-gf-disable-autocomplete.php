@@ -176,6 +176,7 @@ class GF_Disable_Autocomplete extends GFAddOn {
 	 * Render field setting.
 	 *
 	 * @since 1.2.0
+	 *
 	 * @param int $position Form advanced settings position.
 	 * @param int $form_id  Form ID.
 	 *
@@ -204,20 +205,20 @@ class GF_Disable_Autocomplete extends GFAddOn {
 		?>
 		<script type='text/javascript'>
 			// Add setting to specific field types.
-			fieldSettings.address += ", .autocomplete_field_setting";
-			fieldSettings.creditcard += ", .autocomplete_field_setting";
-			fieldSettings.date += ", .autocomplete_field_setting";
-			fieldSettings.email += ", .autocomplete_field_setting";
-			fieldSettings.name += ", .autocomplete_field_setting";
-			fieldSettings.number += ", .autocomplete_field_setting";
-			fieldSettings.password += ", .autocomplete_field_setting";
-			fieldSettings.phone += ", .autocomplete_field_setting";
-			fieldSettings.price += ", .autocomplete_field_setting";
-			fieldSettings.quantity += ", .autocomplete_field_setting";
-			fieldSettings.text += ", .autocomplete_field_setting";
-			fieldSettings.textarea += ", .autocomplete_field_setting";
-			fieldSettings.time += ", .autocomplete_field_setting";
-			fieldSettings.website += ", .autocomplete_field_setting";
+			fieldSettings.address += ', .autocomplete_field_setting';
+			fieldSettings.creditcard += ', .autocomplete_field_setting';
+			fieldSettings.date += ', .autocomplete_field_setting';
+			fieldSettings.email += ', .autocomplete_field_setting';
+			fieldSettings.name += ', .autocomplete_field_setting';
+			fieldSettings.number += ', .autocomplete_field_setting';
+			fieldSettings.password += ', .autocomplete_field_setting';
+			fieldSettings.phone += ', .autocomplete_field_setting';
+			fieldSettings.price += ', .autocomplete_field_setting';
+			fieldSettings.quantity += ', .autocomplete_field_setting';
+			fieldSettings.text += ', .autocomplete_field_setting';
+			fieldSettings.textarea += ', .autocomplete_field_setting';
+			fieldSettings.time += ', .autocomplete_field_setting';
+			fieldSettings.website += ', .autocomplete_field_setting';
 
 			// Bind to the load field settings event to initialize the checkbox.
 			jQuery(document).on('gform_load_field_settings', function(event, field, form){
