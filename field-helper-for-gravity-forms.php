@@ -69,6 +69,10 @@ class GF_Field_Helper_Bootstrap {
 		require_once 'class-gf-disable-autocomplete.php';
 		GFAddOn::register( 'GF_Disable_Autocomplete' );
 
+		// Field input patterns.
+		require_once 'class-gf-input-pattern.php';
+		GFAddOn::register( 'GF_Input_Pattern' );
+
 		// Backend assets.
 		add_action( 'admin_enqueue_scripts', 'GF_Field_Helper_Bootstrap::enqueue_assets' );
 	}
