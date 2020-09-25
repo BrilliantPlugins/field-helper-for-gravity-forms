@@ -125,6 +125,9 @@ class GF_Input_Pattern extends GFAddOn {
 
 		// Frontend.
 		add_filter( 'gform_field_content', array( $this, 'add_input_pattern' ), 15, 5 );
+
+		// Validation.
+		add_filter( 'gform_field_validation', array( $this, 'validate_input_pattern' ), 10, 4 );
 	}
 
 	/**
@@ -309,5 +312,40 @@ class GF_Input_Pattern extends GFAddOn {
 		}
 
 		return $input;
+	}
+
+	/**
+	 * Perform server-side validation.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param array        $result Validation result.
+	 * @param string|array $value  Field value to be validated.
+	 * @param array        $form   Current form object.
+	 * @param array        $field  Current field object.
+	 *
+	 * @return array               Validation result.
+	 */
+	public function validate_input_pattern( $result, $value, $form, $field ) {
+
+		// Bail out for empty values.
+		if ( empty( $value ) ) {
+			return $result;
+		}
+
+		$input_pattern = $this->get_field_input_pattern( $form['id'], $field['id'] );
+
+		// Bail out for empty input patterns.
+		if ( false === $input_pattern ) {
+			return $result;
+		}
+
+		$matches = preg_replace( '/^' . $input_pattern . '/', '', $value );
+		if ( ! empty( $matches ) ) {
+			$result['is_valid'] = false;
+			$result['message']  = 'Please follow the specified pattern.';
+		}
+
+		return $result;
 	}
 }
