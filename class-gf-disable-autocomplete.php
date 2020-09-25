@@ -118,6 +118,12 @@ class GF_Disable_Autocomplete extends GFAddOn {
 	public function __construct() {
 		parent::__construct();
 
+		// Backend.
+		add_action( 'gform_field_advanced_settings', array( $this, 'field_disable_autocomplete_settings' ), 10, 2 );
+		add_action( 'gform_editor_js', array( $this, 'editor_script' ) );
+		add_filter( 'gform_tooltips', array( $this, 'add_field_tooltip' ) );
+
+		// Frontend.
 		add_filter( 'gform_field_content', array( $this, 'maybe_disable_autocomplete' ), 15, 5 );
 	}
 
@@ -150,7 +156,7 @@ class GF_Disable_Autocomplete extends GFAddOn {
 					array(
 						'id'          => 'prevent_autocomplete',
 						'label'       => esc_html__( 'Disable Autocomplete', 'gravity-forms-field-helper' ),
-						'description' => esc_html__( 'Prevents browsers from autocompleting all fields in this form.', 'gravity-forms-field-helper' ),
+						'description' => esc_html__( 'Instruct browsers not to autocomplete any field in this form. If you want to disable autocomplete only for specific fields, leave this unchecked and edit each field individually.', 'gravity-forms-field-helper' ),
 						'type'        => 'checkbox',
 						'choices'     => array(
 							array(
@@ -164,6 +170,75 @@ class GF_Disable_Autocomplete extends GFAddOn {
 		);
 
 		return $autocomplete_fields;
+	}
+
+	/**
+	 * Render field setting.
+	 *
+	 * @since 1.2.0
+	 * @param int $position Form advanced settings position.
+	 * @param int $form_id  Form ID.
+	 *
+	 * @return void
+	 */
+	public function field_disable_autocomplete_settings( $position, $form_id ) {
+		if ( 425 === $position ) {
+			?>
+			<li class="autocomplete_field_setting field_setting">
+				<input type="checkbox" name="disable_autocomplete" id="field_disable_autocomplete" onclick="SetFieldProperty('disable_autocomplete', this.checked);">
+				<label class="inline" for="field_disable_autocomplete"><?php esc_html_e( 'Disable browser autocomplete', 'gravity-forms-field-helper' ); ?> <?php gform_tooltip( 'form_field_disable_autocomplete' ); ?></label>
+			</li>
+
+			<?php
+		}
+	}
+
+	/**
+	 * Inject supporting script to editor pages.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @return void
+	 */
+	public function editor_script() {
+		?>
+		<script type='text/javascript'>
+			// Add setting to specific field types.
+			fieldSettings.address += ", .autocomplete_field_setting";
+			fieldSettings.creditcard += ", .autocomplete_field_setting";
+			fieldSettings.date += ", .autocomplete_field_setting";
+			fieldSettings.email += ", .autocomplete_field_setting";
+			fieldSettings.name += ", .autocomplete_field_setting";
+			fieldSettings.number += ", .autocomplete_field_setting";
+			fieldSettings.password += ", .autocomplete_field_setting";
+			fieldSettings.phone += ", .autocomplete_field_setting";
+			fieldSettings.price += ", .autocomplete_field_setting";
+			fieldSettings.quantity += ", .autocomplete_field_setting";
+			fieldSettings.text += ", .autocomplete_field_setting";
+			fieldSettings.textarea += ", .autocomplete_field_setting";
+			fieldSettings.time += ", .autocomplete_field_setting";
+			fieldSettings.website += ", .autocomplete_field_setting";
+
+			// Bind to the load field settings event to initialize the checkbox.
+			jQuery(document).on('gform_load_field_settings', function(event, field, form){
+				jQuery('#field_disable_autocomplete').attr('checked', field['disable_autocomplete'] == true);
+			});
+		</script>
+		<?php
+	}
+
+	/**
+	 * Display tooltip.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param array $tooltips Field tooltips.
+	 *
+	 * @return array Field tooltips.
+	 */
+	public function add_field_tooltip( $tooltips ) {
+		$tooltips['form_field_disable_autocomplete'] = '<h6>Disable Browser Autocomplete</h6>Check this box to instruct browsers not to autocomplete this field (e.g., with a user’s name, address, email address, etc.).';
+		return $tooltips;
 	}
 
 	/**
@@ -181,6 +256,22 @@ class GF_Disable_Autocomplete extends GFAddOn {
 		}
 
 		return (bool) rgar( $this->get_form_settings( $this->form ), 'disable-autocomplete' );
+	}
+
+	/**
+	 * Get field autocomplete setting.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param int $form_id  Form ID.
+	 * @param int $field_id Field ID.
+	 *
+	 * @return bool         True if autocomplete is disabled for this specific field, false if not.
+	 */
+	public function get_field_autocomplete( $form_id, $field_id ) {
+		$field = GFAPI::get_field( $form_id, $field_id );
+
+		return (bool) $field['disable_autocomplete'];
 	}
 
 	/**
@@ -203,6 +294,10 @@ class GF_Disable_Autocomplete extends GFAddOn {
 
 		$disabled = $this->get_form_autocomplete( $form_id );
 
+		if ( ! $disabled ) {
+			$disabled = $this->get_field_autocomplete( $form_id, $field['id'] );
+		}
+
 		/**
 		 * Filters the disable-autocomplete value.
 		 *
@@ -214,7 +309,7 @@ class GF_Disable_Autocomplete extends GFAddOn {
 		 */
 		$disabled = apply_filters( 'field_helper_disable_autocomplete', $disabled, $form_id, $field );
 		$disabled = apply_filters( 'field_helper_disable_autocomplete_' . $form_id, $disabled, $form_id, $field );
-		$disabled = apply_filters( 'field_helper_disable_autocomplete_' . $form_id . '_' . $field['ID'], $disabled, $form_id, $field );
+		$disabled = apply_filters( 'field_helper_disable_autocomplete_' . $form_id . '_' . $field['id'], $disabled, $form_id, $field );
 
 		if ( $disabled ) {
 			$input = preg_replace( '/<(input|textarea)/', '<${1} autocomplete="ca3704aa0b06f" ', $input );
