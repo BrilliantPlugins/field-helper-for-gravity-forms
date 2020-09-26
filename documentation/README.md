@@ -129,3 +129,21 @@ Disables the browser’s autocomplete feature on all or individual fields.
   ![Form Settings Page](img/disable-autocomplete-form.png)
 2. Or disable autocomplete for individual fields on the field settings under the Advanced tab:
   ![Field Settings](img/disable-autocomplete-field.png)
+
+# Input Patterns
+
+Allows setting a regex pattern for specific field value requirements. Read the [documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-pattern) for more details.
+
+## Usage
+
+On a single-line text or paragraph text field, enable the Input Pattern checkbox and enter a valid regex pattern.
+
+[Regexr](https://regexr.com/) is a great tool to help develop your regex expression.
+
+![Screenshot](img/input-pattern-field.png)
+
+## Examples
+
+- Only letters (either case) and numbers: `[a-zA-Z0-9]+`
+- Only letters (either case), numbers, and the underscore: `[A-Za-z0-9_]`
+- Only lowercase letters and numbers; at least 5 characters, but no maximum: `[a-z/d.]{5,}`
