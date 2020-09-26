@@ -140,6 +140,8 @@ On a single-line text or paragraph text field, enable the Input Pattern checkbox
 
 [Regexr](https://regexr.com/) is a great tool to help develop your regex expression.
 
+![Screenshot](img/input-pattern-field.png)
+
 ## Examples
 
 - Only letters (either case) and numbers: `[a-zA-Z0-9]+`
