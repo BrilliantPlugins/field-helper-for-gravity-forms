@@ -125,9 +125,21 @@ class GF_Input_Pattern extends GFAddOn {
 
 		// Frontend.
 		add_filter( 'gform_field_content', array( $this, 'add_input_pattern' ), 15, 5 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 
 		// Validation.
 		add_filter( 'gform_field_validation', array( $this, 'validate_input_pattern' ), 10, 4 );
+	}
+
+	/**
+	 * Enqueue frontend styles.
+	 *
+	 * @since 1.2.1
+	 *
+	 * @return void
+	 */
+	public function enqueue_assets() {
+		wp_enqueue_style( 'gravity-forms-field-helper' );
 	}
 
 	/**

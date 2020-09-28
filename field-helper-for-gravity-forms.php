@@ -74,7 +74,10 @@ class GF_Field_Helper_Bootstrap {
 		GFAddOn::register( 'GF_Input_Pattern' );
 
 		// Backend assets.
-		add_action( 'admin_enqueue_scripts', 'GF_Field_Helper_Bootstrap::enqueue_assets' );
+		add_action( 'admin_enqueue_scripts', 'GF_Field_Helper_Bootstrap::register_backend_assets' );
+
+		// Frontend assets.
+		add_action( 'wp_enqueue_scripts', 'GF_Field_Helper_Bootstrap::register_frontend_assets' );
 	}
 
 	/**
@@ -84,8 +87,19 @@ class GF_Field_Helper_Bootstrap {
 	 *
 	 * @return void
 	 */
-	public static function enqueue_assets() {
+	public static function register_backend_assets() {
 		wp_register_script( 'gravity-forms-field-helper-admin', plugin_dir_url( GF_FIELD_HELPER_FILE ) . '/assets/js/gravity-forms-field-helper-admin.js', array( 'jquery' ), GF_FIELD_HELPER_VERSION, true );
+	}
+
+	/**
+	 * Register/enqueue frontend assets.
+	 *
+	 * @since 1.2.1
+	 *
+	 * @return void
+	 */
+	public static function register_frontend_assets() {
+		wp_register_style( 'gravity-forms-field-helper', plugin_dir_url( GF_FIELD_HELPER_FILE ) . '/assets/css/gravityforms-field-helper.css', array(), GF_FIELD_HELPER_VERSION );
 	}
 
 	/**

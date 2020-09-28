@@ -1,0 +1,5 @@
+input[pattern]:invalid{
+    color: red;
+    outline: 1px solid red;
+    border: 1px solid red;
+}
