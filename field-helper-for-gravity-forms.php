@@ -99,6 +99,8 @@ class GF_Field_Helper_Bootstrap {
 	 * @return void
 	 */
 	public static function register_frontend_assets() {
+		wp_register_script( 'gravity-forms-field-helper', plugin_dir_url( GF_FIELD_HELPER_FILE ) . '/assets/js/gravity-forms-field-helper.js', array( 'jquery' ), GF_FIELD_HELPER_VERSION, true );
+
 		wp_register_style( 'gravity-forms-field-helper', plugin_dir_url( GF_FIELD_HELPER_FILE ) . '/assets/css/gravity-forms-field-helper.css', array(), GF_FIELD_HELPER_VERSION );\
 	}
 

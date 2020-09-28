@@ -140,6 +140,7 @@ class GF_Input_Pattern extends GFAddOn {
 	 */
 	public function enqueue_assets() {
 		wp_enqueue_style( 'gravity-forms-field-helper' );
+		wp_enqueue_script( 'gravity-forms-field-helper' );
 	}
 
 	/**
