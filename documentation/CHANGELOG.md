@@ -4,43 +4,91 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+# 1.2.0 | 2020-09-28
+
+## Features
+
+- Add form and field settings to disable browser autocomplete.
+- Add field settings for HTML input patterns.
+
 # 1.1.2 | 2020-07-09
+
+## Features
+
   - Update branding.
 
 # 1.1.1 | 2020-06-26
+
+## Features
+
   - Tweaks for WordPress.org repository.
 
 # 1.1.0 | 2020-06-24
+
+## Features
+
   - Public release.
-  - Bugfixes: fix problems on forms without friendly labels.
-  - Bugfixes: fix errors for nonexistent entry IDs.
+
+## Bugfixes
+
+  - Fix problems on forms without friendly labels.
+  - Fix errors for nonexistent entry IDs.
 
 # 1.0.3.5 | 2020-04-23
-  - Bugfix: fix API URL in dashboard.
+
+## Bugfixes
+
+  - Fix API URL in dashboard.
 
 # 1.0.3.4 | 2020-03-18
-  - Bugfix: handle forms with no friendly labels set.
+
+## Bugfixes
+
+  - Handle forms with no friendly labels set.
 
 # 1.0.3.3 | 2019-06-21
-  - Bugfix: checkbox fields should return an array correctly.
-  - Bugfix: PHP notices/errors.
+
+## Bugfixes
+
+  - Checkbox fields should return an array correctly.
+  - PHP notices/errors.
 
 # 1.0.3.2 | 2019-06-19
+
+## Features
+
   - Update EDD licensing store details.
 
 # 1.0.3.1 | 2019-06-19
+
+## Bugfixes
+
   - Prevent unchecked checkboxes from return an empty value.
 
 # 1.0.3.0 | 2019-06-19
+
+## Features
+
   - Add option to return checkbox fields as an array of selected options.
   - Add EDD licensing for automatic plugin updates.
 
 # 1.0.2 | 2019-03-29
-  - Fix typo in the admin.
+
+## Features
   - Add support for retrieving form entries.
 
+## Bugfixes
+
+  - Fix typo in the admin.
+
 # 1.0.1 | 2019-03-08
+
+## Bugfixes
+
   - Fix a class loading conflict with Gutenberg.
 
 # 1.0.0 | 2019-03-07
+
+## Features
+
   - First version of the plugin.
