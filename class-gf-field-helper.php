@@ -201,11 +201,11 @@ class GF_Field_Helper extends GFAddOn {
 		$id = $this->get_field_id( $field );
 
 		$description = '';
-		if ( array_key_exists( 'description', $field ) ) {
+		if ( isset( $field['description'] ) ) {
 			$description = $field['description'];
 		}
 
-		if ( array_key_exists( 'inputs', $field ) && is_array( $field['inputs'] ) ) {
+		if ( isset( $field['inputs'] ) && is_array( $field['inputs'] ) ) {
 
 			// This is a multiple-input field.
 			if ( 'checkbox' === $field['type'] ) {
