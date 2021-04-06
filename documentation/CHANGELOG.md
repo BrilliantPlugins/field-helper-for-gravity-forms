@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+# 1.2.2 | 2021-04-05
+
+- Fix a number of minor code quality issues
+
 # 1.2.1 | 2020-09-28
 
 ## Features
@@ -22,80 +26,80 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## Features
 
-  - Update branding.
+- Update branding.
 
 # 1.1.1 | 2020-06-26
 
 ## Features
 
-  - Tweaks for WordPress.org repository.
+- Tweaks for WordPress.org repository.
 
 # 1.1.0 | 2020-06-24
 
 ## Features
 
-  - Public release.
+- Public release.
 
 ## Bugfixes
 
-  - Fix problems on forms without friendly labels.
-  - Fix errors for nonexistent entry IDs.
+- Fix problems on forms without friendly labels.
+- Fix errors for nonexistent entry IDs.
 
 # 1.0.3.5 | 2020-04-23
 
 ## Bugfixes
 
-  - Fix API URL in dashboard.
+- Fix API URL in dashboard.
 
 # 1.0.3.4 | 2020-03-18
 
 ## Bugfixes
 
-  - Handle forms with no friendly labels set.
+- Handle forms with no friendly labels set.
 
 # 1.0.3.3 | 2019-06-21
 
 ## Bugfixes
 
-  - Checkbox fields should return an array correctly.
-  - PHP notices/errors.
+- Checkbox fields should return an array correctly.
+- PHP notices/errors.
 
 # 1.0.3.2 | 2019-06-19
 
 ## Features
 
-  - Update EDD licensing store details.
+- Update EDD licensing store details.
 
 # 1.0.3.1 | 2019-06-19
 
 ## Bugfixes
 
-  - Prevent unchecked checkboxes from return an empty value.
+- Prevent unchecked checkboxes from return an empty value.
 
 # 1.0.3.0 | 2019-06-19
 
 ## Features
 
-  - Add option to return checkbox fields as an array of selected options.
-  - Add EDD licensing for automatic plugin updates.
+- Add option to return checkbox fields as an array of selected options.
+- Add EDD licensing for automatic plugin updates.
 
 # 1.0.2 | 2019-03-29
 
 ## Features
-  - Add support for retrieving form entries.
+- Add support for retrieving form entries.
 
 ## Bugfixes
 
-  - Fix typo in the admin.
+- Fix typo in the admin.
 
 # 1.0.1 | 2019-03-08
 
 ## Bugfixes
 
-  - Fix a class loading conflict with Gutenberg.
+- Fix a class loading conflict with Gutenberg.
 
 # 1.0.0 | 2019-03-07
 
 ## Features
 
-  - First version of the plugin.
+- First version of the plugin.

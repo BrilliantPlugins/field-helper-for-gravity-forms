@@ -61,7 +61,7 @@ class GF_Field_Helper extends GFAddOn {
 	 *
 	 * @var string $_full_path
 	 */
-	protected $_full_path = __FILE__;
+	protected $_full_path = GF_FIELD_HELPER_FILE;
 
 	/**
 	 * Plugin title.
@@ -147,7 +147,7 @@ class GF_Field_Helper extends GFAddOn {
 		);
 
 		foreach ( $form['fields'] as $key => $field ) {
-			$friendly_fields[] = $this->build_form_settings_array( $field, $form[ GF_FIELD_HELPER_SLUG ] );
+			$friendly_fields[] = $this->build_form_settings_array( $field, $form[ $this->_slug ] );
 		}
 
 		return $friendly_fields;
@@ -201,11 +201,11 @@ class GF_Field_Helper extends GFAddOn {
 		$id = $this->get_field_id( $field );
 
 		$description = '';
-		if ( array_key_exists( 'description', $field ) ) {
+		if ( isset( $field['description'] ) ) {
 			$description = $field['description'];
 		}
 
-		if ( array_key_exists( 'inputs', $field ) && is_array( $field['inputs'] ) ) {
+		if ( isset( $field['inputs'] ) && is_array( $field['inputs'] ) ) {
 
 			// This is a multiple-input field.
 			if ( 'checkbox' === $field['type'] ) {

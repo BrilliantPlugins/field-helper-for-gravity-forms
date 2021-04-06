@@ -61,7 +61,7 @@ class GF_Input_Pattern extends GFAddOn {
 	 *
 	 * @var string $_full_path
 	 */
-	protected $_full_path = __FILE__;
+	protected $_full_path = GF_FIELD_HELPER_FILE;
 
 	/**
 	 * Plugin title.
@@ -178,28 +178,28 @@ class GF_Input_Pattern extends GFAddOn {
 					<input type="text" id="field_input_pattern_value" placeholder="[a-zA-Z0-9]"/>
 
 					<p class="input_pattern_text_description" style="margin:5px 0 0;">
-						<?php esc_html_e( 'Enter an input pattern', 'gravity-forms-field-helper' ) ?>.
-						<a href="javascript:void(0);" onclick="tb_show('<?php echo esc_js( __( 'Input Pattern Instructions', 'gravity-forms-field-helper' ) ); ?>', '#TB_inline?width=350&amp;inlineId=input_pattern_instructions', '');" onkeypress="tb_show('<?php echo esc_js( __( 'Input Pattern Instructions', 'gravity-forms-field-helper' ) ); ?>', '#TB_inline?width=350&amp;inlineId=input_pattern_instructions', '');"><?php esc_html_e( 'Help', 'gravityforms' ) ?></a>
+						<?php esc_html_e( 'Enter an input pattern', 'gravity-forms-field-helper' ); ?>.
+						<a href="javascript:void(0);" onclick="tb_show('<?php echo esc_js( __( 'Input Pattern Instructions', 'gravity-forms-field-helper' ) ); ?>', '#TB_inline?width=350&amp;inlineId=input_pattern_instructions', '');" onkeypress="tb_show('<?php echo esc_js( __( 'Input Pattern Instructions', 'gravity-forms-field-helper' ) ); ?>', '#TB_inline?width=350&amp;inlineId=input_pattern_instructions', '');"><?php esc_html_e( 'Help', 'gravityforms' ); ?></a>
 					</p>
 
 					<div id="input_pattern_instructions" style="display:none;">
 						<div class="input_pattern_instructions custom_mask_instructions">
 
-							<h4><?php esc_html_e( 'Usage', 'gravityforms' ) ?></h4>
+							<h4><?php esc_html_e( 'Usage', 'gravityforms' ); ?></h4>
 							<p>Use a regex to specify the field format.</p>
 							<p>Note: this input pattern <strong>should not</strong> be used for email addresses, dates, or websites; use the appropriate field type for those types of data.</p>
 
-							<h4><?php esc_html_e( 'Examples', 'gravityforms' ) ?></h4>
+							<h4><?php esc_html_e( 'Examples', 'gravityforms' ); ?></h4>
 							<ul class="examples-list">
 								<li>
-									<h5><?php esc_html_e( 'Only letters (either case), numbers, and the underscore; no more than 15 characters.', 'gravity-forms-field-helper' ) ?></h5>
-									<span class="label"><?php esc_html_e( 'Input Pattern', 'gravity-forms-field-helper' ) ?></span> <code>[A-Za-z0-9_]{1,15}</code><br />
-									<span class="label"><?php esc_html_e( 'Valid Input', 'gravity-forms-field-helper' ) ?></span> <code>ABCabc_123</code>
+									<h5><?php esc_html_e( 'Only letters (either case), numbers, and the underscore; no more than 15 characters.', 'gravity-forms-field-helper' ); ?></h5>
+									<span class="label"><?php esc_html_e( 'Input Pattern', 'gravity-forms-field-helper' ); ?></span> <code>[A-Za-z0-9_]{1,15}</code><br />
+									<span class="label"><?php esc_html_e( 'Valid Input', 'gravity-forms-field-helper' ); ?></span> <code>ABCabc_123</code>
 								</li>
 								<li>
-									<h5><?php esc_html_e( 'Only lowercase letters and numbers; at least 5 characters, but no max limit.', 'gravity-forms-field-helper' ) ?></h5>
-									<span class="label"><?php esc_html_e( 'Input Pattern', 'gravity-forms-field-helper' ) ?></span> <code>[a-zd.]{5,}</code><br />
-									<span class="label"><?php esc_html_e( 'Valid Input', 'gravity-forms-field-helper' ) ?></span> <code>abc123</code>
+									<h5><?php esc_html_e( 'Only lowercase letters and numbers; at least 5 characters, but no max limit.', 'gravity-forms-field-helper' ); ?></h5>
+									<span class="label"><?php esc_html_e( 'Input Pattern', 'gravity-forms-field-helper' ); ?></span> <code>[a-zd.]{5,}</code><br />
+									<span class="label"><?php esc_html_e( 'Valid Input', 'gravity-forms-field-helper' ); ?></span> <code>abc123</code>
 								</li>
 							</ul>
 

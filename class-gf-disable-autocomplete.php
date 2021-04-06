@@ -61,7 +61,7 @@ class GF_Disable_Autocomplete extends GFAddOn {
 	 *
 	 * @var string $_full_path
 	 */
-	protected $_full_path = __FILE__;
+	protected $_full_path = GF_FIELD_HELPER_FILE;
 
 	/**
 	 * Plugin title.
@@ -155,6 +155,7 @@ class GF_Disable_Autocomplete extends GFAddOn {
 				'fields' => array(
 					array(
 						'id'          => 'prevent_autocomplete',
+						'name'        => 'disable_autocomplete',
 						'label'       => esc_html__( 'Disable Autocomplete', 'gravity-forms-field-helper' ),
 						'description' => esc_html__( 'Instruct browsers not to autocomplete any field in this form. If you want to disable autocomplete only for specific fields, leave this unchecked and edit each field individually.', 'gravity-forms-field-helper' ),
 						'type'        => 'checkbox',

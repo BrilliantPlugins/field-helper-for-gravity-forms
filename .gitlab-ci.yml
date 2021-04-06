@@ -6,29 +6,11 @@ stages:
   - build
   - deploy
 
-Test Syntax:Push:
-  tags:
-    - docker
-  image: git.luminfire.net:5005/ops/tooling/ci/gitlab-runner-tooling/gitlab-docker-runners/syntax-checker
-  services:
-    - docker:dind
-  stage: test
-  script:
-    - phplint-changed
-  except:
-    - merge_requests
 
-Test Syntax:Merge:
-  tags:
-    - docker
-  image: git.luminfire.net:5005/ops/tooling/ci/gitlab-runner-tooling/gitlab-docker-runners/syntax-checker
-  services:
-    - docker:dind
-  stage: test
-  script:
-    - phplint-merge
-  only:
-    - merge_requests
+include:
+  - project: 'ops/tooling/ci/gitlab-ci-templates'
+    file:
+      - 'test/php-syntax-check.yml'
 
 # Test PHPUnit:
 #   stage: test
