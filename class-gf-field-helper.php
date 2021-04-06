@@ -61,7 +61,7 @@ class GF_Field_Helper extends GFAddOn {
 	 *
 	 * @var string $_full_path
 	 */
-	protected $_full_path = __FILE__;
+	protected $_full_path = GF_FIELD_HELPER_FILE;
 
 	/**
 	 * Plugin title.
