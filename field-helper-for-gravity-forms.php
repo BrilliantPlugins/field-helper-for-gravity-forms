@@ -35,8 +35,8 @@ define( 'GF_FIELD_HELPER_FILE', __FILE__ );
 define( 'GF_FIELD_HELPER_SLUG', 'gravity-forms-field-helper' );
 
 // Init hooks.
-add_action( 'gform_loaded', array( 'GF_Field_Helper_Bootstrap', 'load_field_helper' ), 5 );
-add_action( 'rest_api_init', array( 'GF_Field_Helper_Bootstrap', 'register_api_endpoint' ) );
+add_action( 'gform_loaded', array( GF_Field_Helper_Bootstrap::class, 'load_field_helper' ), 5 );
+add_action( 'rest_api_init', array( GF_Field_Helper_Bootstrap::class, 'register_api_endpoint' ) );
 
 /**
  * Load up the plugin.
@@ -63,15 +63,15 @@ class GF_Field_Helper_Bootstrap {
 
 		// Friendly field names.
 		require_once 'class-gf-field-helper.php';
-		GFAddOn::register( 'GF_Field_Helper' );
+		GFAddOn::register( GF_Field_Helper::class );
 
 		// Disable autocomplete.
 		require_once 'class-gf-disable-autocomplete.php';
-		GFAddOn::register( 'GF_Disable_Autocomplete' );
+		GFAddOn::register( GF_Disable_Autocomplete::class );
 
 		// Field input patterns.
 		require_once 'class-gf-input-pattern.php';
-		GFAddOn::register( 'GF_Input_Pattern' );
+		GFAddOn::register( GF_Input_Pattern::class );
 
 		// Backend assets.
 		add_action( 'admin_enqueue_scripts', 'GF_Field_Helper_Bootstrap::register_backend_assets' );
