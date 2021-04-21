@@ -267,6 +267,39 @@ class GF_Field_Helper extends GFAddOn {
 				$value = $helper_settings[ $id ];
 			}
 
+			// This is a Nested Forms field.
+			if ( 'form' === $field['type'] ) {
+				$friendly_fields['fields'][ $id . '-form-return' ] = array(
+					'name'       => $id . '-form-return',
+					'label'      => esc_html__( 'Response Format', 'gravity-forms-field-helper' ),
+					'class'      => 'form-return-format',
+					'data-input' => $id,
+					'type'       => 'radio',
+					'choices'    => array(
+						array(
+							'label' => esc_html__( 'Comma-separated entried IDs', 'gravity-forms-field-helper' ),
+							'value' => 'csv',
+						),
+						array(
+							'label' => esc_html__( 'An array of entry IDs', 'gravity-forms-field-helper' ),
+							'value' => 'array',
+						),
+						array(
+							'label' => esc_html__( 'An array of expanded entry objects', 'gravity-forms-field-helper' ),
+							'value' => 'expanded',
+						),
+					),
+					'tooltip'    => sprintf(
+						// Translators: %s are code tags and examples.
+						esc_html__( 'How should nested form entries be returned in the JSON response? %1$s %2$s %1$s %3$s %1$s %4$s', 'gravity-forms-field-helper' ),
+						'<br/>',
+						__( 'Comma-separated', 'gravity-forms-field-helper' ) . ': <code>"1,2,3"</code>',
+						__( 'Array of entry IDs', 'gravity-forms-field-helper' ) . ': <code>[1,2,3]</code>',
+						__( 'Array of expanded entry objects', 'gravity-forms-field-helper' ) . ': <code>[{"id": 1, etc.}, {"id": 2, etc.}, {"id": 3, etc.}]</code>'
+					),
+				);
+			}
+
 			$friendly_fields['fields'][ $id ] = array(
 				'name'              => $id,
 				'label'             => $field['label'],
