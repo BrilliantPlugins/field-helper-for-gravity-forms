@@ -4,9 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+# 1.3.0 | 2021-04-21
+
+- Feature: expand [GravityWiz Nested Forms](https://gravitywiz.com/documentation/gravity-forms-nested-forms/) entries.
+- Chore: consolidate duplicated code.
+
 # 1.2.2 | 2021-04-05
 
-- Fix a number of minor code quality issues
+- Fix a number of minor code quality issues.
 
 # 1.2.1 | 2020-09-28
 
