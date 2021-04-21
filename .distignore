@@ -3,6 +3,7 @@
 .github
 .gitignore
 .gitlab-ci.yml
+.phplint.yml
 .vscode
 .wordpress-org
 .DS_Store
