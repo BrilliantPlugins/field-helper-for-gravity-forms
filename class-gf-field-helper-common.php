@@ -37,6 +37,15 @@ class GF_Field_Helper_Common {
 	protected static $checkbox_fields = array();
 
 	/**
+	 * Nested fields to handle.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @var array $nested_fields
+	 */
+	protected static $nested_fields = array();
+
+	/**
 	 * Convert field ID with period to underscore.
 	 *
 	 * @since 1.0.0
@@ -79,6 +88,29 @@ class GF_Field_Helper_Common {
 					// Checkbox.
 					if ( ! empty( $value ) ) {
 						$fields[ $labels[ absint( $sanitized_key ) ] ][] = $value;
+					}
+				} elseif ( array_key_exists( absint( $sanitized_key ), self::$nested_fields ) ) {
+					// Nested Form field.
+					if ( ! empty( $value ) ) {
+						switch ( self::$nested_fields[ absint( $sanitized_key ) ] ) {
+
+							case 'expanded':
+								$entry_ids = explode( ',', $value );
+								$value     = array();
+								foreach ( $entry_ids as $entry_id ) {
+									$fields[ $labels[ absint( $sanitized_key ) ] ][] = self::replace_field_names( GFAPI::get_entry( $entry_id ) );
+								}
+								break;
+
+							case 'array':
+								$value = json_decode( '[' . $value . ']' );
+								// Now just fall through and assign the value.
+
+							case 'csv':
+							default:
+								$fields[ $labels[ absint( $sanitized_key ) ] ] = $value;
+								break;
+						}
 					}
 				} else {
 					// Others.
@@ -129,8 +161,15 @@ class GF_Field_Helper_Common {
 					self::$checkbox_fields[ $field['id'] ] = $field['id'];
 				}
 
-				// Unset the Field Helper setting for checkboxes.
-				unset( $fields[ $field['id'] . '-checkbox-return' ] );
+				if ( 'form' === $field['type'] && array_key_exists( $field['id'] . '-form-return', $fields ) ) {
+					self::$nested_fields[ $field['id'] ] = $fields[ $field['id'] . '-form-return' ];
+				}
+
+				// Unset the format settings.
+				unset(
+					$fields[ $field['id'] . '-checkbox-return' ],
+					$fields[ $field['id'] . '-form-return' ]
+				);
 			}
 
 			self::$friendly_labels[ $form_id ] = $fields;
