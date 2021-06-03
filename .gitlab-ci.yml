@@ -8,23 +8,13 @@ stages:
 
 
 include:
-  - project: 'ops/tooling/ci/gitlab-ci-templates'
+  - project: 'templates/gitlab/ci-templates'
     file:
       - 'test/php-syntax-check.yml'
       - 'deploy/documentation/brilliantsolutions-docsify.yml'
 
-# Test PHPUnit:
-#   stage: test
-#   tags:
-#     - docker
-#   image: gitlab/dind:latest
-#   services:
-#     - docker:dind
-#   script:
-#     - docker run --rm --privileged -v "$(pwd):/code" humanmade/plugin-tester --stop-on-error
-
-# Note: this is basically the same as https://git.luminfire.net/ops/tooling/ci/gitlab-ci-templates/-/blob/master/build/wp-plugin.yml but without S3 as this is deployed to wordpress.org plugin repository.
-Build Plugin Package:
+# Note: this is basically the same as https://git.luminfire.net/templates/gitlab/ci-templates/-/blob/master/build/wp-plugin.yml but without S3 as this is deployed to wordpress.org plugin repository.
+build:release-package:
   stage: build
   resource_group: build_plugin
   only:
