@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+# 1.4.1 | 2022-08-04
+
+- Bugfix: update version in readme
+
 # 1.4.0 | 2022-08-04
 
 - Feature: add `after` [query parameters](https://field-helper-for-gravity-forms.brilliantplugins.info/#/?id=api-parameters)
