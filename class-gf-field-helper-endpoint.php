@@ -108,6 +108,62 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 	}
 
 	/**
+	 * Include our custom query parameters.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @return array
+	 */
+	public function get_collection_params() {
+		$core = parent::get_collection_params();
+
+		$custom = array(
+			'after' => array(
+				'description' => __( 'Entry ID or timestamp', 'gravity-forms-field-helper' ),
+			),
+		);
+
+		return array_merge( $core, $custom );
+	}
+
+	/**
+	 * Parses the entry search, sort and paging parameters from the request
+	 *
+	 * @since 1.4.0
+	 *
+	 * @param WP_REST_Request $request Full data about the request.
+	 *
+	 * @return array Returns an associative array with the "search_criteria", "paging" and "sorting" keys appropriately populated.
+	 */
+	public function parse_entry_search_params( $request ) {
+		$params = parent::parse_entry_search_params( $request );
+
+		if ( ! $request->has_param( 'after' ) ) {
+			return $params;
+		}
+
+		$after = $request->get_param( 'after' );
+
+		if ( array_key_exists( 'entry_id', $after ) ) {
+			$params['search_criteria']['field_filters'][] = array(
+				'key'      => 'id',
+				'operator' => '>',
+				'value'    => absint( $after['entry_id'] ),
+			);
+		}
+
+		if ( array_key_exists( 'time', $after ) ) {
+			$params['search_criteria']['field_filters'][] = array(
+				'key'      => 'date_created',
+				'operator' => '>',
+				'value'    => ( new DateTimeImmutable( sanitize_text_field( wp_unslash( $after['time'] ) ) ) )->format( 'Y-m-d H:i:s' ),
+			);
+		}
+
+		return $params;
+	}
+
+	/**
 	 * Get a collection of entries.
 	 *
 	 * @since 1.0.0
@@ -150,6 +206,8 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 		if ( is_wp_error( $response ) ) {
 			return $response;
 		}
+
+		// FIXME: add after filters.
 
 		$results = $response->get_data();
 
