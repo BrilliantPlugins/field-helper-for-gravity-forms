@@ -147,7 +147,7 @@ class GF_Field_Helper extends GFAddOn {
 		);
 
 		foreach ( $form['fields'] as $key => $field ) {
-			$friendly_fields[] = $this->build_form_settings_array( $field, $form[ $this->_slug ] );
+			$friendly_fields[] = $this->build_form_settings_array( $form[ $this->_slug ], $field );
 		}
 
 		return $friendly_fields;
@@ -157,13 +157,14 @@ class GF_Field_Helper extends GFAddOn {
 	 * Recursively build form settings fields array.
 	 *
 	 * @since 1.0.0
+	 * @since 1.3.2 Switch order of parameters.
 	 *
-	 * @param array $field           Field object.
 	 * @param array $helper_settings Saved options for this form.
+	 * @param array $field           Field object.
 	 *
 	 * @return array                 Field settings array.
 	 */
-	private function build_form_settings_array( $field = array(), $helper_settings ) {
+	private function build_form_settings_array( $helper_settings, $field = array() ) {
 
 		// Defaulting $helper_settings to an array in the function line does not always work.
 		if ( ! is_array( $helper_settings ) ) {

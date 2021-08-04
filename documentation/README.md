@@ -32,6 +32,13 @@ Adds a settings page and REST API endpoint to retrieve human- and computer-frien
 - Retrieve all entries from a specific form:  `https://your-site.com/wp-json/gf/v2/forms/<form_id>/json/`
 - Retrieve a specific entry from a specific form:  `https://your-site.com/wp-json/gf/v2/forms/<form_id>/entries/<entry_id>/json/`
 
+## API Parameters
+
+A couple of additional query parameters are available:
+
+- `after[entry_id]`: retrieves only entries after the specified entry ID
+- `after[time]`: retrieves only entries after the datetime
+
 ## Examples
 
 ### Standard Gravity Forms Response
