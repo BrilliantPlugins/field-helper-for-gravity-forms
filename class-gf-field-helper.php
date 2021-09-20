@@ -146,6 +146,10 @@ class GF_Field_Helper extends GFAddOn {
 			),
 		);
 
+		if ( ! array_key_exists( $this->_slug, $form ) ) {
+			$form[ $this->_slug ] = array();
+		}
+
 		foreach ( $form['fields'] as $key => $field ) {
 			$friendly_fields[] = $this->build_form_settings_array( $form[ $this->_slug ], $field );
 		}
