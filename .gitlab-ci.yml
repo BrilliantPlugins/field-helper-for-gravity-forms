@@ -2,6 +2,7 @@
 # See https://git.luminfire.net/ops/tooling/ci/gitlab-ci-general/-/tree/master/wp-plugin
 
 stages:
+  - solcare
   - test
   - build
   - deploy
