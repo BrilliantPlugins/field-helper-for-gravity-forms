@@ -206,15 +206,15 @@ class GF_Field_Helper extends GFAddOn {
 		$id = $this->get_field_id( $field );
 
 		$description = '';
-		if ( isset( $field['description'] ) ) {
-			$description = $field['description'];
+		if ( ! empty( $field['description'] ) ) {
+			$description = '(' . __( 'Field Description', 'gravity-forms-field-helper' ) . ': ' . esc_html( $field['description'] ) . ')';
 		}
 
 		if ( isset( $field['inputs'] ) && is_array( $field['inputs'] ) ) {
 
 			// This is a multiple-input field.
 			if ( 'checkbox' === $field['type'] ) {
-				$friendly_fields['fields'][ $id . '-checkbox-return' ] = array(
+				$friendly_fields['fields'][] = array(
 					'name'       => $id . '-checkbox-return',
 					'label'      => esc_html__( 'Response Format', 'gravity-forms-field-helper' ),
 					'class'      => 'checkbox-return-format',
@@ -238,8 +238,9 @@ class GF_Field_Helper extends GFAddOn {
 					$value = $helper_settings[ $id ];
 				}
 
-				$friendly_fields['fields'][ $id ] = array(
+				$friendly_fields['fields'][] = array(
 					'name'              => $id,
+					'description'       => $description,
 					'label'             => esc_html__( 'Combined Field', 'gravity-forms-field-helper' ),
 					'type'              => 'text',
 					'class'             => 'small checkbox combined',
@@ -256,8 +257,9 @@ class GF_Field_Helper extends GFAddOn {
 					$value = $helper_settings[ $id ];
 				}
 
-				$friendly_fields['fields'][ $id ] = array(
+				$friendly_fields['fields'][] = array(
 					'name'              => $id,
+					'description'       => $description,
 					'label'             => $field['label'],
 					'type'              => 'text',
 					'class'             => 'small checkbox single',
@@ -274,7 +276,7 @@ class GF_Field_Helper extends GFAddOn {
 
 			// This is a Nested Forms field.
 			if ( 'form' === $field['type'] ) {
-				$friendly_fields['fields'][ $id . '-form-return' ] = array(
+				$friendly_fields['fields'][] = array(
 					'name'       => $id . '-form-return',
 					'label'      => esc_html__( 'Response Format', 'gravity-forms-field-helper' ),
 					'class'      => 'form-return-format',
@@ -305,18 +307,15 @@ class GF_Field_Helper extends GFAddOn {
 				);
 			}
 
-			$friendly_fields['fields'][ $id ] = array(
+			$friendly_fields['fields'][] = array(
 				'name'              => $id,
+				'description'       => $description,
 				'label'             => $field['label'],
 				'type'              => 'text',
 				'class'             => 'small',
 				'value'             => $value,
 				'feedback_callback' => array( $this, 'is_valid_name' ),
 			);
-
-			if ( ! empty( $description ) ) {
-				$friendly_fields['fields'][ $id ]['tooltip'] = esc_html__( 'Field Description: ', 'gravity-forms-field-helper' ) . $description;
-			}
 		}
 
 		return $friendly_fields;
