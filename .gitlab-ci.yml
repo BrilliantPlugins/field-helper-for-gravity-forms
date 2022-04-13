@@ -10,7 +10,6 @@ stages:
 include:
   - project: 'templates/gitlab/ci-templates'
     file:
-      - 'test/php-syntax-check.yml'
-      - 'security/lockfiles.yml'
+      - 'presets/php.yml'
       - 'build/wp-plugin.yml'
       - 'deploy/documentation/brilliantsolutions-docsify.yml'
