@@ -82,40 +82,37 @@ class GF_Field_Helper_Common {
 				);
 			}
 
-			if ( in_array( $sanitized_key, array_flip( $labels ), false ) ) { // phpcs:ignore WordPress.PHP.StrictInArray -- since GF uses both integer and string field keys.
-
-				if ( in_array( absint( $sanitized_key ), self::$checkbox_fields, true ) ) {
-					// Checkbox.
-					if ( ! empty( $value ) ) {
-						$fields[ $labels[ absint( $sanitized_key ) ] ][] = $value;
-					}
-				} elseif ( array_key_exists( absint( $sanitized_key ), self::$nested_fields ) ) {
-					// Nested Form field.
-					if ( ! empty( $value ) ) {
-						switch ( self::$nested_fields[ absint( $sanitized_key ) ] ) {
-
-							case 'expanded':
-								$entry_ids = explode( ',', $value );
-								$value     = array();
-								foreach ( $entry_ids as $entry_id ) {
-									$fields[ $labels[ absint( $sanitized_key ) ] ][] = self::replace_field_names( GFAPI::get_entry( $entry_id ) );
-								}
-								break;
-
-							case 'array':
-								$value = json_decode( '[' . $value . ']' );
-								// Now just fall through and assign the value.
-
-							case 'csv':
-							default:
-								$fields[ $labels[ absint( $sanitized_key ) ] ] = $value;
-								break;
-						}
-					}
-				} else {
-					// Others.
-					$fields[ $labels[ $sanitized_key ] ] = $value;
+			if ( in_array( absint( $sanitized_key ), self::$checkbox_fields, true ) ) {
+				// Checkbox.
+				if ( ! empty( $value ) ) {
+					$fields[ $labels[ absint( $sanitized_key ) ] ][] = $value;
 				}
+			} elseif ( array_key_exists( absint( $sanitized_key ), self::$nested_fields ) ) {
+				// Nested Form field.
+				if ( ! empty( $value ) ) {
+					switch ( self::$nested_fields[ absint( $sanitized_key ) ] ) {
+
+						case 'expanded':
+							$entry_ids = explode( ',', $value );
+							$value     = array();
+							foreach ( $entry_ids as $entry_id ) {
+								$fields[ $labels[ absint( $sanitized_key ) ] ][] = self::replace_field_names( GFAPI::get_entry( $entry_id ) );
+							}
+							break;
+
+						case 'array':
+							$value = json_decode( '[' . $value . ']' );
+							// Now just fall through and assign the value.
+
+						case 'csv':
+						default:
+							$fields[ $labels[ absint( $sanitized_key ) ] ] = $value;
+							break;
+					}
+				}
+			} elseif ( in_array( $sanitized_key, array_flip( $labels ), false ) ) { // phpcs:ignore WordPress.PHP.StrictInArray -- since GF uses both integer and string field keys.
+				// Others.
+				$fields[ $labels[ $sanitized_key ] ] = $value;
 			}
 
 			// Unset only field keys (strings will convert to 0, floats to integers).

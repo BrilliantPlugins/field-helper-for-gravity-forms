@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+# 1.4.4 | 2022-04-13
+
+- Bugfix: fix compatibility issues with Gravity Forms 2.5.7+
+
 # 1.4.3 | 2021-09-30
 
 - Bugfix: update version in readme
