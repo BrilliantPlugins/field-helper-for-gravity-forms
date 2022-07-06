@@ -82,6 +82,70 @@ class GF_Field_Helper extends GFAddOn {
 	protected $_short_title = 'Field Helper';
 
 	/**
+	 * Permissions to access the settings page.
+	 *
+	 * @since 1.4.5
+	 *
+	 * @var string|array A string or an array of capabilities or roles that have access to the settings page.
+	 */
+	protected $_capabilities_settings_page = array(
+		'gravityforms_edit_forms',
+	);
+
+	/**
+	 * Permissions to access the form settings.
+	 *
+	 * @since 1.4.5
+	 *
+	 * @var string|array A string or an array of capabilities or roles that have access to the form settings.
+	 */
+	protected $_capabilities_form_settings = array(
+		'gravityforms_edit_forms',
+	);
+
+	/**
+	 * Permissions to access the plugin page.
+	 *
+	 * @since 1.4.5
+	 *
+	 * @var string|array A string or an array of capabilities or roles that have access to the plugin page.
+	 */
+	protected $_capabilities_plugin_page = 'gravityforms_edit_forms';
+
+	/**
+	 * Permissions to access the app menu.
+	 *
+	 * @since 1.4.5
+	 *
+	 * @var string|array A string or an array of capabilities or roles that have access to the app menu.
+	 */
+	protected $_capabilities_app_menu = array(
+		'gravityforms_edit_forms',
+	);
+
+	/**
+	 * Permissions to access the app settings page.
+	 *
+	 * @since 1.4.5
+	 *
+	 * @var string|array A string or an array of capabilities or roles that have access to the app settings page.
+	 */
+	protected $_capabilities_app_settings = array(
+		'gravityforms_edit_forms',
+	);
+
+	/**
+	 * Permissions to uninstall plugin.
+	 *
+	 * @since 1.4.5
+	 *
+	 * @var string|array A string or an array of capabilities or roles that can uninstall the plugin.
+	 */
+	protected $_capabilities_uninstall = array(
+		'gravityforms_uninstall',
+	);
+
+	/**
 	 * Class instance.
 	 *
 	 * @var null

@@ -3,7 +3,7 @@ Contributors: luminfire, macbookandrew, brilliantplugins, nickciske
 Tags: forms, form entries, api, Gravity Forms, FileMaker, database, field names
 Requires at least: 4.8
 Tested up to: 5.9.2
-Stable tag: 1.4.4
+Stable tag: 1.4.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -28,6 +28,14 @@ Create nearly any form with Gravity Form’s drag-and-drop interface, and use th
 - Retrieve a specific entry:  `https://your-site.com/wp-json/gf/v2/entries/<entry_id>/json/`
 - Retrieve all entries from a specific form:  `https://your-site.com/wp-json/gf/v2/forms/<form_id>/json/`
 - Retrieve a specific entry from a specific form:  `https://your-site.com/wp-json/gf/v2/forms/<form_id>/entries/<entry_id>/json/`
+
+If you need to use the friendly field names in PHP (using the `gform_after_submission` hook, for instance), follow this example:
+
+```php
+// Assuming $entry is a single form entry.
+// You can retrieve an entry by id using GFAPI::get_entry( $id );
+$entry_with_friendly_names = GF_Field_Helper_Common::replace_field_names( $entry );
+```
 
 == Installation ==
 
