@@ -20,9 +20,19 @@ Adds a settings page and REST API endpoint to retrieve human- and computer-frien
 
 1. Create friendly field names on the form settings page:
   ![Form Settings Page](img/friendly-field-names-form.png)
-2. Use the API endpoints to retrieve entries.
-  - The standard entry data is untouched.
-  - All named fields are added to a `fields` object in each entry object.
+1. Use the API endpoints to retrieve entries.
+   - The standard entry data is untouched.
+   - All named fields are added to a `fields` object in each entry object.
+
+### PHP
+
+If you need to use the friendly field names in PHP (using the `gform_after_submission` hook, for instance), follow this example:
+
+```php
+// Assuming $entry is a single form entry.
+// You can retrieve an entry by id using GFAPI::get_entry( $id );
+$entry_with_friendly_names = GF_Field_Helper_Common::replace_field_names( $entry );
+```
 
 ## API Endpoints
 

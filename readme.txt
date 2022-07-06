@@ -33,6 +33,7 @@ If you need to use the friendly field names in PHP (using the `gform_after_submi
 
 ```php
 // Assuming $entry is a single form entry.
+// You can retrieve an entry by id using GFAPI::get_entry( $id );
 $entry_with_friendly_names = GF_Field_Helper_Common::replace_field_names( $entry );
 ```
 
