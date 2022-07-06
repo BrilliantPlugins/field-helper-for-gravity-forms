@@ -29,7 +29,7 @@ Create nearly any form with Gravity Form’s drag-and-drop interface, and use th
 - Retrieve all entries from a specific form:  `https://your-site.com/wp-json/gf/v2/forms/<form_id>/json/`
 - Retrieve a specific entry from a specific form:  `https://your-site.com/wp-json/gf/v2/forms/<form_id>/entries/<entry_id>/json/`
 
-If you need to use the frienldy field names in PHP (using the `gform_after_submission` hook, for instance), follow this example:
+If you need to use the friendly field names in PHP (using the `gform_after_submission` hook, for instance), follow this example:
 
 ```php
 // Assuming $entry is a single form entry.
