@@ -60,6 +60,8 @@ class GF_Field_Helper_Bootstrap {
 
 		// Common.
 		require_once 'class-gf-field-helper-common.php';
+		require_once 'class-gf-field-helper-json.php';
+		GF_Field_Helper_Json::get_instance();
 
 		// Friendly field names.
 		require_once 'class-gf-field-helper.php';

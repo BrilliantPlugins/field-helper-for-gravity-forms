@@ -8,6 +8,7 @@ parameters:
         - class-gf-disable-autocomplete.php
         - class-gf-field-helper-common.php
         - class-gf-field-helper-endpoint.php
+        - class-gf-field-helper-json.php
         - class-gf-field-helper.php
         - class-gf-input-pattern.php
 

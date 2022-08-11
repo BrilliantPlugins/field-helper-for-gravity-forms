@@ -136,6 +136,12 @@ Example of a **friendly** `entry/<ID>/json` response with the `fields` object:
 }
 ```
 
+## Version Control
+
+Field Helper settings are stored in JSON files for easier deployment between development and production environments.
+
+By default, they are stored in a `gf-json/` directory in your theme directory. If you wish to override this location, use the `gf_field_helper_json_directory` filter.
+
 # Disable Autocomplete
 
 Disables the browser’s autocomplete feature on all or individual fields.
