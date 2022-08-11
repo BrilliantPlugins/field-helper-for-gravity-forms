@@ -2,7 +2,7 @@
 /**
  * Field Helper for Gravity Forms
  *
- * @package gravity-forms-field-helper
+ * @package brilliant-plugins/field-helper-for-gravity-forms
  */
 
 if ( ! class_exists( 'GFForms' ) ) {
@@ -14,7 +14,7 @@ GFForms::include_addon_framework();
 /**
  * Field Helper for Gravity Forms
  *
- * @package gravity-forms-field-helper
+ * @package brilliant-plugins/field-helper-for-gravity-forms
  */
 class GF_Field_Helper extends GFAddOn {
 
