@@ -74,10 +74,10 @@ class GF_Field_Helper_Bootstrap {
 		GFAddOn::register( GF_Input_Pattern::class );
 
 		// Backend assets.
-		add_action( 'admin_enqueue_scripts', 'GF_Field_Helper_Bootstrap::register_backend_assets' );
+		add_action( 'admin_enqueue_scripts', array( static::class, 'register_backend_assets' ) );
 
 		// Frontend assets.
-		add_action( 'wp_enqueue_scripts', 'GF_Field_Helper_Bootstrap::register_frontend_assets' );
+		add_action( 'wp_enqueue_scripts', array( static::class, 'register_frontend_assets' ) );
 	}
 
 	/**
