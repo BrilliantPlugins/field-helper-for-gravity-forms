@@ -1,0 +1,9 @@
+{
+    "name": "brilliant-plugins/field-helper-for-gravity-forms",
+    "description": "Adds various features and tweaks to Gravity Forms.",
+    "type": "wordpress-plugin",
+    "homepage": "https://wordpress.org/plugins/field-helper-for-gravity-forms",
+    "require-dev": {
+        "szepeviktor/phpstan-wordpress": "^1.1"
+    }
+}

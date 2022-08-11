@@ -8,9 +8,13 @@
 .wordpress-org
 .DS_Store
 bin
+composer.json
+composer.lock
 gulpfile.js
 documentation
 node_modules
 package.json
 phpcs.xml
+phpstan.neon
+phpstan.neon.dist
 shrinkwrap.yaml
