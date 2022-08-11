@@ -1,0 +1,16 @@
+{
+    "name": "brilliant-plugins/field-helper-for-gravity-forms",
+    "description": "Adds various features and tweaks to Gravity Forms.",
+    "type": "wordpress-plugin",
+    "homepage": "https://wordpress.org/plugins/field-helper-for-gravity-forms",
+    "require-dev": {
+        "szepeviktor/phpstan-wordpress": "^1.1",
+        "brilliant-hosting/rocket-genius-gravity-forms": "^2.6"
+    },
+    "repositories": {
+        "brilliant-hosting": {
+            "type": "composer",
+            "url": "https://git.luminfire.net/api/v4/group/219/-/packages/composer/packages.json"
+        }
+    }
+}

@@ -12,5 +12,9 @@ include:
   - project: 'templates/gitlab/ci-templates'
     file:
       - 'presets/php.yml'
+      - 'test/phpstan.yml'
       - 'build/wp-plugin.yml'
       - 'deploy/documentation/brilliantsolutions-docsify.yml'
+
+test:phpstan:
+  image: git.luminfire.net:5005/luminfire/ops/devops/docker/stacks/edbizarro-gitlab-ci-pipeline-php:7.4-fpm

@@ -28,6 +28,7 @@
 	<rule ref="WordPress">
 		<exclude name="Generic.WhiteSpace.DisallowTabIndent.TabsUsed" />
 		<exclude name="PSR2.Classes.PropertyDeclaration.Underscore" />
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
 	</rule>
 
 	<!-- Verify that the text_domain is set to the desired text-domain.

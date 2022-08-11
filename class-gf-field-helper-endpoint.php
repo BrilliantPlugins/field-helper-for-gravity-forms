@@ -2,7 +2,7 @@
 /**
  * Field Helper for Gravity Forms Endpoint
  *
- * @package gravity-forms-field-helper
+ * @package brilliant-plugins/field-helper-for-gravity-forms
  */
 
 if ( ! class_exists( 'GFForms' ) ) {
@@ -14,7 +14,7 @@ GFForms::include_addon_framework();
 /**
  * Field Helper for Gravity Forms Endpoint
  *
- * @package gravity-forms-field-helper
+ * @package brilliant-plugins/field-helper-for-gravity-forms
  */
 class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 
@@ -25,7 +25,7 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 	 *
 	 * @var string $_slug
 	 */
-	protected $_slug = 'gravity-forms-field-helper';
+	protected $_slug = GF_FIELD_HELPER_SLUG;
 
 	/**
 	 * API base.
@@ -56,7 +56,7 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 			'/entries/' . $base,
 			array(
 				array(
-					'methods'             => WP_REST_SERVER::READABLE,
+					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_items' ),
 					'permission_callback' => array( $this, 'get_items_permissions_check' ),
 					'args'                => $this->get_collection_params(),
@@ -69,7 +69,7 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 			'/entries/(?P<entry_id>[\d]+)/' . $base,
 			array(
 				array(
-					'methods'             => WP_REST_SERVER::READABLE,
+					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_item' ),
 					'permission_callback' => array( $this, 'get_items_permissions_check' ),
 					'args'                => $this->get_collection_params(),
@@ -85,7 +85,7 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 			'/forms/(?P<form_id>[\d]+)/entries/' . $base,
 			array(
 				array(
-					'methods'             => WP_REST_SERVER::READABLE,
+					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_items' ),
 					'permission_callback' => array( $this, 'get_items_permissions_check' ),
 					'args'                => $this->get_collection_params(),
@@ -98,7 +98,7 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 			'/forms/(?P<form_id>[\d]+)/entries/(?P<entry_id>[\d]+)/' . $base,
 			array(
 				array(
-					'methods'             => WP_REST_SERVER::READABLE,
+					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_item' ),
 					'permission_callback' => array( $this, 'get_items_permissions_check' ),
 					'args'                => $this->get_collection_params(),
@@ -196,10 +196,10 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param \WP_REST_Response $response Original API response.
-	 * @param bool              $single   Whether this is a single entry or multiple entries.
+	 * @param WP_REST_Response|WP_Error $response Original API response.
+	 * @param bool                      $single   Whether this is a single entry or multiple entries.
 	 *
-	 * @return mixed                      Result to send to the client.
+	 * @return mixed                              Result to send to the client.
 	 */
 	public function customize_rest_request( $response, $single = false ) {
 

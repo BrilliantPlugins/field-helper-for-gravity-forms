@@ -2,7 +2,7 @@
 /**
  * Disable autocomplete
  *
- * @package gravity-forms-field-helper
+ * @package brilliant-plugins/field-helper-for-gravity-forms
  */
 
 if ( ! class_exists( 'GFForms' ) ) {
@@ -14,7 +14,7 @@ GFForms::include_addon_framework();
 /**
  * Disable autocomplete
  *
- * @package gravity-forms-field-helper
+ * @package brilliant-plugins/field-helper-for-gravity-forms
  */
 class GF_Disable_Autocomplete extends GFAddOn {
 
@@ -150,14 +150,14 @@ class GF_Disable_Autocomplete extends GFAddOn {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @var array $form
+	 * @var array|null $form
 	 */
 	protected $form;
 
 	/**
 	 * Class instance.
 	 *
-	 * @var null
+	 * @var self
 	 */
 	private static $_instance = null;
 
