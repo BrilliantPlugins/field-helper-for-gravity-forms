@@ -93,7 +93,7 @@ class GF_Input_Pattern extends GFAddOn {
 	/**
 	 * Class instance.
 	 *
-	 * @var null
+	 * @var self
 	 */
 	private static $_instance = null;
 

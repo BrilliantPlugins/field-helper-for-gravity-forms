@@ -96,7 +96,7 @@ class GF_Field_Helper_Common {
 							$entry_ids = explode( ',', $value );
 							$value     = array();
 							foreach ( $entry_ids as $entry_id ) {
-								$fields[ $labels[ absint( $sanitized_key ) ] ][] = self::replace_field_names( GFAPI::get_entry( $entry_id ) );
+								$fields[ $labels[ absint( $sanitized_key ) ] ][] = self::replace_field_names( GFAPI::get_entry( absint( $entry_id ) ) );
 							}
 							break;
 

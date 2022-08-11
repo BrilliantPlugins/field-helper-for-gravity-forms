@@ -148,7 +148,7 @@ class GF_Field_Helper extends GFAddOn {
 	/**
 	 * Class instance.
 	 *
-	 * @var null
+	 * @var self
 	 */
 	private static $_instance = null;
 

@@ -150,14 +150,14 @@ class GF_Disable_Autocomplete extends GFAddOn {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @var array $form
+	 * @var array|null $form
 	 */
 	protected $form;
 
 	/**
 	 * Class instance.
 	 *
-	 * @var null
+	 * @var self
 	 */
 	private static $_instance = null;
 
