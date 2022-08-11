@@ -17,4 +17,4 @@ include:
       - 'deploy/documentation/brilliantsolutions-docsify.yml'
 
 test:phpstan:
-  image: git.luminfire.net:5005/luminfire/ops/devops/docker/stacks/edbizarro-gitlab-ci-pipeline-php:7.4
+  image: git.luminfire.net:5005/luminfire/ops/devops/docker/stacks/edbizarro-gitlab-ci-pipeline-php:7.4-fpm

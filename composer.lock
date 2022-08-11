@@ -4,9 +4,32 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2388b6383a0b889037441fe479a46dda",
+    "content-hash": "7b55d6a795c702ba580842399328778b",
     "packages": [],
     "packages-dev": [
+        {
+            "name": "brilliant-hosting/rocket-genius-gravity-forms",
+            "version": "2.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://git.luminfire.net/luminfire/ops/vendor/rocket-genius/gravity-forms.git",
+                "reference": "36511e80f300ef6906c1f464d2ad533f09e556ac"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://git.luminfire.net/api/v4/projects/1150/packages/composer/archives/brilliant-hosting/rocket-genius-gravity-forms.zip?sha=36511e80f300ef6906c1f464d2ad533f09e556ac",
+                "reference": "36511e80f300ef6906c1f464d2ad533f09e556ac",
+                "shasum": ""
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "gravity-forms"
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Gravity Forms"
+        },
         {
             "name": "php-stubs/wordpress-stubs",
             "version": "v6.0.1",

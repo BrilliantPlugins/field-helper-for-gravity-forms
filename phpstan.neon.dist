@@ -12,7 +12,7 @@ parameters:
         - class-gf-input-pattern.php
 
     scanDirectories:
-        - ../gravityforms
+        - vendor/brilliant-hosting/rocket-genius-gravity-forms
 
     # The level 8 is the highest level
     level: 5
@@ -21,6 +21,6 @@ parameters:
         - '#Unsafe usage of new static#'
 
     excludePaths:
-        - vendor
+        - ./*/*/FileToBeExcluded.php
 
     checkMissingIterableValueType: false
