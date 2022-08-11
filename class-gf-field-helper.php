@@ -253,9 +253,10 @@ class GF_Field_Helper extends GFAddOn {
 				'title'  => $title,
 				'fields' => array(
 					array(
-						'name'  => $this->get_field_id( $field ),
-						'label' => '',
-						'type'  => 'gf_helper_no_return_value',
+						'name'           => $this->get_field_id( $field ),
+						'label'          => $field['label'],
+						'type'           => 'gf_helper_no_return_value',
+						'type_for_label' => $field['type'],
 					),
 				),
 			);
@@ -395,7 +396,8 @@ class GF_Field_Helper extends GFAddOn {
 	 * @return void
 	 */
 	public function settings_gf_helper_no_return_value( $field ) {
-		esc_html_e( 'No return value is available for this type of field.', 'gravity-forms-field-helper' );
+		// Translators: %s is the field type.
+		echo sprintf( esc_html__( 'No return value is available for %s fields.', 'gravity-forms-field-helper' ), $field['type_for_label'] );
 	}
 
 	/**
