@@ -2,7 +2,7 @@
 /**
  * Input patterns
  *
- * @package gravity-forms-field-helper
+ * @package brilliant-plugins/field-helper-for-gravity-forms
  */
 
 if ( ! class_exists( 'GFForms' ) ) {
@@ -14,7 +14,7 @@ GFForms::include_addon_framework();
 /**
  * Input patterns
  *
- * @package gravity-forms-field-helper
+ * @package brilliant-plugins/field-helper-for-gravity-forms
  */
 class GF_Input_Pattern extends GFAddOn {
 
@@ -93,7 +93,7 @@ class GF_Input_Pattern extends GFAddOn {
 	/**
 	 * Class instance.
 	 *
-	 * @var null
+	 * @var self
 	 */
 	private static $_instance = null;
 

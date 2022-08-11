@@ -3,7 +3,7 @@
  * Plugin Name: Field Helper for Gravity Forms
  * Plugin URI: https://brilliantplugins.com/
  * Description: Enables Gravity Forms users to set consistent, human-friendly field names for use in the Gravity Forms REST API.
- * Version: 1.4.5
+ * Version: 1.5.0
  * Author: BrilliantPlugins
  * Author URI: https://brilliantplugins.com
  * License: GPL-2.0+
@@ -27,10 +27,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
- * @package gravity-forms-field-helper
+ * @package brilliant-plugins/field-helper-for-gravity-forms
  */
 
-define( 'GF_FIELD_HELPER_VERSION', '1.4.5' );
+define( 'GF_FIELD_HELPER_VERSION', '1.5.0' );
 define( 'GF_FIELD_HELPER_FILE', __FILE__ );
 define( 'GF_FIELD_HELPER_SLUG', 'gravity-forms-field-helper' );
 
@@ -60,6 +60,8 @@ class GF_Field_Helper_Bootstrap {
 
 		// Common.
 		require_once 'class-gf-field-helper-common.php';
+		require_once 'class-gf-field-helper-json.php';
+		GF_Field_Helper_Json::get_instance();
 
 		// Friendly field names.
 		require_once 'class-gf-field-helper.php';
@@ -74,10 +76,10 @@ class GF_Field_Helper_Bootstrap {
 		GFAddOn::register( GF_Input_Pattern::class );
 
 		// Backend assets.
-		add_action( 'admin_enqueue_scripts', 'GF_Field_Helper_Bootstrap::register_backend_assets' );
+		add_action( 'admin_enqueue_scripts', array( static::class, 'register_backend_assets' ) );
 
 		// Frontend assets.
-		add_action( 'wp_enqueue_scripts', 'GF_Field_Helper_Bootstrap::register_frontend_assets' );
+		add_action( 'wp_enqueue_scripts', array( static::class, 'register_frontend_assets' ) );
 	}
 
 	/**
