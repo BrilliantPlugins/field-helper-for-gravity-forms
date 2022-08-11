@@ -25,7 +25,7 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 	 *
 	 * @var string $_slug
 	 */
-	protected $_slug = 'gravity-forms-field-helper';
+	protected $_slug = GF_FIELD_HELPER_SLUG;
 
 	/**
 	 * API base.
