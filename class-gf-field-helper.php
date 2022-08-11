@@ -389,15 +389,15 @@ class GF_Field_Helper extends GFAddOn {
 	/**
 	 * Display note on html, section, and page fields.
 	 *
-	 * @param array $field Gravity Forms field.
-	 *
 	 * @since 1.0.3.0
+	 *
+	 * @param array $field Gravity Forms field.
 	 *
 	 * @return void
 	 */
 	public function settings_gf_helper_no_return_value( $field ) {
 		// Translators: %s is the field type.
-		echo sprintf( esc_html__( 'No return value is available for %s fields.', 'gravity-forms-field-helper' ), $field['type_for_label'] );
+		echo sprintf( esc_html__( 'No return value is available for %s fields.', 'gravity-forms-field-helper' ), esc_attr( $field['type_for_label'] ) );
 	}
 
 	/**
