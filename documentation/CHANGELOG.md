@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+# 1.6.0 | 2022-08-22
+
+- Feature: add `gf_field_helper_friendly_entry` and `gf_field_helper_api_response` filters
+
 # 1.5.0 | 2022-08-11
 
 - Feature: save and load Field Helper settings as JSON files for easier deployment

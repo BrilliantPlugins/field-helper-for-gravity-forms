@@ -34,6 +34,13 @@ If you need to use the friendly field names in PHP (using the `gform_after_submi
 $entry_with_friendly_names = GF_Field_Helper_Common::replace_field_names( $entry );
 ```
 
+### Filters
+
+These filters are available to customize the friendly field name data:
+
+- `gf_field_helper_friendly_entry`: called once for every form entry
+- `gf_field_helper_api_response`: called for API endpoint responses
+
 ## API Endpoints
 
 - Basically, append `/json` to Gravity Forms’ form- or entry-related endpoints to get JSON field data.
