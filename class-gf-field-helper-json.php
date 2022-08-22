@@ -84,6 +84,10 @@ class GF_Field_Helper_Json {
 	public function get_form_meta( $form ) {
 
 		try {
+			if ( ! file_exists( $this->get_filename( $form['id'] ) ) ) {
+				return $form;
+			}
+
 			// phpcs:disable WordPress.WP.AlternativeFunctions
 			$json_file = fopen( $this->get_filename( $form['id'] ), 'r' );
 
