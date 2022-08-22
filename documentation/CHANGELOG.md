@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+# 1.6.1 | 2022-08-22
+
+- Bugfix: prevent error when a JSON settings file doesn’t exist
+
 # 1.6.0 | 2022-08-22
 
 - Feature: add `gf_field_helper_friendly_entry` and `gf_field_helper_api_response` filters
