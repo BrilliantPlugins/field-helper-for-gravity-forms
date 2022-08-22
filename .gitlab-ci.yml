@@ -12,6 +12,7 @@ include:
   - project: 'templates/gitlab/ci-templates'
     file:
       - 'presets/php.yml'
+      - 'test/phpcs.yml'
       - 'test/phpstan.yml'
       - 'build/wp-plugin.yml'
       - 'deploy/documentation/brilliantsolutions-docsify.yml'

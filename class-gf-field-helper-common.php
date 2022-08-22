@@ -123,6 +123,17 @@ class GF_Field_Helper_Common {
 
 		$result['fields'] = $fields;
 
+		/**
+		 * Filter the friendly field names for the entry.
+		 *
+		 * @since 1.6.0
+		 *
+		 * @param array $result Form entry with friendly field names.
+		 *
+		 * @return array
+		 */
+		$result = apply_filters( 'gf_field_helper_friendly_entry', $result );
+
 		return $result;
 	}
 
