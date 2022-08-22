@@ -207,8 +207,6 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 			return $response;
 		}
 
-		// FIXME: add after filters.
-
 		$results = $response->get_data();
 
 		if ( $single ) {
@@ -218,6 +216,19 @@ class GF_Field_Helper_Endpoint extends GF_REST_Entries_Controller {
 				$results['entries'][ $key ] = GF_Field_Helper_Common::replace_field_names( $result );
 			}
 		}
+
+		/**
+		 * Filter the API repsonse containing frienldy field names.
+		 *
+		 * @since 1.6.0
+		 *
+		 * @param array                     $results  Form entry with friendly field names.
+		 * @param WP_Rest_Response|WP_Error $response Original API response
+		 * @param bool                      $single   Whether this is a single entry or multiple entries.
+		 *
+		 * @return array
+		 */
+		$results = apply_filters( 'gf_field_helper_api_response', $results, $response, $single );
 
 		return new WP_REST_Response( $results, $response->get_status() );
 	}
