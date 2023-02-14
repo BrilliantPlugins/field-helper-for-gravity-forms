@@ -46,6 +46,15 @@ class GF_Field_Helper_Common {
 	protected static $nested_fields = array();
 
 	/**
+	 * Survey fields to handle.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @var array $survey_fields
+	 */
+	protected static $survey_fields = array();
+
+	/**
 	 * Convert field ID with period to underscore.
 	 *
 	 * @since 1.0.0
@@ -110,6 +119,8 @@ class GF_Field_Helper_Common {
 							break;
 					}
 				}
+			} elseif ( array_key_exists( absint( $sanitized_key ), self::$survey_fields ) ) {
+				$fields[ $labels[ $sanitized_key ] ] = $value;
 			} elseif ( in_array( $sanitized_key, array_flip( $labels ), false ) ) { // phpcs:ignore WordPress.PHP.StrictInArray -- since GF uses both integer and string field keys.
 				// Others.
 				$fields[ $labels[ $sanitized_key ] ] = $value;
@@ -171,6 +182,10 @@ class GF_Field_Helper_Common {
 
 				if ( 'form' === $field['type'] && array_key_exists( $field['id'] . '-form-return', $fields ) ) {
 					self::$nested_fields[ $field['id'] ] = $fields[ $field['id'] . '-form-return' ];
+				}
+
+				if ( 'survey' === $field['type'] && array_key_exists( $field['id'], $fields ) ) {
+					self::$survey_fields[ $field['id'] ] = $fields[ $field['id'] ];
 				}
 
 				// Unset the format settings.
