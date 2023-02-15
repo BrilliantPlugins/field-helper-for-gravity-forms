@@ -78,8 +78,9 @@ class GF_Field_Helper_Common {
 	 */
 	public static function replace_field_names( $result ) {
 		$labels = self::get_form_friendly_labels( $result['form_id'] );
-		$original_entry = $result;
 		$fields = array();
+
+		$original_entry = $result;
 
 		foreach ( $result as $key => $value ) {
 			$sanitized_key = self::convert_field_id( $key );
@@ -121,7 +122,8 @@ class GF_Field_Helper_Common {
 				}
 			} elseif ( array_key_exists( $sanitized_key, self::$survey_fields ) ) {
 				$field = GFAPI::get_field( $result['form_id'], absint( $sanitized_key ) );
-				if ( method_exists( $field, 'get_column_text' ) ){
+				if ( method_exists( $field, 'get_column_text' ) ) {
+					/** @var GF_Field_Likert $field */
 					$fields[ $labels[ $sanitized_key ] ] = $field->get_column_text( $value, $original_entry, $key );
 				} else {
 					$fields[ $labels[ $sanitized_key ] ] = $field->get_value_export( $original_entry, $sanitized_key );
@@ -193,7 +195,7 @@ class GF_Field_Helper_Common {
 					if ( $field['inputs'] ) {
 						// Unset the choices.
 						foreach ( $field['inputs'] as $input_key => $input_id ) {
-							$input_id = self::convert_field_id( $input_id['id'] );
+							$input_id                         = self::convert_field_id( $input_id['id'] );
 							self::$survey_fields[ $input_id ] = $input_id;
 						}
 					} else {
