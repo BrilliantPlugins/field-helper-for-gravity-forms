@@ -46,6 +46,15 @@ class GF_Field_Helper_Common {
 	protected static $nested_fields = array();
 
 	/**
+	 * Survey fields to handle.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @var array $survey_fields
+	 */
+	protected static $survey_fields = array();
+
+	/**
 	 * Convert field ID with period to underscore.
 	 *
 	 * @since 1.0.0
@@ -69,8 +78,9 @@ class GF_Field_Helper_Common {
 	 */
 	public static function replace_field_names( $result ) {
 		$labels = self::get_form_friendly_labels( $result['form_id'] );
-
 		$fields = array();
+
+		$original_entry = $result;
 
 		foreach ( $result as $key => $value ) {
 			$sanitized_key = self::convert_field_id( $key );
@@ -109,6 +119,14 @@ class GF_Field_Helper_Common {
 							$fields[ $labels[ absint( $sanitized_key ) ] ] = $value;
 							break;
 					}
+				}
+			} elseif ( array_key_exists( $sanitized_key, self::$survey_fields ) ) {
+				$field = GFAPI::get_field( $result['form_id'], absint( $sanitized_key ) );
+				if ( method_exists( $field, 'get_column_text' ) ) {
+					/** @var GF_Field_Likert $field */ // phpcs:ignore, @phpstan-ignore-line
+					$fields[ $labels[ $sanitized_key ] ] = $field->get_column_text( $value, $original_entry, $key ); // @phpstan-ignore-line
+				} else {
+					$fields[ $labels[ $sanitized_key ] ] = $field->get_value_export( $original_entry, $sanitized_key );
 				}
 			} elseif ( in_array( $sanitized_key, array_flip( $labels ), false ) ) { // phpcs:ignore WordPress.PHP.StrictInArray -- since GF uses both integer and string field keys.
 				// Others.
@@ -171,6 +189,18 @@ class GF_Field_Helper_Common {
 
 				if ( 'form' === $field['type'] && array_key_exists( $field['id'] . '-form-return', $fields ) ) {
 					self::$nested_fields[ $field['id'] ] = $fields[ $field['id'] . '-form-return' ];
+				}
+
+				if ( 'survey' === $field['type'] ) {
+					if ( $field['inputs'] ) {
+						// Unset the choices.
+						foreach ( $field['inputs'] as $input_key => $input_id ) {
+							$input_id                         = self::convert_field_id( $input_id['id'] );
+							self::$survey_fields[ $input_id ] = $input_id;
+						}
+					} else {
+						self::$survey_fields[ $field['id'] ] = $fields[ $field['id'] ];
+					}
 				}
 
 				// Unset the format settings.
