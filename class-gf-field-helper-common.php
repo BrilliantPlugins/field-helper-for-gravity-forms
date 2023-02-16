@@ -123,8 +123,8 @@ class GF_Field_Helper_Common {
 			} elseif ( array_key_exists( $sanitized_key, self::$survey_fields ) ) {
 				$field = GFAPI::get_field( $result['form_id'], absint( $sanitized_key ) );
 				if ( method_exists( $field, 'get_column_text' ) ) {
-					/** @var GF_Field_Likert $field */
-					$fields[ $labels[ $sanitized_key ] ] = $field->get_column_text( $value, $original_entry, $key );
+					/** @var GF_Field_Likert $field */ // @phpstan-ignore-line
+					$fields[ $labels[ $sanitized_key ] ] = $field->get_column_text( $value, $original_entry, $key ); // @phpstan-ignore-line
 				} else {
 					$fields[ $labels[ $sanitized_key ] ] = $field->get_value_export( $original_entry, $sanitized_key );
 				}
