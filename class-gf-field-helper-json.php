@@ -134,6 +134,11 @@ class GF_Field_Helper_Json {
 		$form_meta = json_decode( $form_meta, true );
 
 		$field_helper_settings = $form_meta[ GF_FIELD_HELPER_SLUG ];
+
+		if ( ! is_array( $field_helper_settings) ) {
+			$field_helper_settings = array();
+		}
+
 		ksort( $field_helper_settings, SORT_NATURAL );
 
 		// Write the file.

@@ -3,7 +3,7 @@ Contributors: luminfire, macbookandrew, brilliantplugins, nickciske
 Tags: forms, form entries, api, Gravity Forms, FileMaker, database, field names
 Requires at least: 4.8
 Tested up to: 6.0.1
-Stable tag: 1.7.0
+Stable tag: 1.7.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -31,11 +31,11 @@ Create nearly any form with Gravity Form’s drag-and-drop interface, and use th
 
 If you need to use the friendly field names in PHP (using the `gform_after_submission` hook, for instance), follow this example:
 
-```php
+<pre>
 // Assuming $entry is a single form entry.
 // You can retrieve an entry by id using GFAPI::get_entry( $id );
 $entry_with_friendly_names = GF_Field_Helper_Common::replace_field_names( $entry );
-```
+</pre>
 
 == Installation ==
 
