@@ -125,8 +125,14 @@ class GF_Field_Helper_Common {
 				if ( method_exists( $field, 'get_column_text' ) ) {
 					/** @var GF_Field_Likert $field */ // phpcs:ignore, @phpstan-ignore-line
 					$fields[ $labels[ $sanitized_key ] ] = $field->get_column_text( $value, $original_entry, $key ); // @phpstan-ignore-line
- 				} elseif ( $field['inputType'] === 'checkbox' ) {
+ 				} elseif ( 'checkbox' === $field['inputType'] || 'select' === $field['inputType'] ) {
 					$fields[ $labels[ $sanitized_key ] ] = $field->get_selected_choice( $value )['text'];
+				} elseif ( $field['inputType'] === 'radio' ) {
+					// $selected_value = rgpost( $sanitized_key );
+					$fields[ $labels[ $sanitized_key ] ] = $field->get_value_export( $original_entry, $sanitized_key );
+					if ( ! empty ( rgpost( $sanitized_key ) ) ){
+						// $fields[ $labels[ $sanitized_key ] ] =
+					}
 				} else {
 					$fields[ $labels[ $sanitized_key ] ] = $field->get_value_export( $original_entry, $sanitized_key );
 				}
