@@ -125,6 +125,8 @@ class GF_Field_Helper_Common {
 				if ( method_exists( $field, 'get_column_text' ) ) {
 					/** @var GF_Field_Likert $field */ // phpcs:ignore, @phpstan-ignore-line
 					$fields[ $labels[ $sanitized_key ] ] = $field->get_column_text( $value, $original_entry, $key ); // @phpstan-ignore-line
+				} elseif ( in_array( $field['inputType'], array( 'checkbox', 'select', 'radio' ), true ) ) {
+					$fields[ $labels[ $sanitized_key ] ] = $field->get_selected_choice( $value )['text'];
 				} else {
 					$fields[ $labels[ $sanitized_key ] ] = $field->get_value_export( $original_entry, $sanitized_key );
 				}
@@ -186,7 +188,7 @@ class GF_Field_Helper_Common {
 					// Set array of checkbox fields.
 					self::$checkbox_fields[ $field['id'] ] = $field['id'];
 				}
-
+				
 				if ( 'form' === $field['type'] && array_key_exists( $field['id'] . '-form-return', $fields ) ) {
 					self::$nested_fields[ $field['id'] ] = $fields[ $field['id'] . '-form-return' ];
 				}
