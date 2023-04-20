@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+# 1.8.0 | 2023-04-17
+
+- Feature: add support for Gravity Forms Survey radio buttons, checkboxes, single line text, paragraph text, and drop down fields
+
 # 1.7.1 | 2023-03-06
 
 - Bugfix: fix an error when saving a new form
