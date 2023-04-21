@@ -12,6 +12,8 @@ Install and activate this plugin and use the various features below.
 
 Adds a settings page and REST API endpoint to retrieve human- and computer-friendly field names.
 
+If you are using the [Gravity Forms Webhook addon](https://www.gravityforms.com/add-ons/webhooks/), you may choose to use friendly field names in the webhook data as well.
+
 ## Requirements
 
 - Enable the Gravity Forms REST API
