@@ -165,6 +165,13 @@ class GF_Field_Helper extends GFAddOn {
 		return self::$_instance;
 	}
 
+	public function init() {
+		parent::init();
+
+		add_filter( 'gform_addon_feed_settings_fields', array( $this, 'add_webhook_setting' ), 15, 2 );
+		add_filter( 'gform_webhooks_request_data', array( $this, 'gform_webhooks_request_data' ), 15, 4 );
+	}
+
 	/**
 	 * Render plugin page content.
 	 *
@@ -413,4 +420,71 @@ class GF_Field_Helper extends GFAddOn {
 		return GF_Field_Helper_Common::convert_field_id( $field['id'] );
 	}
 
+	/**
+	 * Add field to webhook settings.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param array  $feed_settings_fields Feed settings fields.
+	 * @param object $addon                Addon class object.
+	 *
+	 * @return array
+	 */
+	public function add_webhook_setting( array $feed_settings_fields, $addon ): array
+	{
+		if ( ! GF_Webhooks::class === get_class( $addon ) ) {
+			return $feed_settings_fields;
+		}
+
+		$feed_settings_fields[] = array(
+			'fields' => array(
+				array(
+					'label'          => esc_html__( 'Use Field Helper', 'gravity-forms-field-helper' ),
+					'name'           => 'useGfFieldHelper',
+					'type'           => 'checkbox',
+					'default_value'  => 'no',
+					'horizontal'     => true,
+					'tooltip'        => sprintf(
+						'<h6>%s</h6>%s',
+						esc_html__( 'Use Field Helper', 'gravity-forms-field-helper' ),
+						esc_html__( 'Select whether or not to use friendly field names in the webhook body.', 'gravity-forms-field-helper' )
+					),
+					'choices'        => array(
+						array(
+							'label' => esc_html__( 'Yes, use friendly field names', 'gravity-forms-field-helper' ),
+							'name'  => 'useGfFieldHelper',
+							'value' => 'yes',
+						),
+					),
+				),
+			),
+		);
+
+		return $feed_settings_fields;
+	}
+
+	/**
+	 * Maybe add friendly field names to webhook request data.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param array $request_data HTTP request data.
+	 * @param array $feed         The current feed object.
+	 * @param array $entry        The current entry object.
+	 * @param array $form         The current form object.
+	 *
+	 * @return array
+	 */
+	public function gform_webhooks_request_data( $request_data, $feed, $entry, $form ) {
+		if ( ! isset( $feed['meta']['useGfFieldHelper'] ) || ! in_array( $feed['meta']['useGfFieldHelper'], array( '1', 1, true, 'true', 'yes' )  ) ) {
+			return $request_data;
+		}
+
+		// Bail out if the webhook is sending only specific fields.
+		if ( 'all_fields' !== $feed['meta']['requestBodyType'] ) {
+			return $request_data;
+		}
+
+		return GF_Field_Helper_Common::replace_field_names( $request_data );
+	}
 }
