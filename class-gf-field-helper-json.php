@@ -135,8 +135,8 @@ class GF_Field_Helper_Json {
 
 		$field_helper_settings = $form_meta[ GF_FIELD_HELPER_SLUG ];
 
-		if ( ! is_array( $field_helper_settings) ) {
-			$field_helper_settings = array();
+		if ( empty( $field_helper_settings ) ) {
+			return $form_meta;
 		}
 
 		ksort( $field_helper_settings, SORT_NATURAL );
