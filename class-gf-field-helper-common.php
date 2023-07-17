@@ -78,19 +78,34 @@ class GF_Field_Helper_Common {
 	 */
 	public static function replace_field_names( $result ) {
 		$labels = self::get_form_friendly_labels( $result['form_id'] );
+
+		if ( empty( $labels ) ) {
+			$result['fields']['error'] = array(
+				'code'    => 500,
+				'message' => 'Friendly field names are not set. Please visit your form settings to set them.',
+			);
+
+			/**
+			 * Filter the friendly field names for the entry.
+			 *
+			 * @since 1.6.0
+			 * @since 1.9.3 Added to this guard condition.
+			 *
+			 * @param array $result Form entry with friendly field names.
+			 *
+			 * @return array
+			 */
+			$result = apply_filters( 'gf_field_helper_friendly_entry', $result );
+
+			return $result;
+		}
+
 		$fields = array();
 
 		$original_entry = $result;
 
 		foreach ( $result as $key => $value ) {
 			$sanitized_key = self::convert_field_id( $key );
-
-			if ( empty( $labels ) ) {
-				$fields['error'] = array(
-					'code'    => 500,
-					'message' => 'Friendly field names are not set. Please visit your form settings to set them.',
-				);
-			}
 
 			if ( in_array( absint( $sanitized_key ), self::$checkbox_fields, true ) ) {
 				// Checkbox.
@@ -188,7 +203,7 @@ class GF_Field_Helper_Common {
 					// Set array of checkbox fields.
 					self::$checkbox_fields[ $field['id'] ] = $field['id'];
 				}
-				
+
 				if ( 'form' === $field['type'] && array_key_exists( $field['id'] . '-form-return', $fields ) ) {
 					self::$nested_fields[ $field['id'] ] = $fields[ $field['id'] . '-form-return' ];
 				}
