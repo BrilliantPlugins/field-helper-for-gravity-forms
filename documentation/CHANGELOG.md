@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+# 1.9.3 | 2023-07-17
+
+- Bugfix: return original entry data if field names are not set
+
 # 1.9.2 | 2023-07-10
 
 - Bugfix: prevent issues with empty settings in JSON files
