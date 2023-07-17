@@ -282,7 +282,7 @@ class GF_Field_Helper extends GFAddOn {
 			$description = '(' . __( 'Field Description', 'gravity-forms-field-helper' ) . ': ' . esc_html( $field['description'] ) . ')';
 		}
 
-		if ( isset( $field['inputs'] ) && is_array( $field['inputs'] ) ) {
+		if ( isset( $field['inputs'] ) && is_array( $field['inputs'] ) && 'time' !== $field['type'] ) {
 
 			// This is a multiple-input field.
 			if ( 'checkbox' === $field['type'] ) {
