@@ -28,29 +28,29 @@ class GF_Field_Helper_Common {
 	protected static $friendly_labels = array();
 
 	/**
-	 * Checkbox fields to coalasce.
+	 * Checkbox fields to coalasce, keyed by formId_fieldId strings.
 	 *
 	 * @since 1.0.3.0
 	 *
-	 * @var array $checkbox_fields
+	 * @var array<string, string> $checkbox_fields
 	 */
 	protected static $checkbox_fields = array();
 
 	/**
-	 * Nested fields to handle.
+	 * Nested fields to handle, keyed by formId_fieldId strings.
 	 *
 	 * @since 1.3.0
 	 *
-	 * @var array $nested_fields
+	 * @var array<string, string> $nested_fields
 	 */
 	protected static $nested_fields = array();
 
 	/**
-	 * Survey fields to handle.
+	 * Survey fields to handle, keyed by formId_fieldId strings.
 	 *
 	 * @since 1.3.0
 	 *
-	 * @var array $survey_fields
+	 * @var array<string, string> $survey_fields
 	 */
 	protected static $survey_fields = array();
 
@@ -108,15 +108,15 @@ class GF_Field_Helper_Common {
 		foreach ( $result as $key => $value ) {
 			$sanitized_key = self::convert_field_id( $key );
 
-			if ( in_array( absint( $sanitized_key ), self::$checkbox_fields, true ) ) {
+			if ( in_array( self::convert_field_id( $key, $result['form_id'] ), self::$checkbox_fields, true ) ) {
 				// Checkbox.
 				if ( ! empty( $value ) ) {
 					$fields[ $labels[ absint( $sanitized_key ) ] ][] = $value;
 				}
-			} elseif ( array_key_exists( absint( $sanitized_key ), self::$nested_fields ) ) {
+			} elseif ( array_key_exists( self::convert_field_id( $key, $result['form_id'] ), self::$nested_fields ) ) {
 				// Nested Form field.
 				if ( ! empty( $value ) ) {
-					switch ( self::$nested_fields[ absint( $sanitized_key ) ] ) {
+					switch ( self::$nested_fields[ self::convert_field_id( $key, $result['form_id'] ) ] ) {
 
 						case 'expanded':
 							if ( is_array( $value ) ) {
@@ -215,6 +215,8 @@ class GF_Field_Helper_Common {
 			$fields = array_filter( $form[ GF_FIELD_HELPER_SLUG ] );
 
 			foreach ( $form['fields'] as $field ) {
+				$field_and_form_id = self::convert_field_id( $field['id'], $form_id );
+
 				if ( 'checkbox' === $field['type'] && array_key_exists( $field['id'] . '-checkbox-return', $fields ) && 'combined' === $fields[ $field['id'] . '-checkbox-return' ] ) {
 
 					// Unset the choices.
@@ -224,22 +226,22 @@ class GF_Field_Helper_Common {
 					}
 
 					// Set array of checkbox fields.
-					self::$checkbox_fields[ $field['id'] ] = $field['id'];
+					self::$checkbox_fields[ $field_and_form_id ] = $field['id'];
 				}
 
 				if ( 'form' === $field['type'] && array_key_exists( $field['id'] . '-form-return', $fields ) ) {
-					self::$nested_fields[ $field['id'] ] = $fields[ $field['id'] . '-form-return' ];
+					self::$nested_fields[ $field_and_form_id ] = $fields[ $field['id'] . '-form-return' ];
 				}
 
 				if ( 'survey' === $field['type'] ) {
 					if ( $field['inputs'] ) {
 						// Unset the choices.
 						foreach ( $field['inputs'] as $input_key => $input_id ) {
-							$input_id                         = self::convert_field_id( $input_id['id'] );
+							$input_id                         = self::convert_field_id( $input_id['id'], $form_id );
 							self::$survey_fields[ $input_id ] = $input_id;
 						}
 					} else {
-						self::$survey_fields[ $field['id'] ] = $fields[ $field['id'] ];
+						self::$survey_fields[ $field_and_form_id ] = $fields[ $field['id'] ];
 					}
 				}
 
