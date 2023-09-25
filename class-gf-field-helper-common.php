@@ -59,12 +59,13 @@ class GF_Field_Helper_Common {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $id Field ID.
+	 * @param string     $id      Field ID.
+	 * @param int|string $form_id Form ID.
 	 *
 	 * @return string    Sanitized field ID for/from database.
 	 */
-	public static function convert_field_id( $id ) {
-		return str_replace( '.', '_', $id );
+	public static function convert_field_id( $id, $form_id = null ) {
+		return str_replace( '.', '_', $id ) . ( $form_id ? '_' . $form_id : '' );
 	}
 
 	/**
