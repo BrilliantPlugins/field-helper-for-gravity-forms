@@ -118,19 +118,41 @@ class GF_Field_Helper_Common {
 					switch ( self::$nested_fields[ absint( $sanitized_key ) ] ) {
 
 						case 'expanded':
-							$entry_ids = explode( ',', $value );
-							$value     = array();
-							foreach ( $entry_ids as $entry_id ) {
-								$fields[ $labels[ absint( $sanitized_key ) ] ][] = self::replace_field_names( GFAPI::get_entry( absint( $entry_id ) ) );
+							if ( is_array( $value ) ) {
+								$entries = $value;
+							} else {
+								$entry_ids = explode( ',', $value );
+								$entries   = GFAPI::get_entries(
+									0,
+									array(
+										'field_filters' => array(
+											array(
+												'key'      => 'id',
+												'operator' => 'IN',
+												'value'    => $entry_ids,
+											),
+										),
+									)
+								);
+							}
+							foreach ( $entries as $nested_entry ) {
+								$fields[ $labels[ absint( $sanitized_key ) ] ][] = self::replace_field_names( $nested_entry );
 							}
 							break;
 
 						case 'array':
+							if ( is_array( $value ) ) {
+								$value = wp_list_pluck( $value, 'id' );
+							}
 							$value = json_decode( '[' . $value . ']' );
-							// Now just fall through and assign the value.
+							$fields[ $labels[ absint( $sanitized_key ) ] ] = $value;
+							break;
 
 						case 'csv':
 						default:
+							if ( is_array( $value ) ) {
+								$value = wp_list_pluck( $value, 'id' );
+							}
 							$fields[ $labels[ absint( $sanitized_key ) ] ] = $value;
 							break;
 					}
