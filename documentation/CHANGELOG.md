@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+# 1.9.5 | 2023-09-25
+
+- Bugfix: fix nested fields using the same field IDs
+
 # 1.9.4 | 2023-07-17
 
 - Bugfix: fix time field handling
