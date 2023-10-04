@@ -212,6 +212,10 @@ class GF_Field_Helper_Common {
 				return array();
 			}
 
+			if ( ! is_array( $form[ GF_FIELD_HELPER_SLUG ] ) ) {
+				return array();
+			}
+
 			$fields = array_filter( $form[ GF_FIELD_HELPER_SLUG ] );
 
 			foreach ( $form['fields'] as $field ) {
@@ -221,7 +225,7 @@ class GF_Field_Helper_Common {
 
 					// Unset the choices.
 					foreach ( $field['inputs'] as $input_key => $input_id ) {
-						$input_id = self::convert_field_id( $input_id['id'] );
+						$input_id = self::convert_field_id( $input_id['id'], $form_id );
 						unset( $fields[ $input_id ] );
 					}
 
