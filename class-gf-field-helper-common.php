@@ -212,6 +212,10 @@ class GF_Field_Helper_Common {
 				return array();
 			}
 
+			if ( ! is_array( $form[ GF_FIELD_HELPER_SLUG ] ) ) {
+				return array();
+			}
+
 			$fields = array_filter( $form[ GF_FIELD_HELPER_SLUG ] );
 
 			foreach ( $form['fields'] as $field ) {
