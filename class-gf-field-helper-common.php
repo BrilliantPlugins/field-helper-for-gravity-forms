@@ -55,6 +55,15 @@ class GF_Field_Helper_Common {
 	protected static $survey_fields = array();
 
 	/**
+	 * Signature fields to handle, keyed by formId_fieldId strings.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @var array<string, string> $signature_fields
+	 */
+	protected static $signature_fields = array();
+
+	/**
 	 * Convert field ID with period to underscore.
 	 *
 	 * @since 1.0.0
@@ -205,6 +214,7 @@ class GF_Field_Helper_Common {
 	 * @return array Human-friendly form labels or false if not set.
 	 */
 	public static function get_form_friendly_labels( $form_id ) {
+
 		if ( ! isset( self::$friendly_labels[ $form_id ] ) ) {
 			$form = GFAPI::get_form( $form_id );
 
@@ -231,6 +241,10 @@ class GF_Field_Helper_Common {
 
 					// Set array of checkbox fields.
 					self::$checkbox_fields[ $field_and_form_id ] = $field['id'];
+				}
+
+				if ('signature' === $field['type'] && array_key_exists($field['id'] . '-signature-return', $fields)) {
+					self::$signature_fields[$field_and_form_id] = $fields[$field['id'] . '-signature-return'];
 				}
 
 				if ( 'form' === $field['type'] && array_key_exists( $field['id'] . '-form-return', $fields ) ) {
