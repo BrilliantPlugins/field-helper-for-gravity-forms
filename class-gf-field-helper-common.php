@@ -122,6 +122,11 @@ class GF_Field_Helper_Common {
 				if ( ! empty( $value ) ) {
 					$fields[ $labels[ absint( $sanitized_key ) ] ][] = $value;
 				}
+			} elseif ( in_array( self::convert_field_id( $key, $result['form_id'] ), self::$signature_fields, true ) ) {
+				// Signature.
+				if (!empty($value)) {
+					$fields[$labels[absint($sanitized_key)]][] = $value;
+				}
 			} elseif ( array_key_exists( self::convert_field_id( $key, $result['form_id'] ), self::$nested_fields ) ) {
 				// Nested Form field.
 				if ( ! empty( $value ) ) {
