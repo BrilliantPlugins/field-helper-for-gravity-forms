@@ -282,8 +282,33 @@ class GF_Field_Helper extends GFAddOn {
 			$description = '(' . __( 'Field Description', 'gravity-forms-field-helper' ) . ': ' . esc_html( $field['description'] ) . ')';
 		}
 
-		if ( isset( $field['inputs'] ) && is_array( $field['inputs'] ) && 'time' !== $field['type'] ) {
+		if ('signature' === $field['type']) {
+			$friendly_fields['fields'][] = array(
+				'name'       => $id . '-signature-return',
+				'label'      => esc_html__('Response Format', 'gravity-forms-field-helper'),
+				'class'      => 'signature-return-format',
+				'data-input' => $id,
+				'type'       => 'radio',
+				'choices'    => array(
+					array(
+						'label' => esc_html__('Filename', 'gravity-forms-field-helper'),
+						'value' => 'filename',
+					),
+					array(
+						'label' => esc_html__('Full URL', 'gravity-forms-field-helper'),
+						'value' => 'url',
+					),
+				),
+				'tooltip'    => esc_html__('How should selected values from this field be returned in the JSON response?', 'gravity-forms-field-helper'),
+			);
 
+			$value = '';
+			if (array_key_exists($id, $helper_settings)) {
+				$value = $helper_settings[$id];
+			}
+		}
+
+		if ( isset( $field['inputs'] ) && is_array( $field['inputs'] ) && 'time' !== $field['type'] ) {
 			// This is a multiple-input field.
 			if ( 'checkbox' === $field['type'] ) {
 				$friendly_fields['fields'][] = array(
