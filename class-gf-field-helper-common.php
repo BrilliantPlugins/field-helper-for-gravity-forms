@@ -168,11 +168,11 @@ class GF_Field_Helper_Common {
 					}
 				}
 			} elseif ( array_key_exists( self::convert_field_id( $key, $result['form_id'] ), self::$signature_fields ) ) {
-				if ( self::$signature_fields[ self::convert_field_id( $key, $result['form_id'] ) ] === 'filename' ) {
-					$fields[ $labels[ $sanitized_key ] ] = $value;
-				} else {
+				if ( self::$signature_fields[ self::convert_field_id( $key, $result['form_id'] ) ] === 'url' ) {
 					$field                               = GFAPI::get_field( $result['form_id'], absint( $sanitized_key ) );
 					$fields[ $labels[ $sanitized_key ] ] = $field->get_value_url( $value );
+				} else {
+					$fields[ $labels[ $sanitized_key ] ] = $value;
 				}
 			} elseif ( array_key_exists( $sanitized_key, self::$survey_fields ) ) {
 				$field = GFAPI::get_field( $result ['form_id'], absint( $sanitized_key ) );
