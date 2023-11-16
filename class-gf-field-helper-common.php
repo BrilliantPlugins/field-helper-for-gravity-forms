@@ -122,11 +122,6 @@ class GF_Field_Helper_Common {
 				if ( ! empty( $value ) ) {
 					$fields[ $labels[ absint( $sanitized_key ) ] ][] = $value;
 				}
-			} elseif ( in_array( self::convert_field_id( $key, $result['form_id'] ), self::$signature_fields, true ) ) {
-				// Signature.
-				if (!empty($value)) {
-					$fields[$labels[absint($sanitized_key)]][] = $value;
-				}
 			} elseif ( array_key_exists( self::convert_field_id( $key, $result['form_id'] ), self::$nested_fields ) ) {
 				// Nested Form field.
 				if ( ! empty( $value ) ) {
@@ -171,6 +166,13 @@ class GF_Field_Helper_Common {
 							$fields[ $labels[ absint( $sanitized_key ) ] ] = $value;
 							break;
 					}
+				}
+			} elseif ( array_key_exists( self::convert_field_id( $key, $result['form_id'] ), self::$signature_fields ) ) {
+				if (self::$signature_fields[self::convert_field_id($key, $result['form_id'])] === 'filename') {
+					$fields[$labels[$sanitized_key]] = $value;
+				} else {
+					$field = GFAPI::get_field($result['form_id'], absint($sanitized_key));
+					$fields[$labels[$sanitized_key]] = $field->get_value_url($value);
 				}
 			} elseif ( array_key_exists( $sanitized_key, self::$survey_fields ) ) {
 				$field = GFAPI::get_field( $result['form_id'], absint( $sanitized_key ) );

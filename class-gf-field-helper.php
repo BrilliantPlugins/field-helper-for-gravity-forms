@@ -291,12 +291,12 @@ class GF_Field_Helper extends GFAddOn {
 				'type'       => 'radio',
 				'choices'    => array(
 					array(
-						'label' => esc_html__('A user friendly URL', 'gravity-forms-field-helper'),
-						'value' => 'url',
+						'label' => esc_html__('Filename', 'gravity-forms-field-helper'),
+						'value' => 'filename',
 					),
 					array(
-						'label' => esc_html__('An image .png format', 'gravity-forms-field-helper'),
-						'value' => 'image',
+						'label' => esc_html__('Full URL', 'gravity-forms-field-helper'),
+						'value' => 'url',
 					),
 				),
 				'tooltip'    => esc_html__('How should selected values from this field be returned in the JSON response?', 'gravity-forms-field-helper'),
