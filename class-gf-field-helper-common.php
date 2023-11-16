@@ -57,7 +57,7 @@ class GF_Field_Helper_Common {
 	/**
 	 * Signature fields to handle, keyed by formId_fieldId strings.
 	 *
-	 * @since 1.3.0
+	 * @since 1.10.0
 	 *
 	 * @var array<string, string> $signature_fields
 	 */
