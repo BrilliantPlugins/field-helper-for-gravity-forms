@@ -55,6 +55,15 @@ class GF_Field_Helper_Common {
 	protected static $survey_fields = array();
 
 	/**
+	 * Signature fields to handle, keyed by formId_fieldId strings.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @var array<string, string> $signature_fields
+	 */
+	protected static $signature_fields = array();
+
+	/**
 	 * Convert field ID with period to underscore.
 	 *
 	 * @since 1.0.0
@@ -158,8 +167,15 @@ class GF_Field_Helper_Common {
 							break;
 					}
 				}
+			} elseif ( array_key_exists( self::convert_field_id( $key, $result['form_id'] ), self::$signature_fields ) ) {
+				if ( self::$signature_fields[ self::convert_field_id( $key, $result['form_id'] ) ] === 'url' ) {
+					$field                               = GFAPI::get_field( $result['form_id'], absint( $sanitized_key ) );
+					$fields[ $labels[ $sanitized_key ] ] = $field->get_value_url( $value );
+				} else {
+					$fields[ $labels[ $sanitized_key ] ] = $value;
+				}
 			} elseif ( array_key_exists( $sanitized_key, self::$survey_fields ) ) {
-				$field = GFAPI::get_field( $result['form_id'], absint( $sanitized_key ) );
+				$field = GFAPI::get_field( $result ['form_id'], absint( $sanitized_key ) );
 				if ( method_exists( $field, 'get_column_text' ) ) {
 					/** @var GF_Field_Likert $field */ // phpcs:ignore, @phpstan-ignore-line
 					$fields[ $labels[ $sanitized_key ] ] = $field->get_column_text( $value, $original_entry, $key ); // @phpstan-ignore-line
@@ -205,6 +221,7 @@ class GF_Field_Helper_Common {
 	 * @return array Human-friendly form labels or false if not set.
 	 */
 	public static function get_form_friendly_labels( $form_id ) {
+
 		if ( ! isset( self::$friendly_labels[ $form_id ] ) ) {
 			$form = GFAPI::get_form( $form_id );
 
@@ -231,6 +248,10 @@ class GF_Field_Helper_Common {
 
 					// Set array of checkbox fields.
 					self::$checkbox_fields[ $field_and_form_id ] = $field['id'];
+				}
+
+				if ( 'signature' === $field['type'] && array_key_exists( $field['id'] . '-signature-return', $fields ) ) {
+					self::$signature_fields[ $field_and_form_id ] = $fields[ $field['id'] . '-signature-return' ];
 				}
 
 				if ( 'form' === $field['type'] && array_key_exists( $field['id'] . '-form-return', $fields ) ) {
@@ -261,5 +282,4 @@ class GF_Field_Helper_Common {
 
 		return self::$friendly_labels[ $form_id ];
 	}
-
 }
