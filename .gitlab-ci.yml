@@ -8,6 +8,10 @@ stages:
   - deploy
   - release
 
+variables:
+  CLOUDFLARE_PAGES_PROJECT_NAME: field-helper-for-gravity-forms
+  # CLOUDFLARE_API_TOKEN: # add to GitLab CI/CD variable
+
 include:
   - project: 'templates/gitlab/ci-templates'
     file:
@@ -15,7 +19,7 @@ include:
       - 'test/phpcs.yml'
       - 'test/phpstan.yml'
       - 'build/wp-plugin.yml'
-      - 'deploy/documentation/brilliantsolutions-docsify.yml'
+      - 'deploy/documentation/brilliantsolutions-cloudflare-pages.yml'
 
 test:phpstan:
   image: git.luminfire.net:5005/luminfire/ops/devops/docker/stacks/edbizarro-gitlab-ci-pipeline-php:7.4-fpm
