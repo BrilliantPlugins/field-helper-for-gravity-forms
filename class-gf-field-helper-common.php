@@ -115,17 +115,18 @@ class GF_Field_Helper_Common {
 		$original_entry = $result;
 
 		foreach ( $result as $key => $value ) {
-			$sanitized_key = self::convert_field_id( $key );
+			$sanitized_key     = self::convert_field_id( $key );
+			$field_and_form_id = self::convert_field_id( $key, $result['form_id'] );
 
-			if ( in_array( self::convert_field_id( $key, $result['form_id'] ), self::$checkbox_fields, true ) ) {
+			if ( array_key_exists( $field_and_form_id, self::$checkbox_fields ) ) {
 				// Checkbox.
 				if ( ! empty( $value ) ) {
 					$fields[ $labels[ absint( $sanitized_key ) ] ][] = $value;
 				}
-			} elseif ( array_key_exists( self::convert_field_id( $key, $result['form_id'] ), self::$nested_fields ) ) {
+			} elseif ( array_key_exists( $field_and_form_id, self::$nested_fields ) ) {
 				// Nested Form field.
 				if ( ! empty( $value ) ) {
-					switch ( self::$nested_fields[ self::convert_field_id( $key, $result['form_id'] ) ] ) {
+					switch ( self::$nested_fields[ $field_and_form_id ] ) {
 
 						case 'expanded':
 							if ( is_array( $value ) ) {
@@ -167,8 +168,8 @@ class GF_Field_Helper_Common {
 							break;
 					}
 				}
-			} elseif ( array_key_exists( self::convert_field_id( $key, $result['form_id'] ), self::$signature_fields ) ) {
-				if ( self::$signature_fields[ self::convert_field_id( $key, $result['form_id'] ) ] === 'url' ) {
+			} elseif ( array_key_exists( $field_and_form_id, self::$signature_fields ) ) {
+				if ( self::$signature_fields[ $field_and_form_id ] === 'url' ) {
 					$field                               = GFAPI::get_field( $result['form_id'], absint( $sanitized_key ) );
 					$fields[ $labels[ $sanitized_key ] ] = $field->get_value_url( $value );
 				} else {
@@ -242,8 +243,9 @@ class GF_Field_Helper_Common {
 
 					// Unset the choices.
 					foreach ( $field['inputs'] as $input_key => $input_id ) {
-						$input_id = self::convert_field_id( $input_id['id'], $form_id );
-						unset( $fields[ $input_id ] );
+						$input_and_form_id = self::convert_field_id( $input_id['id'], $form_id );
+						unset( $fields[ $input_and_form_id ] );
+						self::$checkbox_fields[ $input_and_form_id ] = $field['id'];
 					}
 
 					// Set array of checkbox fields.
