@@ -3,7 +3,7 @@ Contributors: luminfire, macbookandrew, brilliantplugins, nickciske, daverydan
 Tags: forms, form entries, api, Gravity Forms, FileMaker, database, field names
 Requires at least: 4.8
 Tested up to: 6.2.2
-Stable tag: 1.10.1
+Stable tag: 1.10.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
