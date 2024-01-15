@@ -12,6 +12,7 @@ variables:
   PLUGIN_SLUG: field-helpe-for-gravity-forms
   CLOUDFLARE_PAGES_PROJECT_NAME: field-helper-for-gravity-forms
   # CLOUDFLARE_API_TOKEN: # add to GitLab CI/CD variable
+  PHP_VERSION: '7.4'
 
 include:
   - project: 'templates/gitlab/ci-templates'
