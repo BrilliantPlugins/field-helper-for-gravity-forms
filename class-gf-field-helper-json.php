@@ -44,8 +44,8 @@ class GF_Field_Helper_Json {
 	 * Load action hooks.
 	 */
 	private function __construct() {
-		add_filter( 'gform_form_post_get_meta', array( $this, 'get_form_meta' ), 10, 2 );
-		add_filter( 'gform_post_update_form_meta', array( $this, 'update_form_meta' ), 10, 3 );
+		add_filter( 'gform_form_post_get_meta', array( $this, 'get_form_meta' ), 10 );
+		add_filter( 'gform_post_update_form_meta', array( $this, 'update_form_meta' ), 10, 2 );
 	}
 
 	/**
@@ -117,15 +117,14 @@ class GF_Field_Helper_Json {
 	 *
 	 * @param string $form_meta Form meta.
 	 * @param int    $form_id   Form ID.
-	 * @param string $meta_name Meta name.
 	 *
 	 * @return string|array     Form meta.
 	 */
-	public function update_form_meta( $form_meta, $form_id, $meta_name ) {
+	public function update_form_meta( $form_meta, $form_id ) {
 
 		// Test whether filesystem is writeable.
-		if ( ! is_writable( $this->get_directory() ) ) {
-			$create_directory = mkdir( $this->get_directory(), 0755 );
+		if ( ! is_writable( $this->get_directory() ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_is_writable
+			$create_directory = mkdir( $this->get_directory(), 0755 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_mkdir
 			if ( ! $create_directory ) {
 				return $form_meta;
 			}
