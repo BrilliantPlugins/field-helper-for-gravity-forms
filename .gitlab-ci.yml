@@ -12,16 +12,13 @@ variables:
   PLUGIN_SLUG: field-helpe-for-gravity-forms
   CLOUDFLARE_PAGES_PROJECT_NAME: field-helper-for-gravity-forms
   # CLOUDFLARE_API_TOKEN: # add to GitLab CI/CD variable
-  PHP_VERSION: '7.4'
+  PHP_VERSION: "7.4"
 
 include:
-  - project: 'templates/gitlab/ci-templates'
+  - project: "templates/gitlab/ci-templates"
     file:
-      - 'presets/php.yml'
-      - 'test/phpcs.yml'
-      - 'test/phpstan.yml'
-      - 'build/wp-plugin.yml'
-      - 'deploy/documentation/brilliantsolutions-cloudflare-pages.yml'
-
-test:phpstan:
-  image: git.luminfire.net:5005/luminfire/ops/devops/docker/stacks/edbizarro-gitlab-ci-pipeline-php:7.4-fpm
+      - "presets/php.yml"
+      - "test/phpcs.yml"
+      - "test/phpstan.yml"
+      - "build/wp-plugin.yml"
+      - "deploy/documentation/brilliantsolutions-cloudflare-pages.yml"

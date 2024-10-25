@@ -165,6 +165,9 @@ class GF_Field_Helper extends GFAddOn {
 		return self::$_instance;
 	}
 
+	/**
+	 * Initialize the class.
+	 */
 	public function init() {
 		parent::init();
 
@@ -282,29 +285,29 @@ class GF_Field_Helper extends GFAddOn {
 			$description = '(' . __( 'Field Description', 'gravity-forms-field-helper' ) . ': ' . esc_html( $field['description'] ) . ')';
 		}
 
-		if ('signature' === $field['type']) {
+		if ( 'signature' === $field['type'] ) {
 			$friendly_fields['fields'][] = array(
 				'name'       => $id . '-signature-return',
-				'label'      => esc_html__('Response Format', 'gravity-forms-field-helper'),
+				'label'      => esc_html__( 'Response Format', 'gravity-forms-field-helper' ),
 				'class'      => 'signature-return-format',
 				'data-input' => $id,
 				'type'       => 'radio',
 				'choices'    => array(
 					array(
-						'label' => esc_html__('Filename', 'gravity-forms-field-helper'),
+						'label' => esc_html__( 'Filename', 'gravity-forms-field-helper' ),
 						'value' => 'filename',
 					),
 					array(
-						'label' => esc_html__('Full URL', 'gravity-forms-field-helper'),
+						'label' => esc_html__( 'Full URL', 'gravity-forms-field-helper' ),
 						'value' => 'url',
 					),
 				),
-				'tooltip'    => esc_html__('How should selected values from this field be returned in the JSON response?', 'gravity-forms-field-helper'),
+				'tooltip'    => esc_html__( 'How should selected values from this field be returned in the JSON response?', 'gravity-forms-field-helper' ),
 			);
 
 			$value = '';
-			if (array_key_exists($id, $helper_settings)) {
-				$value = $helper_settings[$id];
+			if ( array_key_exists( $id, $helper_settings ) ) {
+				$value = $helper_settings[ $id ];
 			}
 		}
 
@@ -429,7 +432,7 @@ class GF_Field_Helper extends GFAddOn {
 	 */
 	public function settings_gf_helper_no_return_value( $field ) {
 		// Translators: %s is the field type.
-		echo sprintf( esc_html__( 'No return value is available for %s fields.', 'gravity-forms-field-helper' ), esc_attr( $field['type_for_label'] ) );
+		printf( esc_html__( 'No return value is available for %s fields.', 'gravity-forms-field-helper' ), esc_attr( $field['type_for_label'] ) );
 	}
 
 	/**
@@ -455,8 +458,7 @@ class GF_Field_Helper extends GFAddOn {
 	 *
 	 * @return array
 	 */
-	public function add_webhook_setting( array $feed_settings_fields, $addon ): array
-	{
+	public function add_webhook_setting( array $feed_settings_fields, $addon ): array {
 		if ( ! GF_Webhooks::class === get_class( $addon ) ) {
 			return $feed_settings_fields;
 		}
@@ -464,17 +466,17 @@ class GF_Field_Helper extends GFAddOn {
 		$feed_settings_fields[] = array(
 			'fields' => array(
 				array(
-					'label'          => esc_html__( 'Use Field Helper', 'gravity-forms-field-helper' ),
-					'name'           => 'useGfFieldHelper',
-					'type'           => 'checkbox',
-					'default_value'  => 'no',
-					'horizontal'     => true,
-					'tooltip'        => sprintf(
+					'label'         => esc_html__( 'Use Field Helper', 'gravity-forms-field-helper' ),
+					'name'          => 'useGfFieldHelper',
+					'type'          => 'checkbox',
+					'default_value' => 'no',
+					'horizontal'    => true,
+					'tooltip'       => sprintf(
 						'<h6>%s</h6>%s',
 						esc_html__( 'Use Field Helper', 'gravity-forms-field-helper' ),
 						esc_html__( 'Select whether or not to use friendly field names in the webhook body.', 'gravity-forms-field-helper' )
 					),
-					'choices'        => array(
+					'choices'       => array(
 						array(
 							'label' => esc_html__( 'Yes, use friendly field names', 'gravity-forms-field-helper' ),
 							'name'  => 'useGfFieldHelper',
@@ -501,7 +503,7 @@ class GF_Field_Helper extends GFAddOn {
 	 * @return array
 	 */
 	public function gform_webhooks_request_data( $request_data, $feed, $entry, $form ) {
-		if ( ! isset( $feed['meta']['useGfFieldHelper'] ) || ! in_array( $feed['meta']['useGfFieldHelper'], array( '1', 1, true, 'true', 'yes' )  ) ) {
+		if ( ! isset( $feed['meta']['useGfFieldHelper'] ) || ! in_array( $feed['meta']['useGfFieldHelper'], array( '1', 1, true, 'true', 'yes' ), true ) ) {
 			return $request_data;
 		}
 

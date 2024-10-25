@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+# 1.10.3 | 2024-10-25
+
+- Bugfix: fix friendly field name settings being mangled by a change in Gravity Forms core
+
 # 1.10.2 | 2024-01-12
 
 - Bugfix: fix combined checkbox field handling
