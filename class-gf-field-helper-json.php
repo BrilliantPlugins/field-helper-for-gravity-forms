@@ -106,6 +106,15 @@ class GF_Field_Helper_Json {
 		$field_helper_settings = json_decode( $json, true );
 
 		if ( JSON_ERROR_NONE === json_last_error() && ! is_null( $field_helper_settings ) ) {
+
+			// Backwards compatibility for older files.
+			foreach ( $field_helper_settings as $key => $value ) {
+				if ( 0 !== strpos( $key, 'field-' ) ) {
+					$field_helper_settings[ 'field-' . $key ] = $value;
+					unset( $field_helper_settings[ $key ] );
+				}
+			}
+
 			$form[ GF_FIELD_HELPER_SLUG ] = $field_helper_settings;
 		}
 

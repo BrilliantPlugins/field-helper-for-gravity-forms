@@ -74,7 +74,7 @@ class GF_Field_Helper_Common {
 	 * @return string    Sanitized field ID for/from database.
 	 */
 	public static function convert_field_id( $id, $form_id = null ) {
-		return str_replace( '.', '_', $id ) . ( $form_id ? '_' . $form_id : '' );
+		return 'field-' . str_replace( '.', '_', $id ) . ( $form_id ? '_' . $form_id : '' );
 	}
 
 	/**
