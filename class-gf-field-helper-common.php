@@ -115,13 +115,13 @@ class GF_Field_Helper_Common {
 		$original_entry = $result;
 
 		foreach ( $result as $key => $value ) {
-			$sanitized_key     = self::convert_field_id( $key );
+			$field_id          = self::convert_field_id( $key );
 			$field_and_form_id = self::convert_field_id( $key, $result['form_id'] );
 
 			if ( array_key_exists( $field_and_form_id, self::$checkbox_fields ) ) {
 				// Checkbox.
 				if ( ! empty( $value ) ) {
-					$fields[ $labels[ absint( $sanitized_key ) ] ][] = $value;
+					$fields[ $labels[ $field_id ] ][] = $value;
 				}
 			} elseif ( array_key_exists( $field_and_form_id, self::$nested_fields ) ) {
 				// Nested Form field.
@@ -147,7 +147,7 @@ class GF_Field_Helper_Common {
 								);
 							}
 							foreach ( $entries as $nested_entry ) {
-								$fields[ $labels[ absint( $sanitized_key ) ] ][] = self::replace_field_names( $nested_entry );
+								$fields[ $labels[ $field_id ] ][] = self::replace_field_names( $nested_entry );
 							}
 							break;
 
@@ -155,8 +155,8 @@ class GF_Field_Helper_Common {
 							if ( is_array( $value ) ) {
 								$value = wp_list_pluck( $value, 'id' );
 							}
-							$value = json_decode( '[' . $value . ']' );
-							$fields[ $labels[ absint( $sanitized_key ) ] ] = $value;
+							$value                          = json_decode( '[' . $value . ']' );
+							$fields[ $labels[ $field_id ] ] = $value;
 							break;
 
 						case 'csv':
@@ -164,30 +164,30 @@ class GF_Field_Helper_Common {
 							if ( is_array( $value ) ) {
 								$value = wp_list_pluck( $value, 'id' );
 							}
-							$fields[ $labels[ absint( $sanitized_key ) ] ] = $value;
+							$fields[ $labels[ $field_id ] ] = $value;
 							break;
 					}
 				}
 			} elseif ( array_key_exists( $field_and_form_id, self::$signature_fields ) ) {
 				if ( self::$signature_fields[ $field_and_form_id ] === 'url' ) {
-					$field                               = GFAPI::get_field( $result['form_id'], absint( $sanitized_key ) );
-					$fields[ $labels[ $sanitized_key ] ] = $field->get_value_url( $value );
+					$field                          = GFAPI::get_field( $result['form_id'], $field_id );
+					$fields[ $labels[ $field_id ] ] = $field->get_value_url( $value );
 				} else {
-					$fields[ $labels[ $sanitized_key ] ] = $value;
+					$fields[ $labels[ $field_id ] ] = $value;
 				}
-			} elseif ( array_key_exists( $sanitized_key, self::$survey_fields ) ) {
-				$field = GFAPI::get_field( $result ['form_id'], absint( $sanitized_key ) );
+			} elseif ( array_key_exists( $field_id, self::$survey_fields ) ) {
+				$field = GFAPI::get_field( $result ['form_id'], $field_id );
 				if ( method_exists( $field, 'get_column_text' ) ) {
-					/** @var GF_Field_Likert $field */ // phpcs:ignore, @phpstan-ignore-line
-					$fields[ $labels[ $sanitized_key ] ] = $field->get_column_text( $value, $original_entry, $key ); // @phpstan-ignore-line
+					/** @var \GF_Field_Likert $field */ // phpcs:ignore
+					$fields[ $labels[ $field_id ] ] = $field->get_column_text( $value, $original_entry, $key );
 				} elseif ( in_array( $field['inputType'], array( 'checkbox', 'select', 'radio' ), true ) ) {
-					$fields[ $labels[ $sanitized_key ] ] = $field->get_selected_choice( $value )['text'];
+					$fields[ $labels[ $field_id ] ] = $field->get_selected_choice( $value )['text'];
 				} else {
-					$fields[ $labels[ $sanitized_key ] ] = $field->get_value_export( $original_entry, $sanitized_key );
+					$fields[ $labels[ $field_id ] ] = $field->get_value_export( $original_entry, $field_id );
 				}
-			} elseif ( in_array( $sanitized_key, array_flip( $labels ), false ) ) { // phpcs:ignore WordPress.PHP.StrictInArray -- since GF uses both integer and string field keys.
+			} elseif ( in_array( $field_id, array_flip( $labels ), false ) ) { // phpcs:ignore WordPress.PHP.StrictInArray -- since GF uses both integer and string field keys.
 				// Others.
-				$fields[ $labels[ $sanitized_key ] ] = $value;
+				$fields[ $labels[ $field_id ] ] = $value;
 			}
 
 			// Unset only field keys (strings will convert to 0, floats to integers).
@@ -237,9 +237,10 @@ class GF_Field_Helper_Common {
 			$fields = array_filter( $form[ GF_FIELD_HELPER_SLUG ] );
 
 			foreach ( $form['fields'] as $field ) {
+				$field_id          = self::convert_field_id( $field['id'] );
 				$field_and_form_id = self::convert_field_id( $field['id'], $form_id );
 
-				if ( 'checkbox' === $field['type'] && array_key_exists( $field['id'] . '-checkbox-return', $fields ) && 'combined' === $fields[ $field['id'] . '-checkbox-return' ] ) {
+				if ( 'checkbox' === $field['type'] && array_key_exists( $field_id . '-checkbox-return', $fields ) && 'combined' === $fields[ $field_id . '-checkbox-return' ] ) {
 
 					// Unset the choices.
 					foreach ( $field['inputs'] as $input_key => $input_id ) {
@@ -252,12 +253,12 @@ class GF_Field_Helper_Common {
 					self::$checkbox_fields[ $field_and_form_id ] = $field['id'];
 				}
 
-				if ( 'signature' === $field['type'] && array_key_exists( $field['id'] . '-signature-return', $fields ) ) {
-					self::$signature_fields[ $field_and_form_id ] = $fields[ $field['id'] . '-signature-return' ];
+				if ( 'signature' === $field['type'] && array_key_exists( $field_id . '-signature-return', $fields ) ) {
+					self::$signature_fields[ $field_and_form_id ] = $fields[ $field_id . '-signature-return' ];
 				}
 
-				if ( 'form' === $field['type'] && array_key_exists( $field['id'] . '-form-return', $fields ) ) {
-					self::$nested_fields[ $field_and_form_id ] = $fields[ $field['id'] . '-form-return' ];
+				if ( 'form' === $field['type'] && array_key_exists( $field_id . '-form-return', $fields ) ) {
+					self::$nested_fields[ $field_and_form_id ] = $fields[ $field_id . '-form-return' ];
 				}
 
 				if ( 'survey' === $field['type'] ) {
@@ -268,7 +269,7 @@ class GF_Field_Helper_Common {
 							self::$survey_fields[ $input_id ] = $input_id;
 						}
 					} else {
-						self::$survey_fields[ $field_and_form_id ] = $fields[ $field['id'] ];
+						self::$survey_fields[ $field_and_form_id ] = $fields[ $field_and_form_id ];
 					}
 				}
 
