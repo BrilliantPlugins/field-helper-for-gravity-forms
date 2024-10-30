@@ -130,6 +130,6 @@ class GF_Field_Helper_Bootstrap {
  *
  * @return GF_Field_Helper Instance of GF Field Helper.
  */
-function gf_field_helper() {
+function gf_field_helper() { // phpcs:ignore -- Universal.Files.SeparateFunctionsFromOO.Mixed
 	return GF_Field_Helper::get_instance();
 }
