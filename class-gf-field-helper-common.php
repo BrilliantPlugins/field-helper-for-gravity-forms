@@ -176,8 +176,8 @@ class GF_Field_Helper_Common {
 				} else {
 					$fields[ $labels[ $field_id ] ] = $value;
 				}
-			} elseif ( array_key_exists( $field_id, self::$survey_fields ) ) {
-				$field = GFAPI::get_field( $result ['form_id'], $compound_field_id );
+			} elseif ( array_key_exists( $field_and_form_id, self::$survey_fields ) ) {
+				$field = GFAPI::get_field( $result ['form_id'], absint( $key ) );
 				if ( method_exists( $field, 'get_column_text' ) ) {
 					/** @var \GF_Field_Likert $field */ // phpcs:ignore
 					$fields[ $labels[ $field_id ] ] = $field->get_column_text( $value, $original_entry, $key );
