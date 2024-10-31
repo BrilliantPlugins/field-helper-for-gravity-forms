@@ -116,12 +116,13 @@ class GF_Field_Helper_Common {
 
 		foreach ( $result as $key => $value ) {
 			$field_id          = self::convert_field_id( $key );
+			$compound_field_id = self::convert_field_id( absint( $key ) ); // Convert checkboxes and other compound fields to a single ID.
 			$field_and_form_id = self::convert_field_id( $key, $result['form_id'] );
 
 			if ( array_key_exists( $field_and_form_id, self::$checkbox_fields ) ) {
 				// Checkbox.
 				if ( ! empty( $value ) ) {
-					$fields[ $labels[ $field_id ] ][] = $value;
+					$fields[ $labels[ $compound_field_id ] ][] = $value;
 				}
 			} elseif ( array_key_exists( $field_and_form_id, self::$nested_fields ) ) {
 				// Nested Form field.
@@ -147,7 +148,7 @@ class GF_Field_Helper_Common {
 								);
 							}
 							foreach ( $entries as $nested_entry ) {
-								$fields[ $labels[ $field_id ] ][] = self::replace_field_names( $nested_entry );
+								$fields[ $labels[ $compound_field_id ] ][] = self::replace_field_names( $nested_entry );
 							}
 							break;
 
@@ -156,7 +157,7 @@ class GF_Field_Helper_Common {
 								$value = wp_list_pluck( $value, 'id' );
 							}
 							$value                          = json_decode( '[' . $value . ']' );
-							$fields[ $labels[ $field_id ] ] = $value;
+							$fields[ $labels[ $compound_field_id ] ] = $value;
 							break;
 
 						case 'csv':
@@ -164,19 +165,19 @@ class GF_Field_Helper_Common {
 							if ( is_array( $value ) ) {
 								$value = wp_list_pluck( $value, 'id' );
 							}
-							$fields[ $labels[ $field_id ] ] = $value;
+							$fields[ $labels[ $compound_field_id ] ] = $value;
 							break;
 					}
 				}
 			} elseif ( array_key_exists( $field_and_form_id, self::$signature_fields ) ) {
 				if ( self::$signature_fields[ $field_and_form_id ] === 'url' ) {
-					$field                          = GFAPI::get_field( $result['form_id'], $field_id );
+					$field                          = GFAPI::get_field( $result['form_id'], $compound_field_id );
 					$fields[ $labels[ $field_id ] ] = $field->get_value_url( $value );
 				} else {
 					$fields[ $labels[ $field_id ] ] = $value;
 				}
 			} elseif ( array_key_exists( $field_id, self::$survey_fields ) ) {
-				$field = GFAPI::get_field( $result ['form_id'], $field_id );
+				$field = GFAPI::get_field( $result ['form_id'], $compound_field_id );
 				if ( method_exists( $field, 'get_column_text' ) ) {
 					/** @var \GF_Field_Likert $field */ // phpcs:ignore
 					$fields[ $labels[ $field_id ] ] = $field->get_column_text( $value, $original_entry, $key );
@@ -246,11 +247,11 @@ class GF_Field_Helper_Common {
 					foreach ( $field['inputs'] as $input_key => $input_id ) {
 						$input_and_form_id = self::convert_field_id( $input_id['id'], $form_id );
 						unset( $fields[ $input_and_form_id ] );
-						self::$checkbox_fields[ $input_and_form_id ] = $field['id'];
+						self::$checkbox_fields[ $input_and_form_id ] = $field_id;
 					}
 
 					// Set array of checkbox fields.
-					self::$checkbox_fields[ $field_and_form_id ] = $field['id'];
+					self::$checkbox_fields[ $field_and_form_id ] = $field_id;
 				}
 
 				if ( 'signature' === $field['type'] && array_key_exists( $field_id . '-signature-return', $fields ) ) {

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+# 1.10.5 | 2024-10-31
+
+- Bugfix: fix missing array keys for checkbox fields caused by 1.10.4
+
 # 1.10.4 | 2024-10-30
 
 - Bugfix: fix empty values for more advanced fields caused by 1.10.3
