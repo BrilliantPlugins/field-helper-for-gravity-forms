@@ -1,6 +1,6 @@
 === Field Helper for Gravity Forms ===
 Contributors: luminfire, macbookandrew, brilliantplugins, nickciske, daverydan
-Tags: forms, form entries, api, Gravity Forms, FileMaker, database, field names
+Tags: FileMaker, Gravity Forms, form entries, forms, field names
 Requires at least: 4.8
 Tested up to: 6.2.2
 Stable tag: 1.10.6
